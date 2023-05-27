@@ -1,0 +1,69 @@
+.dark {
+    // 品牌色
+    @colorPrimaryActive: #282828;       //主色激活态
+    @colorPrimary: #2e2e2e;             //品牌主色
+    @colorPrimaryHover: #3c3c3c;        //主色描边色悬浮态
+    @colorPrimaryBorder: #1d1d1d;       //主色描边色
+    
+    // 中性色
+    @colorText: rgba(255, 255, 255, 0.85);  //一级文本色
+    @colorBorder: #424242;                  //一级边跨色
+    @colorBgMask: rgba(0, 0, 0, 0.45);
+
+    @colorFill:rgba(120, 120, 120, 0.35);              //一级填充色
+    @colorFillSecondary:rgba(120, 120, 120, 0.06);     //二级填充色
+    @colorFillTertiary: rgba(120, 120, 120, 0.04);      //三级填充色
+
+    .Space {
+        background-color: @colorPrimary;
+    }
+
+    .logo {
+        color: @colorText;
+    }
+
+    .dialogues {
+        .title {
+            color: @colorText;
+        }
+
+        .item {
+            color: @colorText;
+            &:hover{
+                background-color: @colorFill;
+            }
+        }
+    }
+
+    .options {
+        background-color: @colorPrimary;
+        color: @colorText;
+
+        border-top: 1px solid @colorBorder;
+
+        .option {
+            &:hover{
+                background-color: @colorFill;
+            }
+        }
+    }
+
+    .room {
+        .header{
+            border-bottom: 1px solid @colorBorder;
+        }
+    
+        .message {
+            background-color: @colorPrimaryActive;
+        }
+    
+        .prompt {
+        }
+    }
+
+    .corrugation {
+        .ripple {
+            background-color: @colorBgMask;
+        }
+    }
+}

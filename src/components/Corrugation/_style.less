@@ -1,0 +1,40 @@
+.corrugation {
+    position: relative;
+    cursor: pointer;
+
+    &>:first-child{
+        z-index: 1;
+    }
+
+    .ripple-root{
+        position: absolute;
+        overflow: hidden;
+        z-index: 0;
+        inset: 0;
+        border-radius: inherit;
+
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+    
+            width: 100px;
+            height: 100px;
+            margin-top: -50px;
+            margin-left: -50px;
+    
+            animation: ripple 0.8s ease-in-out;
+            opacity: 0;
+        }
+    }
+}
+
+@keyframes ripple {
+    from {
+        opacity: 1;
+        transform: scale(0);
+    }
+    to {
+        opacity: 0;
+        transform: scale(10);
+    }
+}
