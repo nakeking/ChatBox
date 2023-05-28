@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { theme } from 'antd'
 import type { ThemeConfig } from 'antd'
 
 import { delStore, getStore, setStore } from "../utils"
+import ChatBoxContext from "../context"
 
 export interface themeInterface {
     themeType?: themeType
@@ -56,6 +57,7 @@ export const lightTheme: themeInterface = {
 
 const useThemeHook = () => {
     const [_theme, setTheme] = useState<themeInterface>()
+    const { _setTheme } = useContext(ChatBoxContext)
 
     useEffect(() => {
         const storedTheme = getStore('theme');
@@ -78,6 +80,7 @@ const useThemeHook = () => {
         }
 
         setTheme(themes[type])
+        _setTheme(themes[type])
     }
 
     return {
