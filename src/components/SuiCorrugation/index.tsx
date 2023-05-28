@@ -29,7 +29,7 @@ const Corrugation = ({children} : {children: ReactNode}) => {
     return (
         <div 
             ref={corrugation}
-            className="corrugation" 
+            className="SnakeCorrugation" 
             onClick={createCorrugation}>
             {children}
             <div className="ripple-root">

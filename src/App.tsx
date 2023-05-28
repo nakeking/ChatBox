@@ -24,7 +24,7 @@ const App: FC = () => {
       _setTheme,
       _setOpenAIKey
     }}>
-      <div className={`App ` + state.themeConfiguration?.themeType}>
+      <div id='App' className={`App ` + state.themeConfiguration?.themeType}>
         <ConfigProvider 
           locale={zhCN}
           theme={state.themeConfiguration?.antdTheme} >

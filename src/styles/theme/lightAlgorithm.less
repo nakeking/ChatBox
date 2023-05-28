@@ -8,7 +8,10 @@
     // 中性色
     @colorText: rgba(0, 0, 0, 0.88);        //一级文本色
 
-    @colorBorder: #d9d9d9;                  //一级边跨色
+    @colorBorder: #d9d9d9;                  //一级边框色
+    @colorBorderSecondary: #5b5b5b;         //二级边框色
+    @colorBorderTertiary: #878787;          //三级边框色
+
     @colorBgMask: #d9d9d9;                  //浮层背景蒙层颜色
 
     
@@ -63,9 +66,22 @@
         }
     }
 
-    .corrugation {
+    .SnakeCorrugation {
         .ripple {
             background-color: @colorBgMask;
+        }
+    }
+
+    .SuiLabel {
+        .label {
+            background-color: @colorPrimary;
+        }
+
+        .childrenBox{
+            border: 1px solid @colorBorder;
+            &:hover {
+                border: 1px solid @colorBorderSecondary;
+            }
         }
     }
 }

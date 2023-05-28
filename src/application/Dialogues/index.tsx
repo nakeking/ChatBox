@@ -4,7 +4,7 @@ import {
     MessageOutlined,
     MoreOutlined
 } from '@ant-design/icons';
-import { Corrugation } from '../../components';
+import { SuiCorrugation } from '../../components';
 
 type DialogueType = {
   id: number
@@ -25,7 +25,7 @@ const Dialogues: FC = () => {
             <div className='dialogue'>
               { dialogues.map(dialogue => {
                 return (
-                  <Corrugation key={dialogue.id}>
+                  <SuiCorrugation key={dialogue.id}>
                     <div className='item'>
                       <MessageOutlined />
                       <div className='title'>{dialogue.title}</div>
@@ -33,7 +33,7 @@ const Dialogues: FC = () => {
                         <MoreOutlined />
                       </div>
                     </div>
-                  </Corrugation>
+                  </SuiCorrugation>
                 )
               })}
             </div>

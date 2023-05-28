@@ -6,7 +6,7 @@ import {
     ExclamationCircleOutlined
 } from '@ant-design/icons';
 
-import { Corrugation } from '../../components';
+import { SuiCorrugation } from '../../components';
 import SettingsPanel from '../SettingsPanel';
 
 const Options: FC = () => {
@@ -27,24 +27,24 @@ const Options: FC = () => {
 
     return (
         <div className='options'>
-            <Corrugation>
+            <SuiCorrugation>
                 <div className='option Corrugation-root' onClick={handleAddDialogue}>
                     <PlusOutlined />
                     <p className='string'>新对话</p>
                 </div>
-            </Corrugation>
-            <Corrugation>
+            </SuiCorrugation>
+            <SuiCorrugation>
                 <div className="option Corrugation-root" onClick={handleSetUp}>
                     <SettingFilled />
                     <p className='string'>设置</p>
                 </div>
-            </Corrugation>
-            <Corrugation>
+            </SuiCorrugation>
+            <SuiCorrugation>
                 <div className='option Corrugation-root'>
                     <ExclamationCircleOutlined />
                     <p className='string'>版本：0.01</p>
                 </div>
-            </Corrugation>
+            </SuiCorrugation>
             
             <SettingsPanel 
                 open={openModal} 

@@ -1,5 +1,7 @@
-import Corrugation from './Corrugation'
+import SuiCorrugation from './SuiCorrugation'
+import SuiLabel from './SuiLabel'
 
 export {
-    Corrugation
+    SuiCorrugation,
+    SuiLabel
 }
