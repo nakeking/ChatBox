@@ -23,7 +23,8 @@ export const darkTheme: themeInterface = {
             colorBgElevated: "#2e2e2e",
             colorBgMask: "rgba(0, 0, 0, 0.45)",
     
-            colorText: "rgba(255, 255, 255, 0.85)",
+            colorText: "rgba(255, 255, 255, 0.85)",             // 一级文本色
+            colorTextQuaternary: "rgba(255, 255, 255, 0.25)"    // 四级文本色
         },
         components: {
             Radio: {
@@ -66,12 +67,6 @@ const useThemeHook = () => {
             setTheme(storedTheme)
         }
     }, [])
-
-    useEffect(() => {
-        if(_theme) {
-            setStore('theme', _theme)
-        }
-    }, [_theme])
 
     const handleToggleTheme = (type: themeType) => {
         const themes = {
