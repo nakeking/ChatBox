@@ -1,15 +1,17 @@
-import { FC, ReactNode, useEffect, useRef, useState } from "react";
+import React, { FC, ReactElement, JSXElementConstructor, useEffect, useState } from "react";
 import classNames from 'classnames'
 
 type SuiLabelProp = {
-    children: ReactNode,
+    children: ReactElement<any, string | JSXElementConstructor<any>>,
 
-    placeholder: string
-}
+    placeholder: string,
+} & React.HTMLAttributes<HTMLDivElement>
+
 const SuiLabel: FC<SuiLabelProp> = (prop) => {
-    const { children, placeholder } = prop
+    const { children, placeholder, ...otherProp } = prop
+    const childrenValue = children?.props.value
 
-    const [ status, ToggleStatus ] = useState(false)
+    const [ status, ToggleStatus ] = useState(childrenValue ? true : false)
 
     const boxTitleClassNames = classNames('label', {
         'expand': !status,
@@ -21,11 +23,13 @@ const SuiLabel: FC<SuiLabelProp> = (prop) => {
     }
 
     const handleBlur = () => {
-        ToggleStatus(false)
+        if(!children?.props.value) {
+            ToggleStatus(false)
+        }
     }
 
     return (
-        <div className="SuiLabel">
+        <div className="SuiLabel" {...otherProp} >
             <label className={boxTitleClassNames}>{placeholder}</label>
             <div 
                 className="childrenBox" 

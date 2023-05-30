@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import './App.less';
 import ChatBoxContext, { useReducerContext } from "./context";
 
@@ -7,7 +7,6 @@ import Dialogues from './application/Dialogues';
 import Options from './application/Options';
 import Room from './application/Room';
 
-import zhCN from "antd/locale/zh_CN"
 import { 
   ConfigProvider, 
   Layout,
@@ -15,18 +14,19 @@ import {
 const { Content } = Layout
 
 const App: FC = () => {
-  const { state, _setTheme, _setOpenAIKey } = useReducerContext()
+  const { state, _setTheme, _setOpenAIKey, _setLanguage } = useReducerContext()
 
   return (
     <ChatBoxContext.Provider value={{
       state,
 
       _setTheme,
-      _setOpenAIKey
+      _setOpenAIKey,
+      _setLanguage
     }}>
       <div id='App' className={`App ` + state.themeConfiguration?.themeType}>
         <ConfigProvider 
-          locale={zhCN}
+          locale={state.language}
           theme={state.themeConfiguration?.antdTheme} >
           <Layout className='Layout'>
             <div className='Sider'>
