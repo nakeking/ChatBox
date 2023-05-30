@@ -1,5 +1,5 @@
 // Modules to control application life and create native browser window
-const { app, BrowserWindow, Menu, Tray, ipcMain } = require('electron')
+const { app, shell, BrowserWindow, Menu, Tray, ipcMain } = require('electron')
 
 const path = require('path')
 
@@ -30,6 +30,7 @@ function createDevTools() {
 // 不需要菜单栏
 Menu.setApplicationMenu(null)
 
+// 创建窗口
 function createWindow () {
   // Create the browser window.
   const mainWindow = new BrowserWindow({

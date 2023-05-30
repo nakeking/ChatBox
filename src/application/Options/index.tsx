@@ -1,4 +1,5 @@
 import React, { FC, useState } from 'react'
+import { shell } from 'electron'
 
 import {
     PlusOutlined,
@@ -8,6 +9,7 @@ import {
 
 import { SuiCorrugation } from '../../components';
 import SettingsPanel from '../SettingsPanel';
+import { Button } from 'antd';
 
 const Options: FC = () => {
     // =============== 设置对话框 =============================
@@ -25,6 +27,14 @@ const Options: FC = () => {
 
     }
 
+    // =============== openUrl ==============
+    const openUrl = (evt: React.MouseEvent) => {
+        evt.preventDefault()
+
+        const url = "https://github.com/nakeking/ChatBox"
+        shell.openExternal(url)
+    }
+
     return (
         <div className='options'>
             <SuiCorrugation>
@@ -40,9 +50,9 @@ const Options: FC = () => {
                 </div>
             </SuiCorrugation>
             <SuiCorrugation>
-                <div className='option Corrugation-root'>
+                <div className='option Corrugation-root' onClick={openUrl}>
                     <ExclamationCircleOutlined />
-                    <p className='string'>版本：0.01</p>
+                    <a className='string'>版本：0.01</a>
                 </div>
             </SuiCorrugation>
             
