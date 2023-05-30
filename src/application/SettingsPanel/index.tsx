@@ -8,7 +8,7 @@ import { Modal, Radio, Button, Input, Select, Form } from 'antd'
 import useThemeHook, { themeType } from "../../hooks/useThemeHook";
 import { getStore } from "../../utils";
 import { SuiLabel } from "../../components";
-import { useReducerContext } from "../../context";
+import ChatBoxContext, { useReducerContext } from "../../context";
 
 // ====== SettingsPanel ======================================
 interface SettingsPanelProp {
@@ -17,10 +17,24 @@ interface SettingsPanelProp {
 }
 const SettingsPanel: FC<SettingsPanelProp> = (prop) => {
     let { open, cancelSetUp } = prop;
+    const { state, _setOpenAIKey, _setLanguage } = useContext(ChatBoxContext)
+
+    let [ initialValues ] = useState({
+        openAIKey: state.OpenAIKey,
+        language: state.language?.locale
+    })
 
     // =============== Save Form ============================
-    const { state, _setOpenAIKey, _setLanguage } = useReducerContext()
     const [ form ] = Form.useForm()
+
+    const handleCancel = () => {
+        form.setFieldsValue({
+            openAIKey: state.OpenAIKey,
+            language: state.language?.locale
+        })
+
+        cancelSetUp()
+    }
 
     const onFinish = (values: any) => {
         let { OpenAIKey: SOpenAIKey, language: SLanguage } = state
@@ -62,7 +76,7 @@ const SettingsPanel: FC<SettingsPanelProp> = (prop) => {
             closable={false}
             getContainer={false}
             footer={[
-                <Button type="text" key="back" onClick={ () => cancelSetUp()}>
+                <Button type="text" key="back" onClick={ handleCancel }>
                     取消
                 </Button>,
                 <Button type="text" key="submit" onClick={form.submit}>
@@ -73,10 +87,7 @@ const SettingsPanel: FC<SettingsPanelProp> = (prop) => {
                     <Form 
                         name="basic" 
                         form={form} 
-                        initialValues={{
-                            openAIKey: state.OpenAIKey,
-                            language: state.language?.locale
-                        }}
+                        initialValues={initialValues}
                         onFinish={onFinish}>
                         <Form.Item style={{marginTop: 20}} name="openAIKey">
                             <OpenAIKeyInput />
@@ -124,7 +135,7 @@ const OpenAIKeyInput: React.FC<OpenAIKeyProps> = ({ value, onChange }) => {
     
     return (
         <SuiLabel placeholder="OpenAI API密钥">
-            <Input type="password" value={OpenAIKey} onChange={openAIKeyChange} bordered={false} />
+            <Input type="password" value={value || OpenAIKey} onChange={openAIKeyChange} bordered={false} />
         </SuiLabel>
     )
 }
@@ -151,7 +162,7 @@ const LanguageSelect: FC<LanguageSelectProps> = ({value, onChange}) => {
             <Select 
                 style={{width: '100%'}} 
                 bordered={false} 
-                value={language}
+                value={value || language}
                 options={[
                     {value: "en", label: "English"},
                     {value: "zh-cn", label: "简体中文"}

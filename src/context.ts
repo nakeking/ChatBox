@@ -89,13 +89,14 @@ export const useReducerContext = () => {
 }
 
 interface IState {
-    state?: State
+    state: State
     _setTheme: (payload: themeInterface) => void
     _setOpenAIKey: (payload: string) => void
     _setLanguage: (payload: string) => void
 }
 
 const ChatBoxContext = React.createContext<IState>({
+    state: {},
     _setTheme: () => {},
     _setOpenAIKey: () => {},
     _setLanguage: () => {}
