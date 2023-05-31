@@ -9,6 +9,7 @@ import useThemeHook, { themeType } from "../../hooks/useThemeHook";
 import { getStore } from "../../utils";
 import { SuiLabel } from "../../components";
 import ChatBoxContext, { useReducerContext } from "../../context";
+import { useTranslation } from "react-i18next";
 
 // ====== SettingsPanel ======================================
 interface SettingsPanelProp {
@@ -23,6 +24,9 @@ const SettingsPanel: FC<SettingsPanelProp> = (prop) => {
         openAIKey: state.OpenAIKey,
         language: state.language?.locale
     })
+
+    // ============== 国际化 =======================
+    const { t } = useTranslation()
 
     // =============== Save Form ============================
     const [ form ] = Form.useForm()
@@ -72,15 +76,15 @@ const SettingsPanel: FC<SettingsPanelProp> = (prop) => {
         <Modal
             className='setUpModal'
             open={open}
-            title="设置"
+            title={t("SettingsPanel.Settings")}
             closable={false}
             getContainer={false}
             footer={[
                 <Button type="text" key="back" onClick={ handleCancel }>
-                    取消
+                    {t("common.Cancel")}
                 </Button>,
                 <Button type="text" key="submit" onClick={form.submit}>
-                    保存
+                    {t("common.Save")}
                 </Button>
             ]}>
                 <div className='modal_body'>
@@ -99,7 +103,7 @@ const SettingsPanel: FC<SettingsPanelProp> = (prop) => {
                     </Form>
                     
                     <div className="formItem">
-                        <span className='title'>主题</span>
+                        <span className='title'>{t("SettingsPanel.theme")}</span>
                         <Radio.Group value={theme} buttonStyle="solid" onChange={(e) => handleThemeChange(e.target.value)}>
                             <Radio.Button value="light">
                                 <BulbOutlined />
@@ -120,6 +124,7 @@ interface OpenAIKeyProps {
     onChange?: (value: string) => void
 }
 const OpenAIKeyInput: React.FC<OpenAIKeyProps> = ({ value, onChange }) => {
+    const { t } = useTranslation()
     const [ OpenAIKey, setOpenAIKey] = useState(value);
 
     const triggerChange = (OpenAIKey: string ) => {
@@ -134,7 +139,7 @@ const OpenAIKeyInput: React.FC<OpenAIKeyProps> = ({ value, onChange }) => {
     }
     
     return (
-        <SuiLabel placeholder="OpenAI API密钥">
+        <SuiLabel placeholder={t("SettingsPanel.OpenAIKey")}>
             <Input type="password" value={value || OpenAIKey} onChange={openAIKeyChange} bordered={false} />
         </SuiLabel>
     )
@@ -146,6 +151,7 @@ interface LanguageSelectProps {
     onChange?: (value: string) => void
 }
 const LanguageSelect: FC<LanguageSelectProps> = ({value, onChange}) => {
+    const { t } = useTranslation()
     const [ language, setLanguage ] = useState(value)
 
     const triggerChange = (language: string ) => {
@@ -158,7 +164,7 @@ const LanguageSelect: FC<LanguageSelectProps> = ({value, onChange}) => {
     }
 
     return (
-        <SuiLabel placeholder="语言" >
+        <SuiLabel placeholder={t("SettingsPanel.language")} >
             <Select 
                 style={{width: '100%'}} 
                 bordered={false} 

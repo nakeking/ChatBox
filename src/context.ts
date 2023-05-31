@@ -6,6 +6,7 @@ import type { Locale } from "antd/es/locale"
 
 import zhCN from "antd/locale/zh_CN"
 import enUS from 'antd/locale/en_US'
+import { useTranslation } from "react-i18next";
 
 const TOGGLETHEME = "TOGGLETHEME"
 const SETOPENAIKEY = "SETOPENAIKEY"
@@ -68,6 +69,8 @@ export const useReducerContext = () => {
         language: languages[storeLanguage]
     } as State)
 
+    const { i18n } = useTranslation()
+
     const _setTheme = useCallback((payload: themeInterface) => {
         dispatch({type: TOGGLETHEME, payload})
     }, [])
@@ -77,6 +80,7 @@ export const useReducerContext = () => {
     }, [])
 
     const _setLanguage = useCallback((payload: string) => {
+        i18n.changeLanguage(payload)
         dispatch({type: SETLANGUAGE, payload})
     }, [])
 

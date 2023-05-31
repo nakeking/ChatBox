@@ -1,0 +1,17 @@
+{
+    "options": {
+        "newDialogue": "New Chat",
+        "setUp": "Settings",
+        "version": "Version"
+    },
+    "common": {
+        "Save": "Save",
+        "Cancel": "Cancel"
+    },
+    "SettingsPanel": {
+        "Settings": "Settings",
+        "OpenAIKey": "OpenAI API Key",
+        "language": "Language",
+        "theme": "Theme"
+    }
+}

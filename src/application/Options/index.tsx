@@ -9,9 +9,13 @@ import {
 
 import { SuiCorrugation } from '../../components';
 import SettingsPanel from '../SettingsPanel';
-import { Button } from 'antd';
+
+import { useTranslation } from 'react-i18next';
 
 const Options: FC = () => {
+    // =============== 国际化 ================================
+    const { t } = useTranslation()
+
     // =============== 设置对话框 =============================
     const [openModal, setOpenModal] = useState<boolean>(false)
     const handleSetUp = () => {
@@ -40,19 +44,19 @@ const Options: FC = () => {
             <SuiCorrugation>
                 <div className='option Corrugation-root' onClick={handleAddDialogue}>
                     <PlusOutlined />
-                    <p className='string'>新对话</p>
+                    <p className='string'>{t("options.newDialogue")}</p>
                 </div>
             </SuiCorrugation>
             <SuiCorrugation>
                 <div className="option Corrugation-root" onClick={handleSetUp}>
                     <SettingFilled />
-                    <p className='string'>设置</p>
+                    <p className='string'>{t("options.setUp")}</p>
                 </div>
             </SuiCorrugation>
             <SuiCorrugation>
                 <div className='option Corrugation-root' onClick={openUrl}>
                     <ExclamationCircleOutlined />
-                    <a className='string'>版本：0.01</a>
+                    <a className='string'>{t('options.version') + ` : 0.01`}</a>
                 </div>
             </SuiCorrugation>
             

@@ -2,6 +2,9 @@ import React, { FC, useEffect } from 'react';
 import './App.less';
 import ChatBoxContext, { useReducerContext } from "./context";
 
+import "./utils/i18n"
+import { useTranslation, Trans } from 'react-i18next';
+
 import Logo from './application/Logo/inex';
 import Dialogues from './application/Dialogues';
 import Options from './application/Options';
@@ -15,6 +18,11 @@ const { Content } = Layout
 
 const App: FC = () => {
   const { state, _setTheme, _setOpenAIKey, _setLanguage } = useReducerContext()
+  const { i18n } = useTranslation()
+
+  useEffect(() => {
+    i18n.changeLanguage(state.language?.locale)
+  }, [])
 
   return (
     <ChatBoxContext.Provider value={{
@@ -22,7 +30,7 @@ const App: FC = () => {
 
       _setTheme,
       _setOpenAIKey,
-      _setLanguage
+      _setLanguage,
     }}>
       <div id='App' className={`App ` + state.themeConfiguration?.themeType}>
         <ConfigProvider 
