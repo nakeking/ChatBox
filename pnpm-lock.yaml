@@ -70,6 +70,7 @@ dependencies:
   i18next-http-backend: 2.2.1
   node-polyfill-webpack-plugin: 2.0.1_webpack@5.83.1
   path-browserify: 1.0.1
+  rc-virtual-list: 3.5.2_biqbaboplfbrettd7655fr4n2y
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   react-i18next: 12.3.1_dje3x67x7taogjmwoynufb4r2i

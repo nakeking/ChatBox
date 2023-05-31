@@ -1,6 +1,11 @@
 import React, { FC, ReactNode, useRef, useState } from "react";
 
-const Corrugation = ({children} : {children: ReactNode}) => {
+interface SuiCorrugationProps {
+    children?: ReactNode
+}
+
+const SuiCorrugation: FC<SuiCorrugationProps> = (props) => {
+    const { children } = props;
     const [ animationStatus, changeAnimationStatus] = useState(false)
     const [clent, setClient] = useState({x: 0, y: 0})
 
@@ -45,4 +50,4 @@ const Corrugation = ({children} : {children: ReactNode}) => {
     )
 }
 
-export default Corrugation
+export default SuiCorrugation

@@ -25,14 +25,20 @@
     }
 
     .dialogues {
-        .title {
+        &>.title {
             color: @colorText;
+            background-color: @colorPrimary;
         }
 
-        .item {
-            color: @colorText;
-            &:hover{
-                background-color: @colorFill;
+        .dialogue{
+            &::-webkit-scrollbar-thumb {
+                background-color: @colorBorderSecondary;
+            }
+            .item {
+                color: @colorText;
+                &:hover{
+                    background-color: @colorFill;
+                }
             }
         }
     }

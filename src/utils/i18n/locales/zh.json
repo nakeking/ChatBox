@@ -1,4 +1,7 @@
 {
+    "Dialogues": {
+        "dialogues": "对话"
+    },
     "options": {
         "newDialogue": "新对话",
         "setUp": "设置",

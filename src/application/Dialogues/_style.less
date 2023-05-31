@@ -1,17 +1,39 @@
 .dialogues{
+    position: relative;
     flex: 1;
+    overflow: hidden;
 
-    display: flex;
-    flex-direction: column;
     &>.title {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 5px;
+
         font-size: @font-size-least;
 
+        height: 50px;
         line-height: 50px;
         padding-left: 20px;
+
+        z-index: 2;
     }
 
     .dialogue{
+        position: relative;
+        padding-top: 50px;
         flex: 1;
+        height: 100%;
+
+        overflow-y: scroll;
+        &::-webkit-scrollbar {
+            width: 6px;
+        }
+        &::-webkit-scrollbar-track {
+            border-radius: 3px;
+        }
+        &::-webkit-scrollbar-thumb {
+            border-radius: 3px;
+        }
 
         .item{
             position: relative;

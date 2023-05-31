@@ -1,4 +1,7 @@
 {
+    "Dialogues": {
+        "dialogues": "Dialogues"
+    },
     "options": {
         "newDialogue": "New Chat",
         "setUp": "Settings",
