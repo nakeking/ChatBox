@@ -35,14 +35,14 @@
             border-radius: 3px;
         }
 
-        .item{
+        .dialogueItem{
             position: relative;
             display: flex;
             justify-content: center;
             align-items: center;
 
             height: 60px;
-            padding-left: 15px;
+            padding: 0 15px;
 
             cursor: pointer;
             .anticon{
@@ -56,6 +56,32 @@
                 text-overflow: ellipsis;
                 white-space: nowrap;
             }
+        }
+
+        .more{
+            .anticon{
+                margin-right: 0;
+            }
+        }
+    }
+
+    .dialoguePop{
+        .ant-popover-inner{
+            padding: 4px 0;
+        }
+        .popItem {
+            font-size: @font-size-base;
+            padding: 4px 12px;
+            cursor: pointer;
+        }
+        .hr{
+            display: block;
+            height: 1px;
+            width: 100%;
+            margin: 6px 0;
+        }
+        .anticon{
+            margin-right: 12px;
         }
     }
 }

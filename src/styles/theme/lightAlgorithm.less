@@ -19,9 +19,15 @@
     @colorFillSecondary:rgba(51, 51, 51, 0.06);     //二级填充色
     @colorFillTertiary: rgba(51, 51, 51, 0.04);      //三级填充色
 
-    .Space {
-        background-color: @colorPrimary;
+    /* common start */
+    .iconBase{
+        color: @colorText;
+
+        &:hover{
+            background-color: @colorFillSecondary;
+        }
     }
+    /* common end */
 
     .logo {
         color: @colorText;
@@ -38,11 +44,21 @@
                 background-color: @colorFill;
             }
 
-            .item {
+            .dialogueItem {
                 color: @colorText;
                 &:hover{
                     background-color: @colorFillSecondary;
                 }
+            }
+        }
+
+        .dialoguePop{
+            .popItem:hover {
+                background-color: @colorFill;
+            }
+
+            .hr{
+                background-color: @colorBorder;
             }
         }
     }
@@ -62,6 +78,7 @@
 
     .room {
         .header{
+            color: @colorText;
             border-bottom: 1px solid @colorBorder;
         }
     
@@ -73,12 +90,15 @@
         }
     }
 
+    /* Corrugation Component start */
     .SuiCorrugation {
         .ripple {
             background-color: @colorBgMask;
         }
     }
+    /* Corrugation Component end */
 
+    /* SuiLabel Component start */
     .SuiLabel {
         .label {
             background-color: @colorPrimary;
@@ -91,5 +111,6 @@
             }
         }
     }
+    /* SuiLabel Component end */
 }
 

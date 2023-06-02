@@ -1,6 +1,8 @@
 {
     "Dialogues": {
-        "dialogues": "Dialogues"
+        "dialogues": "Dialogues",
+        "rename": "Rename",
+        "delete": "Delete"
     },
     "options": {
         "newDialogue": "New Chat",

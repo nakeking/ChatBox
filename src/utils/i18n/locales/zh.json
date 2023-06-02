@@ -1,6 +1,8 @@
 {
     "Dialogues": {
-        "dialogues": "对话"
+        "dialogues": "对话",
+        "rename": "重命名",
+        "delete": "删除"
     },
     "options": {
         "newDialogue": "新对话",
