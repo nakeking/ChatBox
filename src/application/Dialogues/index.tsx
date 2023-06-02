@@ -41,7 +41,7 @@ const Dialogues: FC = () => {
       <div id='dialogues' className='dialogues'>
           <div className='title'>{t("Dialogues.dialogues")}</div>
 
-          <div className='dialogue'>
+          <div className='dialogue webkitScrollbarBase'>
             { dialogues.map(dialogue => {
               return (
                 <DialogueItem 

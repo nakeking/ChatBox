@@ -7,6 +7,8 @@
     
     // 中性色
     @colorText: rgba(255, 255, 255, 0.85);          //一级文本色
+    @colorTextTertiary: rgba(255, 255, 255, 0.45);  //三级文本色
+
     @colorBorder: #424242;                          //一级边框色
     @colorBorderSecondary: #5b5b5b;                 //二级边框色
     @colorBorderTertiary: #878787;                  //三级边框色
@@ -17,6 +19,11 @@
     @colorFillTertiary: rgba(120, 120, 120, 0.04);     //三级填充色
 
     /* common start*/
+    .webkitScrollbarBase{
+        &::-webkit-scrollbar-thumb {
+            background-color: @colorBorderSecondary;
+        }
+    }
 
     .iconBase{
         color: @colorText;
@@ -38,9 +45,6 @@
         }
 
         .dialogue{
-            &::-webkit-scrollbar-thumb {
-                background-color: @colorBorderSecondary;
-            }
             .dialogueItem {
                 color: @colorText;
                 &:hover{
@@ -84,6 +88,13 @@
         }
     
         .prompt {
+            .promptForm{
+                color: @colorText;
+            }
+
+            .tip{
+                color: @colorTextTertiary;
+            }
         }
     }
 

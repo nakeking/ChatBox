@@ -1,4 +1,9 @@
 {
+    "common": {
+        "Save": "Save",
+        "Cancel": "Cancel",
+        "Send": "SEND"
+    },
     "Dialogues": {
         "dialogues": "Dialogues",
         "rename": "Rename",
@@ -9,14 +14,13 @@
         "setUp": "Settings",
         "version": "Version"
     },
-    "common": {
-        "Save": "Save",
-        "Cancel": "Cancel"
-    },
     "SettingsPanel": {
         "Settings": "Settings",
         "OpenAIKey": "OpenAI API Key",
         "language": "Language",
         "theme": "Theme"
+    },
+    "Prompt": {
+        "Tip": "[Enter] send, [Shift+Enter] line break"
     }
 }
