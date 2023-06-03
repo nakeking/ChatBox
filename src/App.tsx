@@ -17,10 +17,20 @@ import {
 const { Content } = Layout
 
 const App: FC = () => {
-  const { state, _setTheme, _setOpenAIKey, _setLanguage } = useReducerContext()
-  const { i18n } = useTranslation()
+  const { 
+    state, 
+    
+    _setTheme, 
+    _setOpenAIKey, 
+    _setLanguage,
 
+    _addDialogue,
+    _delDialogue
+  } = useReducerContext()
+
+  const { i18n } = useTranslation()
   useEffect(() => {
+    console.log("app 执行力")
     i18n.changeLanguage(state.language?.locale)
   }, [])
 
@@ -31,6 +41,9 @@ const App: FC = () => {
       _setTheme,
       _setOpenAIKey,
       _setLanguage,
+      
+      _addDialogue,
+      _delDialogue
     }}>
       <div id='App' className={`App ` + state.themeConfiguration?.themeType}>
         <ConfigProvider 

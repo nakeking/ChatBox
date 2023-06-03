@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useContext, useState } from 'react'
 import { shell } from 'electron'
 
 import {
@@ -11,6 +11,7 @@ import { SuiCorrugation } from '../../components';
 import SettingsPanel from '../SettingsPanel';
 
 import { useTranslation } from 'react-i18next';
+import ChatBoxContext from '../../context';
 
 const Options: FC = () => {
     // =============== 国际化 ================================
@@ -27,10 +28,8 @@ const Options: FC = () => {
     }
 
     // =============== 新建对话 ===============================
-    const handleAddDialogue = () => {
-
-    }
-
+    const { _addDialogue } = useContext(ChatBoxContext)
+    
     // =============== openUrl ==============
     const openUrl = (evt: React.MouseEvent) => {
         evt.preventDefault()
@@ -42,7 +41,7 @@ const Options: FC = () => {
     return (
         <div className='options'>
             <SuiCorrugation>
-                <div className='option Corrugation-root' onClick={handleAddDialogue}>
+                <div className='option Corrugation-root' onClick={_addDialogue}>
                     <PlusOutlined />
                     <p className='string'>{t("options.newDialogue")}</p>
                 </div>

@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useId, useState } from 'react'
+import React, { FC, useContext, useEffect, useId, useState } from 'react'
 
 import {
     MessageOutlined,
@@ -9,7 +9,8 @@ import {
 } from '@ant-design/icons';
 import { SuiCorrugation } from '../../components';
 import { useTranslation } from 'react-i18next';
-import { Divider, Popover } from 'antd';
+import { Popover } from 'antd';
+import ChatBoxContext from '../../context';
 
 type DialogueType = {
   id: number
@@ -17,32 +18,21 @@ type DialogueType = {
 }
 
 const Dialogues: FC = () => {
-  const {t} = useTranslation()
+  const { t } = useTranslation()
+  
   const [ popupContainer, setPopupContainer ] = useState<HTMLElement>()
-
   useEffect(() => {
     setPopupContainer(document.getElementById('dialogues') as HTMLElement)
   }, [popupContainer])
 
-  const [ dialogues ] = useState<DialogueType[]>([
-    {id: 1, title: "Untitled"},
-    {id: 2, title: "Untitled"},
-    {id: 3, title: "Untitled"},
-    {id: 4, title: "Untitled"},
-    {id: 5, title: "Untitled"},
-    {id: 6, title: "Untitled"},
-    {id: 7, title: "Untitled"},
-    {id: 8, title: "Untitled"},
-    {id: 9, title: "Untitled"},
-    {id: 10, title: "Untitled"}
-  ])
+  const { state } = useContext(ChatBoxContext)
 
   return (
       <div id='dialogues' className='dialogues'>
           <div className='title'>{t("Dialogues.dialogues")}</div>
 
           <div className='dialogue webkitScrollbarBase'>
-            { dialogues.map(dialogue => {
+            { state.Dialogues?.map(dialogue => {
               return (
                 <DialogueItem 
                   key={dialogue.id} 
@@ -65,6 +55,11 @@ const DialogueItem: FC<DialogueItemProps> = (props) => {
   const { dialogue, popupContainer } = props
   const { t } = useTranslation()
 
+  const { _delDialogue } = useContext(ChatBoxContext)
+  const handleDelete = () => {
+    _delDialogue(dialogue.id)
+  }
+
   return (
     <SuiCorrugation>
       <div className='dialogueItem'>
@@ -83,7 +78,7 @@ const DialogueItem: FC<DialogueItemProps> = (props) => {
                 <div className='popItem'>
                   <EditFilled />{t("Dialogues.rename")}</div>
                 <span className='hr'></span>
-                <div className='popItem'>
+                <div className='popItem' onClick={handleDelete}>
                   <DeleteFilled />{t("Dialogues.delete")}</div>
               </div>
             }

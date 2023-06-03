@@ -8,7 +8,7 @@ import { Modal, Radio, Button, Input, Select, Form } from 'antd'
 import useThemeHook, { themeType } from "../../hooks/useThemeHook";
 import { getStore } from "../../utils";
 import { SuiLabel } from "../../components";
-import ChatBoxContext, { useReducerContext } from "../../context";
+import ChatBoxContext from "../../context";
 import { useTranslation } from "react-i18next";
 
 // ====== SettingsPanel ======================================
@@ -45,11 +45,11 @@ const SettingsPanel: FC<SettingsPanelProp> = (prop) => {
         let { openAIKey, language } = values
 
         if(SOpenAIKey !== openAIKey) {
-            _setOpenAIKey(openAIKey)
+            _setOpenAIKey!(openAIKey)
         }
 
         if(SLanguage !== language) {
-            _setLanguage(language)
+            _setLanguage!(language)
         }
 
         cancelSetUp()
