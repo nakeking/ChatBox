@@ -8,6 +8,8 @@ import zhCN from "antd/locale/zh_CN"
 import enUS from 'antd/locale/en_US'
 import { useTranslation } from "react-i18next";
 
+import type { DialogueType } from './types'
+
 enum ActionType {
     TOGGLE_THEME = "TOGGLE_THEME",
     SET_OPENAI_KEY = "SET_OPENAI_KEY",
@@ -22,19 +24,16 @@ const languages: Record<string, Locale> = {
     "zh-cn": zhCN
 }
 
-interface DialogueType {
-    id: number
-    name: string
-}
-
 interface State {
     themeConfiguration?: themeInterface,
 
     OpenAIKey?: string,
     language?: Locale,
 
-    Dialogues?: DialogueType[],
-    Dialogue?: DialogueType
+    Dialogues?: Map<number, DialogueType>,
+    Dialogue?: DialogueType,
+
+    FlattenDialogues?: Map<number, unknown>
 }
 
 type Action<T> = {
@@ -70,7 +69,7 @@ export const contextReducer = <T>(state: State, action: Action<T>): State => {
             return {
                 ...state,
 
-                Dialogues: payload as DialogueType[]
+                Dialogues: payload as Map<number, DialogueType>
             }
         default:
             break;
@@ -89,7 +88,7 @@ export const useReducerContext = () => {
         OpenAIKey: stroedOpenAIKey,
         language: languages[storeLanguage],
 
-        Dialogues: []
+        Dialogues: new Map()
     } as State)
 
     // ========== 设置 Theme =======================
@@ -111,33 +110,36 @@ export const useReducerContext = () => {
     
     // =========== 新对话 ==========================
     const _addDialogue = useCallback(() => {
-        const baseDialogue: DialogueType = {
-            id: new Date().getTime(),
-            name: "Untitled"
-        }
-        const dialogues = [baseDialogue, ...state.Dialogues!]
+        const { Dialogues } = state
+        const id = new Date().getTime()
 
-        dispatch({type: ActionType.ADD_DIALOGUE, payload: dialogues})
+        Dialogues?.set(id, {
+            id,
+            name: "Untitled"
+        })
+
+        dispatch({type: ActionType.ADD_DIALOGUE, payload: Dialogues})
     }, [state.Dialogues])
 
     // ========== 删除对话 =========================
     const _delDialogue = useCallback((payload: number) => {
-        const dialogues = state.Dialogues?.filter((d) => d.id !== payload);
+        const { Dialogues } = state
+        Dialogues?.delete(payload)
 
-        dispatch({type: ActionType.DEL_DIALOGUE, payload: dialogues})
+        dispatch({type: ActionType.DEL_DIALOGUE, payload: Dialogues})
     }, [state.Dialogues])
 
     // ========== 对话重命名 =======================
     const _renameDialogue = useCallback((payload: DialogueType) => {
         let { id, name } = payload;
-        const dialogues = state.Dialogues?.map(item => {
-            if (item.id === id) {
-                item.name = name
-            }
-            return item
-        })
+        const { Dialogues } = state
 
-        dispatch({type: ActionType.RENAME_DIALOGUE, payload: dialogues})
+        Dialogues?.set(id, {
+            id,
+            name
+        })
+        
+        dispatch({type: ActionType.RENAME_DIALOGUE, payload: Dialogues})
     }, [state.Dialogues])
 
     return {

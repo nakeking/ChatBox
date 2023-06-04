@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, useContext, useEffect, useState } from 'react'
+import React, { ChangeEvent, FC, memo, useContext, useEffect, useState } from 'react'
 
 import {
     MessageOutlined,
@@ -12,10 +12,7 @@ import { useTranslation } from 'react-i18next';
 import { Modal, Popover, Button, Input } from 'antd';
 import ChatBoxContext from '../../context';
 
-type DialogueType = {
-  id: number
-  name: string
-}
+import type { DialogueType } from '../../types'
 
 const Dialogues: FC = () => {
   const { t } = useTranslation()
@@ -34,22 +31,22 @@ const Dialogues: FC = () => {
   }
 
   return (
-      <div id='dialogues' className='dialogues'>
-          <div className='title'>{t("Dialogues.dialogues")}</div>
+    <div id='dialogues' className='dialogues'>
+      <div className='title'>{t("Dialogues.dialogues")}</div>
 
-          <div className='dialogue webkitScrollbarBase'>
-            { state.Dialogues?.map(dialogue => {
-              return (
-                <DialogueItem 
-                  key={dialogue.id} 
-                  dialogue={dialogue} 
-                  popupContainer={popupContainer as HTMLElement} 
-                  handleDelete={ handleDelete } 
-                  handleRename={ handleRename }/>
-              )
-            })}
-          </div>
+      <div className='dialogue webkitScrollbarBase'>
+        { [...state.Dialogues!.values()].map(dialogue => {
+          return (
+            <DialogueItem 
+              key={dialogue.id} 
+              dialogue={dialogue} 
+              popupContainer={popupContainer as HTMLElement} 
+              handleDelete={ handleDelete } 
+              handleRename={ handleRename }/>
+          )
+        })}
       </div>
+    </div>
   )
 }
 
@@ -126,7 +123,6 @@ const DialogueItem: FC<DialogueItemProps> = (props) => {
             open={open} 
             title={t("Dialogues.rename")} 
             closable={false}
-            getContainer={false}
             width={320}
             bodyStyle={{paddingTop: "10px"}}
             destroyOnClose={true}
@@ -150,4 +146,4 @@ const DialogueItem: FC<DialogueItemProps> = (props) => {
   )
 }
 
-export default Dialogues
+export default memo(Dialogues)
