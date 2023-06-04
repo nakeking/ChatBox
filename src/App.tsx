@@ -25,7 +25,8 @@ const App: FC = () => {
     _setLanguage,
 
     _addDialogue,
-    _delDialogue
+    _delDialogue,
+    _renameDialogue
   } = useReducerContext()
 
   const { i18n } = useTranslation()
@@ -43,7 +44,8 @@ const App: FC = () => {
       _setLanguage,
       
       _addDialogue,
-      _delDialogue
+      _delDialogue,
+      _renameDialogue
     }}>
       <div id='App' className={`App ` + state.themeConfiguration?.themeType}>
         <ConfigProvider 

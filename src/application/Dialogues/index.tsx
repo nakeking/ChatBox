@@ -1,4 +1,4 @@
-import React, { FC, useContext, useEffect, useId, useState } from 'react'
+import React, { ChangeEvent, FC, useContext, useEffect, useState } from 'react'
 
 import {
     MessageOutlined,
@@ -7,14 +7,14 @@ import {
     EditFilled,
     DeleteFilled
 } from '@ant-design/icons';
-import { SuiCorrugation } from '../../components';
+import { SuiCorrugation, SuiLabel } from '../../components';
 import { useTranslation } from 'react-i18next';
-import { Popover } from 'antd';
+import { Modal, Popover, Button, Input } from 'antd';
 import ChatBoxContext from '../../context';
 
 type DialogueType = {
   id: number
-  title: string
+  name: string
 }
 
 const Dialogues: FC = () => {
@@ -25,7 +25,13 @@ const Dialogues: FC = () => {
     setPopupContainer(document.getElementById('dialogues') as HTMLElement)
   }, [popupContainer])
 
-  const { state } = useContext(ChatBoxContext)
+  const { state, _delDialogue, _renameDialogue } = useContext(ChatBoxContext)
+  const handleDelete = (id: number) => {
+    _delDialogue(id)
+  }
+  const handleRename = (dialogue: DialogueType) => {
+    _renameDialogue(dialogue)
+  }
 
   return (
       <div id='dialogues' className='dialogues'>
@@ -37,7 +43,9 @@ const Dialogues: FC = () => {
                 <DialogueItem 
                   key={dialogue.id} 
                   dialogue={dialogue} 
-                  popupContainer={popupContainer as HTMLElement}/>
+                  popupContainer={popupContainer as HTMLElement} 
+                  handleDelete={ handleDelete } 
+                  handleRename={ handleRename }/>
               )
             })}
           </div>
@@ -47,26 +55,51 @@ const Dialogues: FC = () => {
 
 interface DialogueItemProps {
   dialogue: DialogueType,
+  popupContainer: HTMLElement,
 
-  popupContainer: HTMLElement
+  handleDelete: Function,
+  handleRename: Function
 }
 
 const DialogueItem: FC<DialogueItemProps> = (props) => {
-  const { dialogue, popupContainer } = props
+  const { dialogue, popupContainer, handleDelete, handleRename } = props
   const { t } = useTranslation()
 
-  const { _delDialogue } = useContext(ChatBoxContext)
-  const handleDelete = () => {
-    _delDialogue(dialogue.id)
+  const [popoverOpen, setPopoverOpen] = useState(false)
+  const popoverOpenChange = (status: boolean) => {
+    setPopoverOpen(status)
+  }
+
+  const [ open, setOpen ] = useState(false)
+  const modalOpenChange = () => {
+    setOpen(true)
+    setPopoverOpen(false)
+  }
+
+  const [ name, setName ] = useState(dialogue.name)
+  const handleChange = (evt: ChangeEvent<HTMLInputElement>) => {
+    setName(evt.target.value)
+  }
+
+  const cancelRename = () => {
+    setName(dialogue.name)
+    setOpen(false)
+  }
+
+  const saveRename = () => {
+    handleRename({id: dialogue.id, name})
+    setOpen(false)
   }
 
   return (
     <SuiCorrugation>
       <div className='dialogueItem'>
         <MessageOutlined />
-        <div className='title'>{dialogue.title}</div>
+        <div className='title'>{dialogue.name}</div>
         <div className='more iconBase'>
           <Popover
+            open={popoverOpen}
+            onOpenChange={popoverOpenChange}
             overlayClassName="dialoguePop"
             placement="bottomRight"
             arrow={false}
@@ -75,10 +108,12 @@ const DialogueItem: FC<DialogueItemProps> = (props) => {
             }}
             content={
               <div className='popContent'>
-                <div className='popItem'>
+                <div className='popItem' onClick={modalOpenChange}>
                   <EditFilled />{t("Dialogues.rename")}</div>
                 <span className='hr'></span>
-                <div className='popItem' onClick={handleDelete}>
+                <div className='popItem' onClick={() => {
+                  handleDelete(dialogue.id)
+                }}>
                   <DeleteFilled />{t("Dialogues.delete")}</div>
               </div>
             }
@@ -86,6 +121,29 @@ const DialogueItem: FC<DialogueItemProps> = (props) => {
             trigger="click">
             <MoreOutlined />
           </Popover>
+
+          <Modal 
+            open={open} 
+            title={t("Dialogues.rename")} 
+            closable={false}
+            getContainer={false}
+            width={320}
+            bodyStyle={{paddingTop: "10px"}}
+            destroyOnClose={true}
+            footer={[
+              <Button type="text" key="back" onClick={ cancelRename }>
+                  {t("common.Cancel")}
+              </Button>,
+              <Button type="text" key="submit" onClick={ saveRename }>
+                  {t("common.Save")}
+              </Button>
+            ]}>
+            <div className='modal_body'>
+              <SuiLabel placeholder={t("Dialogues.name")}>
+                <Input type='text' spellCheck={false} value={name} onChange={handleChange} bordered={false} />
+              </SuiLabel>
+            </div>
+          </Modal>
         </div>
       </div>
     </SuiCorrugation>

@@ -14,6 +14,7 @@ enum ActionType {
     SET_LANGUAGE = "SET_LANGUAGE",
     ADD_DIALOGUE = "ADD_DIALOGUE",
     DEL_DIALOGUE = "DEL_DIALOGUE",
+    RENAME_DIALOGUE = "RENAME_DIALOGUE"
 }
 
 const languages: Record<string, Locale> = {
@@ -23,7 +24,7 @@ const languages: Record<string, Locale> = {
 
 interface DialogueType {
     id: number
-    title: string
+    name: string
 }
 
 interface State {
@@ -65,6 +66,7 @@ export const contextReducer = <T>(state: State, action: Action<T>): State => {
             }
         case ActionType.ADD_DIALOGUE:
         case ActionType.DEL_DIALOGUE:
+        case ActionType.RENAME_DIALOGUE:
             return {
                 ...state,
 
@@ -111,7 +113,7 @@ export const useReducerContext = () => {
     const _addDialogue = useCallback(() => {
         const baseDialogue: DialogueType = {
             id: new Date().getTime(),
-            title: "Untitled"
+            name: "Untitled"
         }
         const dialogues = [baseDialogue, ...state.Dialogues!]
 
@@ -125,6 +127,19 @@ export const useReducerContext = () => {
         dispatch({type: ActionType.DEL_DIALOGUE, payload: dialogues})
     }, [state.Dialogues])
 
+    // ========== 对话重命名 =======================
+    const _renameDialogue = useCallback((payload: DialogueType) => {
+        let { id, name } = payload;
+        const dialogues = state.Dialogues?.map(item => {
+            if (item.id === id) {
+                item.name = name
+            }
+            return item
+        })
+
+        dispatch({type: ActionType.RENAME_DIALOGUE, payload: dialogues})
+    }, [state.Dialogues])
+
     return {
         state,
 
@@ -132,7 +147,8 @@ export const useReducerContext = () => {
         _setOpenAIKey,
         _setLanguage,
         _addDialogue,
-        _delDialogue
+        _delDialogue,
+        _renameDialogue
     }
 }
 
@@ -144,6 +160,7 @@ interface ChatBoxContextType {
     _setLanguage: (payload: string) => void
     _addDialogue: () => void
     _delDialogue: (payload: number) => void
+    _renameDialogue: (payload: DialogueType) => void
 }
 
 const ChatBoxContext = React.createContext<ChatBoxContextType>({
@@ -153,7 +170,8 @@ const ChatBoxContext = React.createContext<ChatBoxContextType>({
     _setOpenAIKey: () => {},
     _setLanguage: () => {},
     _addDialogue: () => {},
-    _delDialogue: () => {}
+    _delDialogue: () => {},
+    _renameDialogue: () => {}
 });
 
 export default ChatBoxContext;

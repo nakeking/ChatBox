@@ -7,7 +7,8 @@
     "Dialogues": {
         "dialogues": "Dialogues",
         "rename": "Rename",
-        "delete": "Delete"
+        "delete": "Delete",
+        "name": "Name"
     },
     "options": {
         "newDialogue": "New Chat",
