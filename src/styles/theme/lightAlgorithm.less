@@ -17,8 +17,10 @@
 
     
     @colorFill:rgba(51, 51, 51, 0.15);              //一级填充色
-    @colorFillSecondary:rgba(51, 51, 51, 0.06);     //二级填充色
-    @colorFillTertiary: rgba(51, 51, 51, 0.04);      //三级填充色
+    @colorFillSecondary:rgba(51, 51, 51, 0.09);     //二级填充色
+    @colorFillTertiary: rgba(51, 51, 51, 0.05);      //三级填充色
+
+    @colorActivationFill: rgba(51, 51, 51, 0.06);
 
     /* common start */
     .webkitScrollbarBase{
@@ -31,7 +33,7 @@
         color: @colorText;
 
         &:hover{
-            background-color: @colorFillSecondary;
+            background-color: @colorFillTertiary;
         }
     }
     /* common end */
@@ -50,8 +52,11 @@
             .dialogueItem {
                 color: @colorText;
                 &:hover{
-                    background-color: @colorFillSecondary;
+                    background-color: @colorFillSecondary !important;
                 }
+            }
+            .dialogueItem.activation{
+                background-color: @colorActivationFill;
             }
         }
 
@@ -74,7 +79,7 @@
 
         .option {
             &:hover{
-                background-color: @colorFillSecondary;
+                background-color: @colorFillTertiary;
             }
         }
     }

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, memo, useContext, useEffect, useState } from 'react'
+import React, { ChangeEvent, FC, memo, useContext, useEffect, useMemo, useState } from 'react'
 
 import {
     MessageOutlined,
@@ -13,6 +13,7 @@ import { Modal, Popover, Button, Input } from 'antd';
 import ChatBoxContext from '../../context';
 
 import type { DialogueType } from '../../types'
+import classNames from 'classnames';
 
 const Dialogues: FC = () => {
   const { t } = useTranslation()
@@ -22,12 +23,22 @@ const Dialogues: FC = () => {
     setPopupContainer(document.getElementById('dialogues') as HTMLElement)
   }, [popupContainer])
 
-  const { state, _delDialogue, _renameDialogue } = useContext(ChatBoxContext)
+  const { 
+    state, 
+    _delDialogue, 
+    _renameDialogue,
+    _toggledialogue 
+  } = useContext(ChatBoxContext)
+  const Dialogues = [...state.Dialogues!.values()].reverse()
+  
   const handleDelete = (id: number) => {
     _delDialogue(id)
   }
   const handleRename = (dialogue: DialogueType) => {
     _renameDialogue(dialogue)
+  }
+  const handleToggle = (id: number) => {
+    _toggledialogue(id)
   }
 
   return (
@@ -35,14 +46,15 @@ const Dialogues: FC = () => {
       <div className='title'>{t("Dialogues.dialogues")}</div>
 
       <div className='dialogue webkitScrollbarBase'>
-        { [...state.Dialogues!.values()].map(dialogue => {
+        { Dialogues.map(dialogue => {
           return (
             <DialogueItem 
               key={dialogue.id} 
               dialogue={dialogue} 
               popupContainer={popupContainer as HTMLElement} 
               handleDelete={ handleDelete } 
-              handleRename={ handleRename }/>
+              handleRename={ handleRename }
+              handleToggle={ handleToggle } />
           )
         })}
       </div>
@@ -55,11 +67,19 @@ interface DialogueItemProps {
   popupContainer: HTMLElement,
 
   handleDelete: Function,
-  handleRename: Function
+  handleRename: Function,
+  handleToggle: Function
 }
 
 const DialogueItem: FC<DialogueItemProps> = (props) => {
-  const { dialogue, popupContainer, handleDelete, handleRename } = props
+  const { 
+    dialogue, 
+    popupContainer, 
+    
+    handleDelete, 
+    handleRename,
+    handleToggle
+  } = props
   const { t } = useTranslation()
 
   const [popoverOpen, setPopoverOpen] = useState(false)
@@ -88,9 +108,14 @@ const DialogueItem: FC<DialogueItemProps> = (props) => {
     setOpen(false)
   }
 
+  const { state } = useContext(ChatBoxContext)
+  const itemClass = classNames("dialogueItem", {
+    "activation": state.CurrentDialogueID === dialogue.id
+  })
+
   return (
     <SuiCorrugation>
-      <div className='dialogueItem'>
+      <div className={itemClass} onClick={() => { handleToggle(dialogue.id) }}>
         <MessageOutlined />
         <div className='title'>{dialogue.name}</div>
         <div className='more iconBase'>
@@ -118,7 +143,7 @@ const DialogueItem: FC<DialogueItemProps> = (props) => {
             trigger="click">
             <MoreOutlined />
           </Popover>
-
+          
           <Modal 
             open={open} 
             title={t("Dialogues.rename")} 

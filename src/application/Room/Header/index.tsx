@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useContext, useEffect } from "react";
 
 import {
     MessageOutlined,
@@ -6,18 +6,27 @@ import {
     RestFilled,
     SaveFilled
 } from '@ant-design/icons';
+import ChatBoxContext from "../../../context";
 
 const Header: FC = () => {
+    const { state } = useContext(ChatBoxContext)
+    const { CurrentDialogueID, Dialogues } = state
+    const Dialogue = Dialogues?.get(CurrentDialogueID!)
+
     return (
         <div className="header">
-            <div className="left">
-                <span className="iconBase"><MessageOutlined /></span>
-                <span className="title">Untitled</span>
-            </div>
-            <div className="right">
-                <span className="iconBase"><RestFilled /></span>
-                <span className="iconBase"><SaveFilled /></span>
-            </div>
+            { Dialogue?.id ? (
+                <>
+                <div className="left">
+                    <span className="iconBase"><MessageOutlined /></span>
+                    <span className="title">{Dialogue?.name}</span>
+                </div>
+                <div className="right">
+                    <span className="iconBase"><RestFilled /></span>
+                    <span className="iconBase"><SaveFilled /></span>
+                </div>
+                </>
+            ) : <></> }
         </div>
     )
 }

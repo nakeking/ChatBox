@@ -15,8 +15,10 @@
     @colorBgMask: rgba(0, 0, 0, 0.45);
 
     @colorFill:rgba(120, 120, 120, 0.35);              //一级填充色
-    @colorFillSecondary:rgba(120, 120, 120, 0.06);     //二级填充色
+    @colorFillSecondary:rgba(120, 120, 120, 0.09);     //二级填充色
     @colorFillTertiary: rgba(120, 120, 120, 0.04);     //三级填充色
+
+    @colorActivationFill: rgba(120, 120, 120, 0.2);
 
     /* common start*/
     .webkitScrollbarBase{
@@ -48,8 +50,11 @@
             .dialogueItem {
                 color: @colorText;
                 &:hover{
-                    background-color: @colorFill;
+                    background-color: @colorFill !important;
                 }
+            }
+            .dialogueItem.activation{
+                background-color: @colorActivationFill;
             }
         }
 

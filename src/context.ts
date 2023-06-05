@@ -12,11 +12,15 @@ import type { DialogueType } from './types'
 
 enum ActionType {
     TOGGLE_THEME = "TOGGLE_THEME",
+
     SET_OPENAI_KEY = "SET_OPENAI_KEY",
     SET_LANGUAGE = "SET_LANGUAGE",
+
     ADD_DIALOGUE = "ADD_DIALOGUE",
     DEL_DIALOGUE = "DEL_DIALOGUE",
-    RENAME_DIALOGUE = "RENAME_DIALOGUE"
+    RENAME_DIALOGUE = "RENAME_DIALOGUE",
+
+    TOGGLE_DIALOGUE = "TOGGLE_DIALOGUE"
 }
 
 const languages: Record<string, Locale> = {
@@ -31,7 +35,7 @@ interface State {
     language?: Locale,
 
     Dialogues?: Map<number, DialogueType>,
-    Dialogue?: DialogueType,
+    CurrentDialogueID?: number,
 
     FlattenDialogues?: Map<number, unknown>
 }
@@ -71,6 +75,12 @@ export const contextReducer = <T>(state: State, action: Action<T>): State => {
 
                 Dialogues: payload as Map<number, DialogueType>
             }
+        case ActionType.TOGGLE_DIALOGUE:
+            return {
+                ...state,
+
+                CurrentDialogueID: payload as number
+            }
         default:
             break;
     }
@@ -88,7 +98,8 @@ export const useReducerContext = () => {
         OpenAIKey: stroedOpenAIKey,
         language: languages[storeLanguage],
 
-        Dialogues: new Map()
+        Dialogues: new Map(),
+        Dialogue: {}
     } as State)
 
     // ========== 设置 Theme =======================
@@ -119,6 +130,9 @@ export const useReducerContext = () => {
         })
 
         dispatch({type: ActionType.ADD_DIALOGUE, payload: Dialogues})
+        
+        // 新建对话时激活
+        _toggledialogue(id)
     }, [state.Dialogues])
 
     // ========== 删除对话 =========================
@@ -127,20 +141,26 @@ export const useReducerContext = () => {
         Dialogues?.delete(payload)
 
         dispatch({type: ActionType.DEL_DIALOGUE, payload: Dialogues})
+    
+        // 当前删除Dialogue === 当前激活dialogue
+        // 需要切换当前激活的Dialogue
+        // 待完成
+
     }, [state.Dialogues])
 
     // ========== 对话重命名 =======================
     const _renameDialogue = useCallback((payload: DialogueType) => {
-        let { id, name } = payload;
+        let { id } = payload
         const { Dialogues } = state
 
-        Dialogues?.set(id, {
-            id,
-            name
-        })
-        
+        Dialogues?.set(id, payload)
         dispatch({type: ActionType.RENAME_DIALOGUE, payload: Dialogues})
     }, [state.Dialogues])
+
+    // 激活当前对话
+    const _toggledialogue = useCallback((payload: number) => {
+        dispatch({type: ActionType.TOGGLE_DIALOGUE, payload})
+    }, [])
 
     return {
         state,
@@ -150,7 +170,8 @@ export const useReducerContext = () => {
         _setLanguage,
         _addDialogue,
         _delDialogue,
-        _renameDialogue
+        _renameDialogue,
+        _toggledialogue
     }
 }
 
@@ -163,6 +184,7 @@ interface ChatBoxContextType {
     _addDialogue: () => void
     _delDialogue: (payload: number) => void
     _renameDialogue: (payload: DialogueType) => void
+    _toggledialogue: (payload: number) => void
 }
 
 const ChatBoxContext = React.createContext<ChatBoxContextType>({
@@ -173,7 +195,8 @@ const ChatBoxContext = React.createContext<ChatBoxContextType>({
     _setLanguage: () => {},
     _addDialogue: () => {},
     _delDialogue: () => {},
-    _renameDialogue: () => {}
+    _renameDialogue: () => {},
+    _toggledialogue: () => {}
 });
 
 export default ChatBoxContext;
