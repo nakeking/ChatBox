@@ -31,13 +31,13 @@ const Dialogues: FC = () => {
   } = useContext(ChatBoxContext)
   const Dialogues = [...state.Dialogues!.values()].reverse()
   
-  const handleDelete = (id: number) => {
+  const handleDelete = (id: string) => {
     _delDialogue(id)
   }
   const handleRename = (dialogue: DialogueType) => {
     _renameDialogue(dialogue)
   }
-  const handleToggle = (id: number) => {
+  const handleToggle = (id: string) => {
     _toggledialogue(id)
   }
 

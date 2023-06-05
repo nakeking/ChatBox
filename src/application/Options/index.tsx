@@ -12,6 +12,7 @@ import SettingsPanel from '../SettingsPanel';
 
 import { useTranslation } from 'react-i18next';
 import ChatBoxContext from '../../context';
+import { openLink } from '../../utils';
 
 const Options: FC = () => {
     // =============== 国际化 ================================
@@ -29,14 +30,6 @@ const Options: FC = () => {
 
     // =============== 新建对话 ===============================
     const { _addDialogue } = useContext(ChatBoxContext)
-    
-    // =============== openUrl ==============
-    const openUrl = (evt: React.MouseEvent) => {
-        evt.preventDefault()
-
-        const url = "https://github.com/nakeking/ChatBox"
-        shell.openExternal(url)
-    }
 
     return (
         <div className='options'>
@@ -53,7 +46,7 @@ const Options: FC = () => {
                 </div>
             </SuiCorrugation>
             <SuiCorrugation>
-                <div className='option Corrugation-root' onClick={openUrl}>
+                <div className='option Corrugation-root' onClick={() => { openLink("https://github.com/nakeking/ChatBox") }}>
                     <ExclamationCircleOutlined />
                     <a className='string'>{t('options.version') + ` : 0.01`}</a>
                 </div>

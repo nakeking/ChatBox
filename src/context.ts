@@ -1,4 +1,5 @@
 import React, { useCallback, useReducer } from "react";
+import { v4 as uuidv4 } from 'uuid'
 
 import type { themeInterface } from './hooks/useThemeHook'
 import { getStore, setStore } from "./utils";
@@ -34,8 +35,8 @@ interface State {
     OpenAIKey?: string,
     language?: Locale,
 
-    Dialogues?: Map<number, DialogueType>,
-    CurrentDialogueID?: number,
+    Dialogues?: Map<string, DialogueType>,
+    CurrentDialogueID?: string,
 
     FlattenDialogues?: Map<number, unknown>
 }
@@ -73,13 +74,13 @@ export const contextReducer = <T>(state: State, action: Action<T>): State => {
             return {
                 ...state,
 
-                Dialogues: payload as Map<number, DialogueType>
+                Dialogues: payload as Map<string, DialogueType>
             }
         case ActionType.TOGGLE_DIALOGUE:
             return {
                 ...state,
 
-                CurrentDialogueID: payload as number
+                CurrentDialogueID: payload as string
             }
         default:
             break;
@@ -122,7 +123,7 @@ export const useReducerContext = () => {
     // =========== 新对话 ==========================
     const _addDialogue = useCallback(() => {
         const { Dialogues } = state
-        const id = new Date().getTime()
+        const id = uuidv4()
 
         Dialogues?.set(id, {
             id,
@@ -136,7 +137,7 @@ export const useReducerContext = () => {
     }, [state.Dialogues])
 
     // ========== 删除对话 =========================
-    const _delDialogue = useCallback((payload: number) => {
+    const _delDialogue = useCallback((payload: string) => {
         const { Dialogues } = state
         Dialogues?.delete(payload)
 
@@ -158,7 +159,7 @@ export const useReducerContext = () => {
     }, [state.Dialogues])
 
     // 激活当前对话
-    const _toggledialogue = useCallback((payload: number) => {
+    const _toggledialogue = useCallback((payload: string) => {
         dispatch({type: ActionType.TOGGLE_DIALOGUE, payload})
     }, [])
 
@@ -182,9 +183,9 @@ interface ChatBoxContextType {
     _setOpenAIKey: (payload: string) => void
     _setLanguage: (payload: string) => void
     _addDialogue: () => void
-    _delDialogue: (payload: number) => void
+    _delDialogue: (payload: string) => void
     _renameDialogue: (payload: DialogueType) => void
-    _toggledialogue: (payload: number) => void
+    _toggledialogue: (payload: string) => void
 }
 
 const ChatBoxContext = React.createContext<ChatBoxContextType>({

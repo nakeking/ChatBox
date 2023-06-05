@@ -12,6 +12,7 @@ specifiers:
   '@types/react': ^18.2.6
   '@types/react-dom': ^18.2.4
   '@types/testing-library__jest-dom': ^5.14.5
+  '@types/uuid': ^9.0.1
   antd: ^5.5.1
   assert: ^2.0.0
   classnames: ^2.3.2
@@ -62,6 +63,7 @@ dependencies:
   '@types/node': 16.18.32
   '@types/react': 18.2.6
   '@types/react-dom': 18.2.4
+  '@types/uuid': 9.0.1
   antd: 5.5.1_biqbaboplfbrettd7655fr4n2y
   classnames: 2.3.2
   craco-css-modules: 1.0.5_ypts4tkomiuuthfnjnf3hrrxuq
@@ -2707,6 +2709,10 @@ packages:
 
   /@types/trusted-types/2.0.3:
     resolution: {integrity: sha512-NfQ4gyz38SL8sDNrSixxU2Os1a5xcdFxipAFxYEuLUlvU2uDwS4NUpsImcf1//SlWItCVMMLiylsxbmNMToV/g==}
+
+  /@types/uuid/9.0.1:
+    resolution: {integrity: sha512-rFT3ak0/2trgvp4yYZo5iKFEPsET7vKydKF+VRCxlQ9bpheehyAJH89dAkaLEq/j/RZXJIqcgsmPJKUP1Z28HA==}
+    dev: false
 
   /@types/verror/1.10.6:
     resolution: {integrity: sha512-NNm+gdePAX1VGvPcGZCDKQZKYSiAWigKhKaz5KF94hG6f2s8de9Ow5+7AbXoeKxL8gavZfk4UquSAygOF2duEQ==}
