@@ -2,7 +2,8 @@
     "common": {
         "Save": "Save",
         "Cancel": "Cancel",
-        "Send": "SEND"
+        "Send": "SEND",
+        "Copy": "copy"
     },
     "Dialogues": {
         "dialogues": "Dialogues",

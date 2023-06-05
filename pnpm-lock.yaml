@@ -7,7 +7,10 @@ specifiers:
   '@testing-library/jest-dom': ^5.16.5
   '@testing-library/react': ^13.4.0
   '@testing-library/user-event': ^13.5.0
+  '@traptitech/markdown-it-katex': ^3.6.0
   '@types/jest': ^27.5.2
+  '@types/markdown-it': ^12.2.3
+  '@types/markdown-it-link-attributes': ^3.0.1
   '@types/node': ^16.18.32
   '@types/react': ^18.2.6
   '@types/react-dom': ^18.2.4
@@ -30,6 +33,7 @@ specifiers:
   electron-is-dev: ^2.0.0
   electron-store: ^8.0.1
   fs: 0.0.1-security
+  highlight.js: ^11.8.0
   https-browserify: ^1.0.0
   i18next: ^22.5.0
   i18next-http-backend: ^2.2.1
@@ -59,6 +63,7 @@ dependencies:
   '@testing-library/jest-dom': 5.16.5
   '@testing-library/react': 13.4.0_biqbaboplfbrettd7655fr4n2y
   '@testing-library/user-event': 13.5.0_yxlyej73nftwmh2fiao7paxmlm
+  '@traptitech/markdown-it-katex': 3.6.0
   '@types/jest': 27.5.2
   '@types/node': 16.18.32
   '@types/react': 18.2.6
@@ -71,6 +76,7 @@ dependencies:
   electron: 24.4.0
   electron-is-dev: 2.0.0
   electron-store: 8.0.1
+  highlight.js: 11.8.0
   i18next: 22.5.0
   i18next-http-backend: 2.2.1
   markdown-it: 13.0.1
@@ -87,6 +93,8 @@ dependencies:
 devDependencies:
   '@craco/craco': 5.0.1_react-scripts@5.0.1
   '@craco/types': 7.1.0_jm2icsqrzfonygc2qs2o6gjbti
+  '@types/markdown-it': 12.2.3
+  '@types/markdown-it-link-attributes': 3.0.1
   '@types/testing-library__jest-dom': 5.14.5
   assert: 2.0.0
   concurrently: 8.0.1
@@ -2425,6 +2433,12 @@ packages:
     engines: {node: '>= 10'}
     dev: true
 
+  /@traptitech/markdown-it-katex/3.6.0:
+    resolution: {integrity: sha512-CnJzTWxsgLGXFdSrWRaGz7GZ1kUUi8g3E9HzJmeveX1YwVJavrKYqysktfHZQsujdnRqV5O7g8FPKEA/aeTkOQ==}
+    dependencies:
+      katex: 0.16.7
+    dev: false
+
   /@trysound/sax/0.2.0:
     resolution: {integrity: sha512-L7z9BgrNEcYyUYtF+HaEfiS5ebkh9jXqbszz7pC0hRBPaatV0XjSD3+eHrpqFemQfgwiFF0QPIarnIihIDn7OA==}
     engines: {node: '>=10.13.0'}
@@ -2591,6 +2605,27 @@ packages:
     dependencies:
       '@types/node': 16.18.32
     dev: false
+
+  /@types/linkify-it/3.0.2:
+    resolution: {integrity: sha512-HZQYqbiFVWufzCwexrvh694SOim8z2d+xJl5UNamcvQFejLY/2YUtzXHYi3cHdI7PMlS8ejH2slRAOJQ32aNbA==}
+    dev: true
+
+  /@types/markdown-it-link-attributes/3.0.1:
+    resolution: {integrity: sha512-K8RnNb1q8j7rDOJbMF7AnlhCC/45BjrQ8z3WZWOrvkBIl8u9RXvmBdG/hfpnmK1JhhEZcmFEKWt+ilW1Mly+2Q==}
+    dependencies:
+      '@types/markdown-it': 12.2.3
+    dev: true
+
+  /@types/markdown-it/12.2.3:
+    resolution: {integrity: sha512-GKMHFfv3458yYy+v/N8gjufHO6MSZKCOXpZc5GXIWWy8uldwfmPn98vp81gZ5f9SVw8YYBctgfJ22a2d7AOMeQ==}
+    dependencies:
+      '@types/linkify-it': 3.0.2
+      '@types/mdurl': 1.0.2
+    dev: true
+
+  /@types/mdurl/1.0.2:
+    resolution: {integrity: sha512-eC4U9MlIcu2q0KQmXszyn5Akca/0jrQmwDRgpAMJai7qBWq4amIQhZyNau4VYGtCeALvW1/NtjzJJ567aZxfKA==}
+    dev: true
 
   /@types/mime/1.3.2:
     resolution: {integrity: sha512-YATxVxgRqNH6nHEIsvg6k2Boc1JHI9ZbH5iWFFv/MTkchz3b1ieGDa5T0a9RznNdI0KhVbdbWSN+KWWrQZRxTw==}
@@ -6214,6 +6249,11 @@ packages:
     resolution: {integrity: sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==}
     hasBin: true
 
+  /highlight.js/11.8.0:
+    resolution: {integrity: sha512-MedQhoqVdr0U6SSnWPzfiadUcDHfN/Wzq25AkXiQv9oiOO/sG0S7XkvpFIqWBl9Yq1UYyYOOVORs5UW2XlPyzg==}
+    engines: {node: '>=12.0.0'}
+    dev: false
+
   /highlight.js/9.18.5:
     resolution: {integrity: sha512-a5bFyofd/BHCX52/8i8uJkjr9DYwXIPnM/plwI6W7ezItLGqzt7X2G2nXuYSfsIJdkwwj/g9DG1LkcGJI/dDoA==}
     deprecated: Support has ended for 9.x series. Upgrade to @latest
@@ -7484,6 +7524,13 @@ packages:
       readable-stream: 2.3.8
       setimmediate: 1.0.5
     dev: true
+
+  /katex/0.16.7:
+    resolution: {integrity: sha512-Xk9C6oGKRwJTfqfIbtr0Kes9OSv6IFsuhFGc7tW4urlpMJtuh+7YhzU6YEG9n8gmWKcMAFzkp7nr+r69kV0zrA==}
+    hasBin: true
+    dependencies:
+      commander: 8.3.0
+    dev: false
 
   /keyboardevent-from-electron-accelerator/2.0.0:
     resolution: {integrity: sha512-iQcmNA0M4ETMNi0kG/q0h/43wZk7rMeKYrXP7sqKIJbHkTU8Koowgzv+ieR/vWJbOwxx5nDC3UnudZ0aLSu4VA==}
