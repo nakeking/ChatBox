@@ -18,6 +18,8 @@ function createDevTools() {
     REDUX_DEVTOOLS,
   } = require('electron-devtools-installer');
 
+  /**加载react调试工具无效 待跟进*/
+
   // 安装devtron
   const devtronExtension = require('devtron');
   devtronExtension.install();

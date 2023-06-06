@@ -1,4 +1,4 @@
-import { FC, useMemo } from "react"
+import { FC, useEffect, useMemo } from "react"
 
 import MarkdownIt from 'markdown-it'
 import mdKatex from '@traptitech/markdown-it-katex'
@@ -56,7 +56,7 @@ const _Block: FC<BlockProps> = (props) => {
             key={msg.id}>
             <div
                 className='msg-content'
-                dangerouslySetInnerHTML={{ __html: md.render("```go\npackage main\n\nimport \"fmt\"\n\nfunc main() {\n    fmt.Println(\"Hello, world!\")\n}\n```\n该示例是一个最简单的 Hello World 程序，使用 Go 语言编写。") }}
+                dangerouslySetInnerHTML={{ __html: md.render("```go\npackage main\n\nimport \"fmt\"\n\nfunc main() {\n    fmt.Println(\"Hello, World!\")\n}\n```") }}
             />
         </div>
     )
