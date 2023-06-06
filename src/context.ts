@@ -2,14 +2,14 @@ import React, { useCallback, useReducer } from "react";
 import { v4 as uuidv4 } from 'uuid'
 
 import type { themeInterface } from './hooks/useThemeHook'
-import { getStore, setStore } from "./utils";
+import { JSONToMap, MapToJSON, delStore, getStore, setStore } from "./utils";
 import type { Locale } from "antd/es/locale"
 
 import zhCN from "antd/locale/zh_CN"
 import enUS from 'antd/locale/en_US'
 import { useTranslation } from "react-i18next";
 
-import type { DialogueType } from './types'
+import type { DialogueType, DialoguesType } from './types'
 
 enum ActionType {
     TOGGLE_THEME = "TOGGLE_THEME",
@@ -35,7 +35,7 @@ interface State {
     OpenAIKey?: string,
     language?: Locale,
 
-    Dialogues?: Map<string, DialogueType>,
+    Dialogues?: DialoguesType,
     CurrentDialogueID?: string,
 
     FlattenDialogues?: Map<number, unknown>
@@ -71,6 +71,7 @@ export const contextReducer = <T>(state: State, action: Action<T>): State => {
         case ActionType.ADD_DIALOGUE:
         case ActionType.DEL_DIALOGUE:
         case ActionType.RENAME_DIALOGUE:
+            setStore("Dialogues", MapToJSON(payload as Map<string, DialogueType>))
             return {
                 ...state,
 
@@ -93,13 +94,14 @@ export const useReducerContext = () => {
     const storedTheme = getStore('theme');
     const stroedOpenAIKey = getStore('OpenAIKey')
     const storeLanguage = getStore('language') || "en"
+    const storeDialogues = getStore('Dialogues') ? JSONToMap(getStore('Dialogues')!)  : new Map()
     
     const [state, dispatch] = useReducer(contextReducer, {
         themeConfiguration: storedTheme,
         OpenAIKey: stroedOpenAIKey,
         language: languages[storeLanguage],
 
-        Dialogues: new Map(),
+        Dialogues: storeDialogues,
         Dialogue: {}
     } as State)
 

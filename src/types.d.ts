@@ -20,3 +20,5 @@ export interface DialogueType {
     name: string,
     messages?: MessageType[]
 }
+
+export type DialoguesType = Map<string, DialogueType>

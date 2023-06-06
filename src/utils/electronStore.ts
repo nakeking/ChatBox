@@ -8,6 +8,7 @@ export const setStore = (key: string, data?: unknown) => {
     store.set(key, data)
 }
 
+function getStore(key: "Dialogues"): string | null
 function getStore(key: 'theme'): themeInterface | null
 function getStore(key: 'language'): string | null
 function getStore(key: 'OpenAIKey'): string | null

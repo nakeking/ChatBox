@@ -1,10 +1,12 @@
 import { setStore, getStore, delStore } from './electronStore'
-import { openLink } from './util'
+import { openLink, MapToJSON, JSONToMap } from './util'
 
 export {
     setStore,
     getStore,
     delStore,
 
-    openLink
+    openLink,
+    MapToJSON,
+    JSONToMap
 }
