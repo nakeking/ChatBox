@@ -1,7 +1,18 @@
-interface MessageType {
+const OpenAIRoleEnum = {
+    System: 'system',
+    User: "user"
+} as const
+
+type OpenAIRoleEnumType = typeof OpenAIRoleEnum[keyof typeof OpenAIRoleEnum]
+
+interface OpenAIMessage {
+    role: OpenAIRoleEnumType,
+    content?: string
+}
+
+export type Message = OpenAIMessage & {
     id: string,
-    role: "user" | "system",
-    content: string
+    model?: string
 }
 
 export interface DialogueType {
