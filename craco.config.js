@@ -1,22 +1,14 @@
 const webpack = require("webpack")
 
 const CracoLessPlugin = require('craco-less');
-const CracoCSSModules = require('craco-css-modules');
+
+const WorkerLoaderPlugin = require("craco-worker-loader");
 
 module.exports = {
-  module: {
-    rules: [
-      {
-        test: /\.less$/,
-        use: [
-          { loader: 'style-loader' },
-          { loader: 'css-loader' },
-          { loader: 'less-loader' },
-        ],
-      },
-    ],
-  },
   plugins: [
+    {
+      plugin: WorkerLoaderPlugin
+    },
     {
       plugin: CracoLessPlugin,
       options: {
@@ -31,8 +23,19 @@ module.exports = {
     }
   ],
   webpack: {
+    output: {
+      globalObject: 'this'
+    },
     configure: {
       target: 'electron-main',
+      module: {
+        rules: [
+          {
+            test: /\.worker\.(ts|js)$/i,
+            loader: 'worker-loader'
+          }
+        ]
+      },
       resolve: {
         fallback: {
           fs: false,
@@ -49,7 +52,7 @@ module.exports = {
           Buffer: ["buffer", "Buffer"],
           process: "process/browser",
         }),
-      ],
+      ]
     },
   },
 }

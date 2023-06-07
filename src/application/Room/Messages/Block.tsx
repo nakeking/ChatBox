@@ -50,10 +50,7 @@ const _Block: FC<BlockProps> = (props) => {
     let { id, msg } = props
 
     return (
-        <div 
-            className="msgItem" 
-            id={id} 
-            key={msg.id}>
+        <div className="msgItem" id={id} key={msg.id}>
             <div
                 className='msg-content'
                 dangerouslySetInnerHTML={{ __html: md.render("```go\npackage main\n\nimport \"fmt\"\n\nfunc main() {\n    fmt.Println(\"Hello, World!\")\n}\n```") }}
@@ -65,5 +62,5 @@ const _Block: FC<BlockProps> = (props) => {
 export default function Block(props: BlockProps) {
     return useMemo(() => {
         return <_Block {...props} />
-    }, [props])
+    }, [props.msg])
 }
