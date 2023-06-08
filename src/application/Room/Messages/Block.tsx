@@ -56,7 +56,7 @@ const _Block: FC<BlockProps> = (props) => {
     return (
         <div className="msgItem" id={msg.id} key={msg.id}>
             <div className="role">
-                <Avatar shape="square" icon={
+                <Avatar size={40} shape="square" icon={
                     msg.role === 'system' ? <SettingFilled /> : <RocketFilled />
                 } />
             </div>
@@ -65,6 +65,9 @@ const _Block: FC<BlockProps> = (props) => {
                     className='msg-content'
                     dangerouslySetInnerHTML={{ __html: md.render("这是一段Go语言的例子: \n```go\npackage main\n\nimport \"fmt\"\n\nfunc main() {\n    fmt.Println(\"Hello, World!\")\n}\n```") }}
                 />
+            </div>
+            <div className="other">
+                
             </div>
         </div>
     )
