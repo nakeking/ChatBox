@@ -1,34 +1,54 @@
 .message{
     overflow-y: scroll;
 
-    pre{
-        word-break: break-word;
-        overflow-wrap: break-word;
-        white-space: pre-wrap;
-    }
-
-    .code-header{
+    .msgItem{
         display: flex;
-        line-height: 24px;
-        .code-lang{
-            flex: 1;
+        align-items: start;
+        justify-content: start;
+        .role{
+            padding-left: 16px;
+            padding-top: 16px;
         }
-        .copy-action{
-            background-color: rgba(144,202,249,.16);
-            cursor: pointer;
-            padding: 0 4px;
 
-            &:hover{
-                background-color: rgba(144,202,249,.26);
+        .msg {
+            flex: 1;
+            padding-left: 16px;
+            padding-top: 16px;
+
+            .msg-content p {
+                margin: .4rem 0;
+            }
+
+            pre{
+                word-break: break-word;
+                overflow-wrap: break-word;
+                white-space: pre-wrap;
+            }
+        
+            .code-header{
+                display: flex;
+                line-height: 24px;
+                .code-lang{
+                    flex: 1;
+                }
+                .copy-action{
+                    background-color: rgba(144,202,249,.16);
+                    cursor: pointer;
+                    padding: 0 4px;
+        
+                    &:hover{
+                        background-color: rgba(144,202,249,.26);
+                    }
+                }
+            }
+        
+            .code-block{
+                box-sizing: border-box;
+                margin: 0;
+                max-width: 100%;
+                overflow: auto;
+                padding: 15px;
             }
         }
-    }
-
-    .code-block{
-        box-sizing: border-box;
-        margin: 0;
-        max-width: 100%;
-        overflow: auto;
-        padding: 15px;
     }
 }

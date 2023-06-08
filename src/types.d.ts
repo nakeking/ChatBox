@@ -7,7 +7,7 @@ type OpenAIRoleEnumType = typeof OpenAIRoleEnum[keyof typeof OpenAIRoleEnum]
 
 interface OpenAIMessage {
     role: OpenAIRoleEnumType,
-    content?: string
+    content: string
 }
 
 export type Message = OpenAIMessage & {
@@ -18,7 +18,7 @@ export type Message = OpenAIMessage & {
 export interface DialogueType {
     id: string
     name: string,
-    messages?: MessageType[]
+    messages?: Message[]
 }
 
 export type DialoguesType = Map<string, DialogueType>

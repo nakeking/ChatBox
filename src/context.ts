@@ -9,7 +9,7 @@ import zhCN from "antd/locale/zh_CN"
 import enUS from 'antd/locale/en_US'
 import { useTranslation } from "react-i18next";
 
-import type { DialogueType, DialoguesType } from './types'
+import type { DialogueType, DialoguesType, Message } from './types'
 
 enum ActionType {
     TOGGLE_THEME = "TOGGLE_THEME",
@@ -22,11 +22,6 @@ enum ActionType {
     RENAME_DIALOGUE = "RENAME_DIALOGUE",
 
     TOGGLE_DIALOGUE = "TOGGLE_DIALOGUE"
-}
-
-const languages: Record<string, Locale> = {
-    "en": enUS,
-    "zh-cn": zhCN
 }
 
 interface State {
@@ -44,6 +39,17 @@ interface State {
 type Action<T> = {
     payload?: T
     type: ActionType
+}
+
+const languages: Record<string, Locale> = {
+    "en": enUS,
+    "zh-cn": zhCN
+}
+
+const msgTemplate: Message = {
+    id: uuidv4(),
+    role: "system",
+    content: "You are a helpful assistant. You can help me by answering my questions. You can also ask me questions."
 }
 
 export const contextReducer = <T>(state: State, action: Action<T>): State => {
@@ -129,7 +135,8 @@ export const useReducerContext = () => {
 
         Dialogues?.set(id, {
             id,
-            name: "Untitled"
+            name: "Untitled",
+            messages: [msgTemplate]
         })
 
         dispatch({type: ActionType.ADD_DIALOGUE, payload: Dialogues})

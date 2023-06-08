@@ -1,4 +1,5 @@
 import { FC, useEffect, useMemo } from "react"
+import type { Message } from '../../../types'
 
 import MarkdownIt from 'markdown-it'
 import mdKatex from '@traptitech/markdown-it-katex'
@@ -7,7 +8,11 @@ import mila from "markdown-it-link-attributes"
 import { getI18n } from 'react-i18next';
 import hljs from 'highlight.js'
 
-import type { Message } from '../../../types'
+import { 
+    SettingFilled,
+    RocketFilled
+} from '@ant-design/icons'
+import { Avatar } from 'antd'
 
 const md = new MarkdownIt({
     linkify: true,
@@ -42,19 +47,25 @@ md.use(mdKatex, { blockClass: 'katexmath-block rounded-md p-[10px]', errorColor:
 md.use(mila, { attrs: { target: "_blank", rel: "noopener" } })
 
 interface BlockProps {
-    id: string,
     msg: Message
 }
 
 const _Block: FC<BlockProps> = (props) => {
-    let { id, msg } = props
+    let { msg } = props
 
     return (
-        <div className="msgItem" id={id} key={msg.id}>
-            <div
-                className='msg-content'
-                dangerouslySetInnerHTML={{ __html: md.render("```go\npackage main\n\nimport \"fmt\"\n\nfunc main() {\n    fmt.Println(\"Hello, World!\")\n}\n```") }}
-            />
+        <div className="msgItem" id={msg.id} key={msg.id}>
+            <div className="role">
+                <Avatar shape="square" icon={
+                    msg.role === 'system' ? <SettingFilled /> : <RocketFilled />
+                } />
+            </div>
+            <div className="msg">
+                <div
+                    className='msg-content'
+                    dangerouslySetInnerHTML={{ __html: md.render("这是一段Go语言的例子: \n```go\npackage main\n\nimport \"fmt\"\n\nfunc main() {\n    fmt.Println(\"Hello, World!\")\n}\n```") }}
+                />
+            </div>
         </div>
     )
 }
