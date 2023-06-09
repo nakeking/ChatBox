@@ -1,9 +1,11 @@
 import React, { FC, useEffect, useLayoutEffect, useState } from 'react';
 import './App.less';
-import ChatBoxContext, { useReducerContext } from "./context";
+import ChatBoxContext, { useReducerContext, languages } from "./context";
 
 import "./utils/i18n"
 import { useTranslation, Trans } from 'react-i18next';
+
+import { themeConfigs } from './hooks/useThemeHook'
 
 import Logo from './application/Logo/inex';
 import Dialogues from './application/Dialogues';
@@ -20,33 +22,29 @@ const App: FC = () => {
   const { 
     state, 
     
-    _setTheme, 
-    _setOpenAIKey, 
-    _setLanguage,
+    _saveSettings,
 
     _addDialogue,
     _delDialogue,
     _renameDialogue,
     _toggledialogue
   } = useReducerContext()
+  const { Settings } = state
   const { i18n } = useTranslation()
   useEffect(() => {
-    i18n.changeLanguage(state.language?.locale)
+    i18n.changeLanguage(Settings.language)
   }, [])
 
-  const { themeConfiguration } = state
+  const { theme } = Settings
   useLayoutEffect(() => {
-    const themeType = themeConfiguration?.themeType || 'light'
-    document.querySelector("html")?.setAttribute("data-theme", themeType)
-  }, [themeConfiguration?.themeType])
+    document.querySelector("html")?.setAttribute("data-theme", theme)
+  }, [theme])
 
   return (
     <ChatBoxContext.Provider value={{
       state,
-
-      _setTheme,
-      _setOpenAIKey,
-      _setLanguage,
+      
+      _saveSettings,
       
       _addDialogue,
       _delDialogue,
@@ -55,8 +53,8 @@ const App: FC = () => {
     }}>
       <div id='App' className="App">
         <ConfigProvider 
-          locale={state.language}
-          theme={state.themeConfiguration?.antdTheme} >
+          locale={languages[Settings.language]}
+          theme={themeConfigs[Settings.theme].antdTheme} >
           <Layout className='Layout'>
             <div className='Sider'>
               <Logo />

@@ -12,8 +12,7 @@ import {
     Input, 
     Select, 
     Form, 
-    Collapse,
-    Alert
+    Collapse
 } from 'antd'
 
 import useThemeHook, { themeType } from "../../hooks/useThemeHook";
@@ -30,36 +29,40 @@ interface SettingsPanelProp {
 const SettingsPanel: FC<SettingsPanelProp> = (prop) => {
     const { t } = useTranslation()
     let { open, cancelSetUp } = prop;
+    const { state, _saveSettings } = useContext(ChatBoxContext)
+    const { Settings } = state
 
     // =============== Form ============================
-    const { state, _setOpenAIKey, _setLanguage } = useContext(ChatBoxContext)
-
     let [ initialValues ] = useState({
-        openAIKey: state.OpenAIKey,
-        language: state.language?.locale
+        OpenAIKey: Settings.OpenAIKey,
+        language: Settings.language
     })
     const [ form ] = Form.useForm()
 
     const handleCancel = () => {
         form.setFieldsValue({
-            openAIKey: state.OpenAIKey,
-            language: state.language?.locale
+            OpenAIKey: Settings.OpenAIKey,
+            language: Settings.language
         })
 
         cancelSetUp()
     }
 
     const onFinish = (values: any) => {
-        let { OpenAIKey: SOpenAIKey, language: SLanguage } = state
+        let { Settings } = state
+        let { OpenAIKey: SOpenAIKey, language: SLanguage } = Settings
+        
         let { openAIKey, language } = values
 
-        if(SOpenAIKey !== openAIKey) {
-            _setOpenAIKey!(openAIKey)
-        }
+        // if(SOpenAIKey !== openAIKey) {
+        //     _setOpenAIKey!(openAIKey)
+        // }
 
-        if(SLanguage !== language) {
-            _setLanguage!(language)
-        }
+        // if(SLanguage !== language) {
+        //     _setLanguage!(language)
+        // }
+
+        _saveSettings({...Settings, ...values})
 
         cancelSetUp()
     };
@@ -70,9 +73,8 @@ const SettingsPanel: FC<SettingsPanelProp> = (prop) => {
 
     // 获取缓存主题设置，默认"light"
     useEffect(() => {
-        const storedTheme = getStore('theme')
-
-        setTheme(storedTheme?.themeType || 'light')
+        const { theme } = Settings
+        setTheme(theme)
     }, [])
 
     const handleThemeChange = (theme: themeType) => {
@@ -103,7 +105,7 @@ const SettingsPanel: FC<SettingsPanelProp> = (prop) => {
                         form={form} 
                         initialValues={initialValues}
                         onFinish={onFinish}>
-                        <Form.Item style={{marginTop: 20}} name="openAIKey">
+                        <Form.Item style={{marginTop: 20}} name="OpenAIKey">
                             <OpenAIKeyInput />
                         </Form.Item>
                         

@@ -1,7 +1,7 @@
 import React, { useCallback, useReducer } from "react";
 import { v4 as uuidv4 } from 'uuid'
 
-import type { themeInterface } from './hooks/useThemeHook'
+import type { themeInterface, themeType } from './hooks/useThemeHook'
 import { JSONToMap, MapToJSON, delStore, getStore, setStore } from "./utils";
 import type { Locale } from "antd/es/locale"
 
@@ -12,8 +12,9 @@ import { useTranslation } from "react-i18next";
 import type { DialogueType, DialoguesType, Message } from './types'
 
 enum ActionType {
-    TOGGLE_THEME = "TOGGLE_THEME",
+    SETTINGS = "SETTINGS",
 
+    TOGGLE_THEME = "TOGGLE_THEME",
     SET_OPENAI_KEY = "SET_OPENAI_KEY",
     SET_LANGUAGE = "SET_LANGUAGE",
 
@@ -24,20 +25,17 @@ enum ActionType {
     TOGGLE_DIALOGUE = "TOGGLE_DIALOGUE"
 }
 
-interface Settings {
-    themeConfiguration?: string
+type LanguageType = "en" | "zh-cn"
+
+interface SettingsType {
+    theme: themeType
     OpenAIKey?: string,
-    language?: string,
+    language: LanguageType,
     model?: string
 }
 
 interface State {
-    Settings?: Settings
-
-    themeConfiguration?: themeInterface,
-    OpenAIKey?: string,
-    language?: Locale,
-    model?: string
+    Settings: SettingsType
 
     Dialogues?: DialoguesType,
     CurrentDialogueID?: string,
@@ -50,7 +48,7 @@ type Action<T> = {
     type: ActionType
 }
 
-const languages: Record<string, Locale> = {
+export const languages: Record<string, Locale> = {
     "en": enUS,
     "zh-cn": zhCN
 }
@@ -61,27 +59,22 @@ const msgTemplate: Message = {
     content: "You are a helpful assistant. You can help me by answering my questions. You can also ask me questions."
 }
 
+const baseSettings: SettingsType = {
+    theme: "light",
+    language: "en",
+    OpenAIKey: "",
+    model: "gpt-3.5-turbo"
+}
+
 export const contextReducer = <T>(state: State, action: Action<T>): State => {
     const { type, payload } = action
 
     switch(type) {
-        case ActionType.SET_OPENAI_KEY:
-            setStore('OpenAIKey', payload)
+        case ActionType.SETTINGS:
+            setStore('Settings', payload)
             return {
                 ...state,
-                OpenAIKey: payload as string
-            }
-        case ActionType.TOGGLE_THEME:
-            setStore("theme", payload)
-            return {
-                ...state,
-                themeConfiguration: payload as themeInterface
-            }
-        case ActionType.SET_LANGUAGE:
-            setStore("language", payload)
-            return {
-                ...state,
-                language: languages[payload as string]
+                Settings: payload as SettingsType
             }
         case ActionType.ADD_DIALOGUE:
         case ActionType.DEL_DIALOGUE:
@@ -106,36 +99,22 @@ export const contextReducer = <T>(state: State, action: Action<T>): State => {
 }
 
 export const useReducerContext = () => {
-    const storedTheme = getStore('theme');
-    const stroedOpenAIKey = getStore('OpenAIKey')
-    const storeLanguage = getStore('language') || "en"
+    const storeSettings = getStore('Settings') || baseSettings;
     const storeDialogues = getStore('Dialogues') ? JSONToMap(getStore('Dialogues')!)  : new Map()
     
     const [state, dispatch] = useReducer(contextReducer, {
-        themeConfiguration: storedTheme,
-        OpenAIKey: stroedOpenAIKey,
-        language: languages[storeLanguage],
+        Settings: storeSettings,
 
         Dialogues: storeDialogues,
         Dialogue: {}
     } as State)
 
-    // ========== 设置 Theme =======================
-    const _setTheme = useCallback((payload: themeInterface) => {
-        dispatch({type: ActionType.TOGGLE_THEME, payload})
-    }, [])
-
-    // ========== 设置 OpenAIKey ====================
-    const _setOpenAIKey = useCallback((payload: string) => {
-        dispatch({type: ActionType.SET_OPENAI_KEY, payload})
-    }, [])
-
-    // =========== 设置 Language ===================
+    // =========== Settings =======================
     const { i18n } = useTranslation()
-    const _setLanguage = useCallback((payload: string) => {
-        i18n.changeLanguage(payload)
-        dispatch({type: ActionType.SET_LANGUAGE, payload})
-    }, [])
+    const _saveSettings = useCallback((payload: SettingsType) => {
+        i18n.changeLanguage(payload.language)
+        dispatch({type: ActionType.SETTINGS, payload})
+    }, [state.Settings])
     
     // =========== 新对话 ==========================
     const _addDialogue = useCallback(() => {
@@ -183,10 +162,8 @@ export const useReducerContext = () => {
 
     return {
         state,
+        _saveSettings,
 
-        _setTheme,
-        _setOpenAIKey,
-        _setLanguage,
         _addDialogue,
         _delDialogue,
         _renameDialogue,
@@ -197,9 +174,8 @@ export const useReducerContext = () => {
 interface ChatBoxContextType {
     state: State
 
-    _setTheme: (payload: themeInterface) => void
-    _setOpenAIKey: (payload: string) => void
-    _setLanguage: (payload: string) => void
+    _saveSettings: (payload: SettingsType) => void
+
     _addDialogue: () => void
     _delDialogue: (payload: string) => void
     _renameDialogue: (payload: DialogueType) => void
@@ -207,11 +183,11 @@ interface ChatBoxContextType {
 }
 
 const ChatBoxContext = React.createContext<ChatBoxContextType>({
-    state: {},
+    state: {
+        Settings: baseSettings
+    },
+    _saveSettings: () => {},
 
-    _setTheme: () => {},
-    _setOpenAIKey: () => {},
-    _setLanguage: () => {},
     _addDialogue: () => {},
     _delDialogue: () => {},
     _renameDialogue: () => {},

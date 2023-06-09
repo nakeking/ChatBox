@@ -13,7 +13,7 @@ export interface themeInterface {
 export type themeType = "light" | "dark"
 
 // 暗黑风格Theme
-export const darkTheme: themeInterface = {
+const darkTheme: themeInterface = {
     themeType: "dark",
     antdTheme: {
         token: {
@@ -50,7 +50,7 @@ export const darkTheme: themeInterface = {
 }
 
 // 默认Theme
-export const lightTheme: themeInterface = {
+const lightTheme: themeInterface = {
     themeType: "light",
     antdTheme: {
         algorithm: theme.defaultAlgorithm,
@@ -60,26 +60,21 @@ export const lightTheme: themeInterface = {
     }
 }
 
+export const themeConfigs: Record<themeType, themeInterface> = {
+    'light': lightTheme,
+    'dark': darkTheme
+}
+
 const useThemeHook = () => {
     const [_theme, setTheme] = useState<themeInterface>()
-    const { _setTheme } = useContext(ChatBoxContext)
-
-    useEffect(() => {
-        const storedTheme = getStore('theme');
-
-        if(storedTheme) {
-            setTheme(storedTheme)
-        }
-    }, [])
+    const { state, _saveSettings } = useContext(ChatBoxContext)
+    let { Settings } = state
 
     const handleToggleTheme = (type: themeType) => {
-        const themes = {
-            dark: darkTheme,
-            light: lightTheme
-        }
+        setTheme(themeConfigs[type])
 
-        setTheme(themes[type])
-        _setTheme(themes[type])
+        Settings.theme = type
+        _saveSettings(Settings)
     }
 
     return {
