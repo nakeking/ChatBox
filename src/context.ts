@@ -24,11 +24,20 @@ enum ActionType {
     TOGGLE_DIALOGUE = "TOGGLE_DIALOGUE"
 }
 
-interface State {
-    themeConfiguration?: themeInterface,
+interface Settings {
+    themeConfiguration?: string
+    OpenAIKey?: string,
+    language?: string,
+    model?: string
+}
 
+interface State {
+    Settings?: Settings
+
+    themeConfiguration?: themeInterface,
     OpenAIKey?: string,
     language?: Locale,
+    model?: string
 
     Dialogues?: DialoguesType,
     CurrentDialogueID?: string,

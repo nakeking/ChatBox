@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react"
 import { theme } from 'antd'
 import type { ThemeConfig } from 'antd'
 
-import { delStore, getStore, setStore } from "../utils"
+import { getStore } from "../utils"
 import ChatBoxContext from "../context"
 
 export interface themeInterface {
@@ -40,6 +40,10 @@ export const darkTheme: themeInterface = {
               controlOutline: "rgba(0, 0, 0, 0.15)",
               colorBgContainer: "#141414",
               colorPrimaryHover: "#3c3c3c"
+            },
+            Collapse: {
+                colorBorder: "#333",
+                colorBgContainer: "#1d1d1d",
             }
         }
     }

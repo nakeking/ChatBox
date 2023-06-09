@@ -2,9 +2,20 @@ import { FC, useContext, useEffect, useState } from "react";
 
 import {
     BulbOutlined,
-    BulbFilled
+    BulbFilled,
+    WarningOutlined
 } from '@ant-design/icons'
-import { Modal, Radio, Button, Input, Select, Form } from 'antd'
+import { 
+    Modal, 
+    Radio, 
+    Button, 
+    Input, 
+    Select, 
+    Form, 
+    Collapse,
+    Alert
+} from 'antd'
+
 import useThemeHook, { themeType } from "../../hooks/useThemeHook";
 import { getStore } from "../../utils";
 import { SuiLabel } from "../../components";
@@ -17,18 +28,16 @@ interface SettingsPanelProp {
     cancelSetUp: Function
 }
 const SettingsPanel: FC<SettingsPanelProp> = (prop) => {
+    const { t } = useTranslation()
     let { open, cancelSetUp } = prop;
+
+    // =============== Form ============================
     const { state, _setOpenAIKey, _setLanguage } = useContext(ChatBoxContext)
 
     let [ initialValues ] = useState({
         openAIKey: state.OpenAIKey,
         language: state.language?.locale
     })
-
-    // ============== 国际化 =======================
-    const { t } = useTranslation()
-
-    // =============== Save Form ============================
     const [ form ] = Form.useForm()
 
     const handleCancel = () => {
@@ -75,6 +84,7 @@ const SettingsPanel: FC<SettingsPanelProp> = (prop) => {
     return (
         <Modal
             className='setUpModal'
+            centered
             open={open}
             title={t("SettingsPanel.Settings")}
             closable={false}
@@ -112,6 +122,18 @@ const SettingsPanel: FC<SettingsPanelProp> = (prop) => {
                                 <BulbFilled />
                             </Radio.Button>
                         </Radio.Group>
+                    </div>
+
+                    <div className="formItem">
+                        <Collapse>
+                            <Collapse.Panel header={t("SettingsPanel.model & token")} key={1}>
+                                <div className="warning">
+                                    <WarningOutlined />
+                                    <p>{t("SettingsPanel.waringMsg")}</p>
+                                </div>
+
+                            </Collapse.Panel>
+                        </Collapse>
                     </div>
                 </div>
         </Modal>
