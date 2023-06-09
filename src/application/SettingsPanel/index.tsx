@@ -35,7 +35,8 @@ const SettingsPanel: FC<SettingsPanelProp> = (prop) => {
     // =============== Form ============================
     let [ initialValues ] = useState({
         OpenAIKey: Settings.OpenAIKey,
-        language: Settings.language
+        language: Settings.language,
+        model: Settings.model
     })
     const [ form ] = Form.useForm()
 
@@ -112,31 +113,33 @@ const SettingsPanel: FC<SettingsPanelProp> = (prop) => {
                         <Form.Item name="language">
                             <LanguageSelect />
                         </Form.Item>
-                    </Form>
-                    
-                    <div className="formItem">
-                        <span className='title'>{t("SettingsPanel.theme")}</span>
-                        <Radio.Group value={theme} buttonStyle="solid" onChange={(e) => handleThemeChange(e.target.value)}>
-                            <Radio.Button value="light">
-                                <BulbOutlined />
-                            </Radio.Button>
-                            <Radio.Button value="dark">
-                                <BulbFilled />
-                            </Radio.Button>
-                        </Radio.Group>
-                    </div>
 
-                    <div className="formItem">
+                        <div className="formItem">
+                            <span className='title'>{t("SettingsPanel.theme")}</span>
+                            <Radio.Group value={theme} buttonStyle="solid" onChange={(e) => handleThemeChange(e.target.value)}>
+                                <Radio.Button value="light">
+                                    <BulbOutlined />
+                                </Radio.Button>
+                                <Radio.Button value="dark">
+                                    <BulbFilled />
+                                </Radio.Button>
+                            </Radio.Group>
+                        </div>
+
                         <Collapse>
-                            <Collapse.Panel header={t("SettingsPanel.model & token")} key={1}>
+                            <Collapse.Panel header={`${t("SettingsPanel.model")} & ${t("SettingsPanel.token")}`} key={1}>
                                 <div className="warning">
                                     <WarningOutlined />
                                     <p>{t("SettingsPanel.waringMsg")}</p>
                                 </div>
-
+                                <div className="formItem">
+                                    <Form.Item name="model">
+                                        <ModelSelect />
+                                    </Form.Item>
+                                </div>
                             </Collapse.Panel>
                         </Collapse>
-                    </div>
+                    </Form>
                 </div>
         </Modal>
     )
@@ -196,6 +199,40 @@ const LanguageSelect: FC<LanguageSelectProps> = ({value, onChange}) => {
                 options={[
                     {value: "en", label: "English"},
                     {value: "zh-cn", label: "简体中文"}
+                ]}
+                onChange={ handleChange }/>
+        </SuiLabel>
+    )
+}
+
+// ======= ModelSelect ============================================
+interface ModelSelectProps {
+    value?: string
+    onChange?: (value: string) => void
+}
+const ModelSelect: FC<ModelSelectProps> = ({value, onChange}) => {
+    const { t } = useTranslation()
+    const [ model, setModel ] = useState(value)
+
+    const triggerChange = (language: string ) => {
+        onChange?.(language);
+    };
+    
+    const handleChange = (value: string) => {
+        setModel(value)
+        triggerChange(value)
+    }
+
+    return (
+        <SuiLabel placeholder={t("SettingsPanel.model")} >
+            <Select 
+                style={{width: '100%'}} 
+                bordered={false} 
+                value={value || model}
+                options={[
+                    {value: "gpt-3.5-turbo", label: "gpt-3.5-turbo"},
+                    {value: "gpt-4", label: "gpt-4"},
+                    {value: "gpt-4-32k", label: "gpt-4-32k"}
                 ]}
                 onChange={ handleChange }/>
         </SuiLabel>
