@@ -33,6 +33,7 @@ specifiers:
   electron-devtools-installer: ^2.2.4
   electron-is-dev: ^2.0.0
   electron-store: ^8.0.1
+  eventsource-parser: ^1.0.0
   fs: 0.0.1-security
   highlight.js: ^11.8.0
   https-browserify: ^1.0.0
@@ -59,7 +60,6 @@ specifiers:
   wait-on: ^7.0.1
   web-vitals: ^2.1.4
   worker-loader: ^3.0.8
-  worker-plugin: ^5.0.1
 
 dependencies:
   '@ant-design/icons': 5.1.1_biqbaboplfbrettd7655fr4n2y
@@ -79,6 +79,7 @@ dependencies:
   electron: 24.4.0
   electron-is-dev: 2.0.0
   electron-store: 8.0.1
+  eventsource-parser: 1.0.0
   highlight.js: 11.8.0
   i18next: 22.5.0
   i18next-http-backend: 2.2.1
@@ -122,7 +123,6 @@ devDependencies:
   stream-http: 3.2.0
   wait-on: 7.0.1
   worker-loader: 3.0.8_webpack@5.83.1
-  worker-plugin: 5.0.1_webpack@5.83.1
 
 packages:
 
@@ -5685,6 +5685,11 @@ packages:
   /events/3.3.0:
     resolution: {integrity: sha512-mQw+2fkQbALzQ7V0MY0IqdnXNOeTtP4r0lN9z7AAawCXgqea7bDii20AYrIBrFd/Hx0M2Ocz6S111CaFkUcb0Q==}
     engines: {node: '>=0.8.x'}
+
+  /eventsource-parser/1.0.0:
+    resolution: {integrity: sha512-9jgfSCa3dmEme2ES3mPByGXfgZ87VbP97tng1G2nWwWx6bV2nYxm2AWCrbQjXToSe+yYlqaZNtxffR9IeQr95g==}
+    engines: {node: '>=14.18'}
+    dev: false
 
   /evp_bytestokey/1.0.3:
     resolution: {integrity: sha512-/f2Go4TognH/KvCISP7OUsHn85hT9nUkxxA9BEWxFn+Oj9o8ZNLm/40hdlgSLyuOimsrTKLUMEorQexp/aPQeA==}
@@ -11955,15 +11960,6 @@ packages:
     dependencies:
       loader-utils: 2.0.4
       schema-utils: 3.1.2
-      webpack: 5.83.1
-    dev: true
-
-  /worker-plugin/5.0.1_webpack@5.83.1:
-    resolution: {integrity: sha512-Pn7+19jIiANcGuTSGdy+vrzyF+SGH03A5wV8iu4jRTMAOfAC9bNeiHo4+l5tPS7F0uvICMBv+h8UCvL7lunxcA==}
-    peerDependencies:
-      webpack: '>= 4'
-    dependencies:
-      loader-utils: 1.4.2
       webpack: 5.83.1
     dev: true
 

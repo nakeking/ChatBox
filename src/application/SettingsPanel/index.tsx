@@ -100,7 +100,7 @@ const SettingsPanel: FC<SettingsPanelProp> = (prop) => {
                     {t("common.Save")}
                 </Button>
             ]}>
-                <div className='modal_body'>
+                <div className='modal_body webkitScrollbarBase'>
                     <Form 
                         name="basic" 
                         form={form} 

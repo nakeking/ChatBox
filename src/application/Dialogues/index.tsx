@@ -1,11 +1,11 @@
 import React, { ChangeEvent, FC, memo, useContext, useEffect, useMemo, useState } from 'react'
 
 import {
-    MessageOutlined,
-    MoreOutlined,
+  MessageOutlined,
+  MoreOutlined,
 
-    EditFilled,
-    DeleteFilled
+  EditFilled,
+  DeleteFilled
 } from '@ant-design/icons';
 import { SuiCorrugation, SuiLabel } from '../../components';
 import { useTranslation } from 'react-i18next';
@@ -14,31 +14,48 @@ import ChatBoxContext from '../../context';
 
 import type { DialogueType } from '../../types'
 import classNames from 'classnames';
+import { replay } from '../../services/http';
 
 const Dialogues: FC = () => {
   const { t } = useTranslation()
-  
-  const [ popupContainer, setPopupContainer ] = useState<HTMLElement>()
+
+  const [popupContainer, setPopupContainer] = useState<HTMLElement>()
   useEffect(() => {
     setPopupContainer(document.getElementById('dialogues') as HTMLElement)
   }, [popupContainer])
 
-  const { 
-    state, 
-    _delDialogue, 
+  const {
+    state,
+    _delDialogue,
     _renameDialogue,
-    _toggledialogue 
+    _toggledialogue
   } = useContext(ChatBoxContext)
   const Dialogues = [...state.Dialogues!.values()].reverse()
-  
+
   const handleDelete = (id: string) => {
     _delDialogue(id)
   }
   const handleRename = (dialogue: DialogueType) => {
     _renameDialogue(dialogue)
   }
-  const handleToggle = (id: string) => {
+  const handleToggle = async (id: string) => {
     _toggledialogue(id)
+
+    await replay(
+      state.Settings.OpenAIKey!,
+      "",
+      "4000",
+      "2048",
+      state.Settings.model!,
+      0.7,
+      [
+        {id: "1", content: "hi", role: "system"},
+        {id: "2", content: "你好", role: "user"}
+      ],
+      (option) => {
+        console.log("fullText: ", option)
+      }
+    )
   }
 
   return (
@@ -46,15 +63,15 @@ const Dialogues: FC = () => {
       <div className='title'>{t("Dialogues.dialogues")}</div>
 
       <div className='dialogue webkitScrollbarBase'>
-        { Dialogues.map(dialogue => {
+        {Dialogues.map(dialogue => {
           return (
-            <DialogueItem 
-              key={dialogue.id} 
-              dialogue={dialogue} 
-              popupContainer={popupContainer as HTMLElement} 
-              handleDelete={ handleDelete } 
-              handleRename={ handleRename }
-              handleToggle={ handleToggle } />
+            <DialogueItem
+              key={dialogue.id}
+              dialogue={dialogue}
+              popupContainer={popupContainer as HTMLElement}
+              handleDelete={handleDelete}
+              handleRename={handleRename}
+              handleToggle={handleToggle} />
           )
         })}
       </div>
@@ -72,11 +89,11 @@ interface DialogueItemProps {
 }
 
 const DialogueItem: FC<DialogueItemProps> = (props) => {
-  const { 
-    dialogue, 
-    popupContainer, 
-    
-    handleDelete, 
+  const {
+    dialogue,
+    popupContainer,
+
+    handleDelete,
     handleRename,
     handleToggle
   } = props
@@ -87,13 +104,13 @@ const DialogueItem: FC<DialogueItemProps> = (props) => {
     setPopoverOpen(status)
   }
 
-  const [ open, setOpen ] = useState(false)
+  const [open, setOpen] = useState(false)
   const modalOpenChange = () => {
     setOpen(true)
     setPopoverOpen(false)
   }
 
-  const [ name, setName ] = useState(dialogue.name)
+  const [name, setName] = useState(dialogue.name)
   const handleChange = (evt: ChangeEvent<HTMLInputElement>) => {
     setName(evt.target.value)
   }
@@ -104,7 +121,7 @@ const DialogueItem: FC<DialogueItemProps> = (props) => {
   }
 
   const saveRename = () => {
-    handleRename({id: dialogue.id, name})
+    handleRename({ id: dialogue.id, name })
     setOpen(false)
   }
 
@@ -143,20 +160,20 @@ const DialogueItem: FC<DialogueItemProps> = (props) => {
             trigger="click">
             <MoreOutlined />
           </Popover>
-          
-          <Modal 
-            open={open} 
-            title={t("Dialogues.rename")} 
+
+          <Modal
+            open={open}
+            title={t("Dialogues.rename")}
             closable={false}
             width={320}
-            bodyStyle={{paddingTop: "10px"}}
+            bodyStyle={{ paddingTop: "10px" }}
             destroyOnClose={true}
             footer={[
-              <Button type="text" key="back" onClick={ cancelRename }>
-                  {t("common.Cancel")}
+              <Button type="text" key="back" onClick={cancelRename}>
+                {t("common.Cancel")}
               </Button>,
-              <Button type="text" key="submit" onClick={ saveRename }>
-                  {t("common.Save")}
+              <Button type="text" key="submit" onClick={saveRename}>
+                {t("common.Save")}
               </Button>
             ]}>
             <div className='modal_body'>

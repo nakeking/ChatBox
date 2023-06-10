@@ -21,6 +21,7 @@
     "electron": "^24.4.0",
     "electron-is-dev": "^2.0.0",
     "electron-store": "^8.0.1",
+    "eventsource-parser": "^1.0.0",
     "highlight.js": "^11.8.0",
     "i18next": "^22.5.0",
     "i18next-http-backend": "^2.2.1",

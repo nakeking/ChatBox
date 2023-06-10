@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useLayoutEffect, useState } from 'react';
 import './App.less';
-import ChatBoxContext, { useReducerContext, languages } from "./context";
+import ChatBoxContext, { useReducerContext, languageMap } from "./context";
 
 import "./utils/i18n"
 import { useTranslation, Trans } from 'react-i18next';
@@ -53,7 +53,7 @@ const App: FC = () => {
     }}>
       <div id='App' className="App">
         <ConfigProvider 
-          locale={languages[Settings.language]}
+          locale={languageMap[Settings.language]}
           theme={themeConfigs[Settings.theme].antdTheme} >
           <Layout className='Layout'>
             <div className='Sider'>

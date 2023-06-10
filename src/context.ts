@@ -48,7 +48,7 @@ type Action<T> = {
     type: ActionType
 }
 
-export const languages: Record<string, Locale> = {
+export const languageMap: Record<string, Locale> = {
     "en": enUS,
     "zh-cn": zhCN
 }
