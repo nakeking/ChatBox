@@ -1,35 +1,61 @@
-import { FC, useContext, useEffect, useState } from "react";
+import { FC, useContext, useEffect, useRef, useState } from "react";
+import { v4 as uuidv4 } from 'uuid'
 
 import Header from "./Header";
 import Prompt from "./Prompt";
 import Messages from "./Messages";
 import ChatBoxContext from "../../context";
-import { DialogueType, Message } from "../../types";
+import type { DialogueType, Message } from "../../types";
+import { createMessage } from '../../types';
 import { OnTextCallbackResult, replay } from "../../services/http";
 
 const Room: FC = () => {
     const { state } = useContext(ChatBoxContext)
-    const { Dialogues, currentDialogue } = state
+    const { currentDialogue } = state
 
     const [ Dialogue, setDialogue ] = useState<DialogueType>()
-
+    const DialogueRef = useRef(currentDialogue)
     useEffect(() => {
         setDialogue(currentDialogue)
     }, [])
 
-    const onsubmit = async (msg: Message) => {
-        let messages = currentDialogue!.messages
-        messages.push(msg)
-        
+    // ================= user 提交 prompt =========================
+    const onsubmit = async (newUserMsg: Message) => {
+        let { messages } = Dialogue!
+
+        const id = uuidv4()
+        const newSystemMsg = createMessage("system", ".....", id)
+        setDialogue({
+            ...Dialogue!, 
+            messages: [ ...messages, newUserMsg, newSystemMsg ]
+        })
+        DialogueRef.current!.messages = [ ...messages, newUserMsg, newSystemMsg ]
+
+        // ============= openAI 返回结果 =========================
         const onText = (option: OnTextCallbackResult) => {
-            console.log('Dialogue: ', Dialogue?.messages)
-            console.log("fullText: ", option)
+            let { text } = option
+            text = text.replace(/['"“”]/g, '')
+
+            let { messages } = DialogueRef.current!
+            for(let i = messages.length - 1; i >= 0; i--) {
+                if(messages[i].id === id) {
+                    messages[i] = {...messages[i], content: text}
+                    break;
+                }
+            }
+
+            setDialogue({
+                ...Dialogue!, 
+                messages: [ ...messages ]
+            })
         }
 
+        // ============= openAI 请求错误处理 ======================
         const onError = (error: Error) => {
             console.log(error)
         }
 
+        // ============= 发起请求 ==================================
         await replay(
             state.Settings.OpenAIKey!,
             "",
@@ -37,10 +63,10 @@ const Room: FC = () => {
             state.Settings.maxTokens,
             state.Settings.model!,
             state.Settings.temperature,
-            messages,
+            DialogueRef.current!.messages,
             onText,
             onError
-          )
+        )
     }
 
     return (

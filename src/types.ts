@@ -25,9 +25,9 @@ export interface DialogueType {
 
 export type DialoguesType = Map<string, DialogueType>
 
-export const createMessage = (role: OpenAIRoleEnumType, content: string): Message => {
+export const createMessage = (role: OpenAIRoleEnumType, content: string, id?: string): Message => {
     return {
-        id: uuidv4(),
+        id: id || uuidv4(),
         role,
         content
     }
