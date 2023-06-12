@@ -15,9 +15,11 @@ const Room: FC = () => {
 
     const [ Dialogue, setDialogue ] = useState<DialogueType>()
     const DialogueRef = useRef(currentDialogue)
+
     useEffect(() => {
+        DialogueRef.current = currentDialogue
         setDialogue(currentDialogue)
-    }, [])
+    }, [currentDialogue])
 
     // ================= user 提交 prompt =========================
     const onsubmit = async (newUserMsg: Message) => {
