@@ -1,20 +1,21 @@
 import { ChangeEvent, FC, useContext, useState } from "react";
 import { SuiLabel } from "../../../components";
 
-import { Input, message } from "antd";
+import { Input } from "antd";
 import { useTranslation } from "react-i18next";
 import { OnTextCallbackResult, replay } from "../../../services/http";
 import ChatBoxContext from "../../../context";
+import { createMessage } from "../../../types";
 const { TextArea } = Input;
 
 interface PromptProps {
-
+    onSubmit: Function
 }
 
 const Prompt: FC<PromptProps> = (props) => {
+    const { onSubmit } = props
     const { t } = useTranslation()
     const { state } = useContext(ChatBoxContext)
-    const { Dialogues, CurrentDialogueID } = state
 
     const [ prompt, setPrompt ] = useState<string>("")
     const handleChange = (evt: ChangeEvent<HTMLTextAreaElement>) => {
@@ -27,26 +28,9 @@ const Prompt: FC<PromptProps> = (props) => {
             return
         }
 
-        let messages = Dialogues.get(CurrentDialogueID)!.messages 
-        messages.push({
-            role: "user",
-            content: prompt
-        })
+        onSubmit(createMessage('user', prompt))
 
-        const onText = (option: OnTextCallbackResult) => {
-            console.log("fullText: ", option)
-        }
-
-        await replay(
-            state.Settings.OpenAIKey!,
-            "",
-            "4000",
-            "2048",
-            state.Settings.model!,
-            0.7,
-            messages,
-            onText
-          )
+        setPrompt("")
     }
 
     return (

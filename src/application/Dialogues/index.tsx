@@ -37,8 +37,8 @@ const Dialogues: FC = () => {
   const handleRename = (dialogue: DialogueType) => {
     _renameDialogue(dialogue)
   }
-  const handleToggle = async (id: string) => {
-    _toggledialogue(id)
+  const handleToggle = async (dialogue: DialogueType) => {
+    _toggledialogue(dialogue)
   }
 
   return (
@@ -110,12 +110,12 @@ const DialogueItem: FC<DialogueItemProps> = (props) => {
 
   const { state } = useContext(ChatBoxContext)
   const itemClass = classNames("dialogueItem", {
-    "activation": state.CurrentDialogueID === dialogue.id
+    "activation": state.currentDialogue?.id === dialogue.id
   })
 
   return (
     <SuiCorrugation>
-      <div className={itemClass} onClick={() => { handleToggle(dialogue.id) }}>
+      <div className={itemClass} onClick={() => { handleToggle(dialogue) }}>
         <MessageOutlined />
         <div className='title'>{dialogue.name}</div>
         <div className='more iconBase'>

@@ -10,16 +10,15 @@ import ChatBoxContext from "../../../context";
 
 const Header: FC = () => {
     const { state } = useContext(ChatBoxContext)
-    const { CurrentDialogueID, Dialogues } = state
-    const Dialogue = Dialogues?.get(CurrentDialogueID!)
+    const { currentDialogue, Dialogues } = state
 
     return (
         <div className="header">
-            { Dialogue?.id ? (
+            { currentDialogue?.id ? (
                 <>
                 <div className="left">
                     <span className="iconBase"><MessageOutlined /></span>
-                    <span className="title">{Dialogue?.name}</span>
+                    <span className="title">{currentDialogue?.name}</span>
                 </div>
                 <div className="right">
                     <span className="iconBase"><RestFilled /></span>

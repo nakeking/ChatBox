@@ -9,7 +9,7 @@ import zhCN from "antd/locale/zh_CN"
 import enUS from 'antd/locale/en_US'
 import { useTranslation } from "react-i18next";
 
-import type { DialogueType, DialoguesType, Message } from './types'
+import { messageTemplate, type DialogueType, type DialoguesType, type Message } from './types'
 
 enum ActionType {
     SETTINGS = "SETTINGS",
@@ -31,16 +31,18 @@ interface SettingsType {
     theme: themeType
     OpenAIKey?: string,
     language: LanguageType,
-    model?: string
+    model?: string,
+
+    temperature: number,
+    maxContextSize: string,
+    maxTokens: string
 }
 
 interface State {
     Settings: SettingsType
 
-    Dialogues: DialoguesType,
-    CurrentDialogueID: string,
-
-    FlattenDialogues?: Map<number, unknown>
+    Dialogues: DialoguesType
+    currentDialogue?: DialogueType
 }
 
 type Action<T> = {
@@ -53,28 +55,23 @@ export const languageMap: Record<string, Locale> = {
     "zh-cn": zhCN
 }
 
-const msgTemplate: Message = {
-    id: uuidv4(),
-    role: "system",
-    content: "You are a helpful assistant. You can help me by answering my questions. You can also ask me questions."
-}
-
 const baseSettings: SettingsType = {
     theme: "light",
     language: "en",
     OpenAIKey: "",
-    model: "gpt-3.5-turbo"
+    model: "gpt-3.5-turbo",
+    temperature: 0.7,
+    maxContextSize: "4000",
+    maxTokens: "2048"
 }
+
+
 
 const initDialogues = (): DialoguesType => {
     const id = uuidv4()
 
     let Dialogues: DialoguesType = new Map()
-    Dialogues.set(id, {
-        id,
-        name: "Untitled",
-        messages: [msgTemplate]
-    })
+    Dialogues.set(id, messageTemplate(id))
 
     return Dialogues
 }
@@ -102,7 +99,7 @@ export const contextReducer = <T>(state: State, action: Action<T>): State => {
             return {
                 ...state,
 
-                CurrentDialogueID: payload as string
+                currentDialogue: payload as DialogueType
             }
         default:
             break;
@@ -113,18 +110,19 @@ export const contextReducer = <T>(state: State, action: Action<T>): State => {
 
 export const useReducerContext = () => {
     const storeSettings = getStore('Settings') || baseSettings;
+
     const storeDialogues = getStore('Dialogues') ? JSONToMap(getStore('Dialogues')!) : initDialogues()
     
-    let CurrentDialogueID = ""
+    let currentDialogue
     if(storeDialogues.size) {
-        CurrentDialogueID = [...storeDialogues.keys()][0] as string
+        currentDialogue = [...storeDialogues.values()][0]
     }
 
     const [state, dispatch] = useReducer(contextReducer, {
         Settings: storeSettings,
 
         Dialogues: storeDialogues,
-        CurrentDialogueID
+        currentDialogue
     } as State)
 
     // =========== Settings =======================
@@ -139,16 +137,12 @@ export const useReducerContext = () => {
         const { Dialogues } = state
         const id = uuidv4()
 
-        Dialogues?.set(id, {
-            id,
-            name: "Untitled",
-            messages: [msgTemplate]
-        })
+        Dialogues?.set(id, messageTemplate(id))
 
         dispatch({type: ActionType.ADD_DIALOGUE, payload: Dialogues})
         
         // 新建对话时激活
-        _toggledialogue(id)
+        _toggledialogue(messageTemplate(id))
     }, [state.Dialogues])
 
     // ========== 删除对话 =========================
@@ -166,7 +160,7 @@ export const useReducerContext = () => {
         if(!Dialogues?.size) {
             const baseDialogues = initDialogues()
             dispatch({type: ActionType.DEL_DIALOGUE, payload: baseDialogues})
-            _toggledialogue([...baseDialogues.keys()][0])
+            _toggledialogue([...baseDialogues.values()][0])
         }
 
     }, [state.Dialogues])
@@ -181,7 +175,7 @@ export const useReducerContext = () => {
     }, [state.Dialogues])
 
     // 激活当前对话
-    const _toggledialogue = useCallback((payload: string) => {
+    const _toggledialogue = useCallback((payload: DialogueType) => {
         dispatch({type: ActionType.TOGGLE_DIALOGUE, payload})
     }, [])
 
@@ -204,13 +198,12 @@ interface ChatBoxContextType {
     _addDialogue: () => void
     _delDialogue: (payload: string) => void
     _renameDialogue: (payload: DialogueType) => void
-    _toggledialogue: (payload: string) => void
+    _toggledialogue: (payload: DialogueType) => void
 }
 
 const ChatBoxContext = React.createContext<ChatBoxContextType>({
     state: {
         Dialogues: new Map(),
-        CurrentDialogueID: "",
         Settings: baseSettings
     },
     _saveSettings: () => {},
