@@ -14,7 +14,6 @@ import ChatBoxContext from '../../context';
 
 import type { DialogueType } from '../../types'
 import classNames from 'classnames';
-import { replay } from '../../services/http';
 
 const Dialogues: FC = () => {
   const { t } = useTranslation()
@@ -40,22 +39,6 @@ const Dialogues: FC = () => {
   }
   const handleToggle = async (id: string) => {
     _toggledialogue(id)
-
-    await replay(
-      state.Settings.OpenAIKey!,
-      "",
-      "4000",
-      "2048",
-      state.Settings.model!,
-      0.7,
-      [
-        {id: "1", content: "hi", role: "system"},
-        {id: "2", content: "你好", role: "user"}
-      ],
-      (option) => {
-        console.log("fullText: ", option)
-      }
-    )
   }
 
   return (

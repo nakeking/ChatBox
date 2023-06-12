@@ -37,8 +37,8 @@ interface SettingsType {
 interface State {
     Settings: SettingsType
 
-    Dialogues?: DialoguesType,
-    CurrentDialogueID?: string,
+    Dialogues: DialoguesType,
+    CurrentDialogueID: string,
 
     FlattenDialogues?: Map<number, unknown>
 }
@@ -64,6 +64,19 @@ const baseSettings: SettingsType = {
     language: "en",
     OpenAIKey: "",
     model: "gpt-3.5-turbo"
+}
+
+const initDialogues = (): DialoguesType => {
+    const id = uuidv4()
+
+    let Dialogues: DialoguesType = new Map()
+    Dialogues.set(id, {
+        id,
+        name: "Untitled",
+        messages: [msgTemplate]
+    })
+
+    return Dialogues
 }
 
 export const contextReducer = <T>(state: State, action: Action<T>): State => {
@@ -100,13 +113,18 @@ export const contextReducer = <T>(state: State, action: Action<T>): State => {
 
 export const useReducerContext = () => {
     const storeSettings = getStore('Settings') || baseSettings;
-    const storeDialogues = getStore('Dialogues') ? JSONToMap(getStore('Dialogues')!)  : new Map()
+    const storeDialogues = getStore('Dialogues') ? JSONToMap(getStore('Dialogues')!) : initDialogues()
     
+    let CurrentDialogueID = ""
+    if(storeDialogues.size) {
+        CurrentDialogueID = [...storeDialogues.keys()][0] as string
+    }
+
     const [state, dispatch] = useReducer(contextReducer, {
         Settings: storeSettings,
 
         Dialogues: storeDialogues,
-        Dialogue: {}
+        CurrentDialogueID
     } as State)
 
     // =========== Settings =======================
@@ -143,6 +161,13 @@ export const useReducerContext = () => {
         // 当前删除Dialogue === 当前激活dialogue
         // 需要切换当前激活的Dialogue
         // 待完成
+
+        // 所有Dialogues被删除，重新初始化Dialogues
+        if(!Dialogues?.size) {
+            const baseDialogues = initDialogues()
+            dispatch({type: ActionType.DEL_DIALOGUE, payload: baseDialogues})
+            _toggledialogue([...baseDialogues.keys()][0])
+        }
 
     }, [state.Dialogues])
 
@@ -184,6 +209,8 @@ interface ChatBoxContextType {
 
 const ChatBoxContext = React.createContext<ChatBoxContextType>({
     state: {
+        Dialogues: new Map(),
+        CurrentDialogueID: "",
         Settings: baseSettings
     },
     _saveSettings: () => {},

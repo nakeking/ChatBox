@@ -13,9 +13,7 @@ const Room: FC = () => {
     const [ Dialogue, setDialogue ] = useState<DialogueType>()
 
     useEffect(() => {
-        setDialogue(Dialogues?.get(CurrentDialogueID!))
-
-        console.log(Dialogues?.get(CurrentDialogueID!))
+        setDialogue(Dialogues?.get(CurrentDialogueID))
     }, [CurrentDialogueID])
 
     return (

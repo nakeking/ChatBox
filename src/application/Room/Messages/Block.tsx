@@ -63,7 +63,7 @@ const _Block: FC<BlockProps> = (props) => {
             <div className="msg">
                 <div
                     className='msg-content'
-                    dangerouslySetInnerHTML={{ __html: md.render("这是一段Go语言的例子: \n```go\npackage main\n\nimport \"fmt\"\n\nfunc main() {\n    fmt.Println(\"Hello, World!\")\n}\n```") }}
+                    dangerouslySetInnerHTML={{ __html: md.render(msg.content) }}
                 />
             </div>
             <div className="other">

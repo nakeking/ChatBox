@@ -11,14 +11,14 @@ interface OpenAIMessage {
 }
 
 export type Message = OpenAIMessage & {
-    id: string,
+    id?: string,
     model?: string
 }
 
 export interface DialogueType {
     id: string
     name: string,
-    messages?: Message[]
+    messages: Message[]
 }
 
 export type DialoguesType = Map<string, DialogueType>
