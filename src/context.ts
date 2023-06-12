@@ -113,7 +113,7 @@ export const useReducerContext = () => {
 
     const storeDialogues = getStore('Dialogues') ? JSONToMap(getStore('Dialogues')!) : initDialogues()
     
-    let currentDialogue
+    let currentDialogue = undefined
     if(storeDialogues.size) {
         currentDialogue = [...storeDialogues.values()][0]
     }
@@ -138,7 +138,6 @@ export const useReducerContext = () => {
         const id = uuidv4()
 
         Dialogues?.set(id, messageTemplate(id))
-
         dispatch({type: ActionType.ADD_DIALOGUE, payload: Dialogues})
         
         // 新建对话时激活

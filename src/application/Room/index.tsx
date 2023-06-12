@@ -22,6 +22,7 @@ const Room: FC = () => {
         messages.push(msg)
         
         const onText = (option: OnTextCallbackResult) => {
+            console.log('Dialogue: ', Dialogue?.messages)
             console.log("fullText: ", option)
         }
 

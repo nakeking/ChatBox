@@ -104,7 +104,7 @@ const DialogueItem: FC<DialogueItemProps> = (props) => {
   }
 
   const saveRename = () => {
-    handleRename({ id: dialogue.id, name })
+    handleRename({ ...dialogue, name })
     setOpen(false)
   }
 
