@@ -1,7 +1,10 @@
 // Modules to control application life and create native browser window
-const { app, shell, BrowserWindow, Menu, Tray, ipcMain } = require('electron')
+const { app, BrowserWindow, Menu, session } = require('electron')
+// const { default: installExtension, REDUX_DEVTOOLS } = require('electron-devtools-installer');
+const { default: installExtension, REACT_DEVELOPER_TOOLS } = require("electron-extension-installer")
 
 const path = require('path')
+const os = require('os')
 
 const Store = require('electron-store');
 const store = new Store();
@@ -12,21 +15,18 @@ isDev && require('electron-debug')({ enabled: true, showDevTools: false });
 
 // 添加Chrome插件
 function createDevTools() {
-  const {
-    default: installExtension,
-    REACT_DEVELOPER_TOOLS,
-    REDUX_DEVTOOLS,
-  } = require('electron-devtools-installer');
-
-  /**加载react调试工具无效 待跟进*/
-
-  // 安装devtron
-  const devtronExtension = require('devtron');
-  devtronExtension.install();
+  installExtension(REACT_DEVELOPER_TOOLS, {
+    loadExtensionOptions: {
+      allowFileAccess: true,
+    }
+  })
+  .then((name) => console.log(`Added Extension:  ${name}`))
+  .catch((err) => console.log('An error occurred: ', err));
 
   // 安装React开发者工具
-  installExtension(REACT_DEVELOPER_TOOLS);
-  installExtension(REDUX_DEVTOOLS);
+  // installExtension(REDUX_DEVTOOLS)
+  //       .then((name) => console.log(`Added Extension:  ${name}`))
+  //       .catch((err) => console.log('An error occurred: ', err));
 }
 
 // 不需要菜单栏

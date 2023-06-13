@@ -50,23 +50,22 @@ pnpm add -S electron-is-dev
 
 // main.ts
 const isDev = require('electron-is-dev');
+// const { default: installExtension, REDUX_DEVTOOLS } = require('electron-devtools-installer');
+const { default: installExtension, REACT_DEVELOPER_TOOLS } = require("electron-extension-installer")
+
 
 // 利用electron-debug，添加和Chrome类似的快捷键
 isDev && require('electron-debug')({ enabled: true, showDevTools: false });
 
 // 添加Chromium插件
 function createDevTools() {
-  const {
-    default: installExtension,
-    REACT_DEVELOPER_TOOLS,
-    REDUX_DEVTOOLS,
-  } = require('electron-devtools-installer');
-  // 安装devtron
-  const devtronExtension = require('devtron');
-  devtronExtension.install();
-  // 安装React开发者工具
-  installExtension(REACT_DEVELOPER_TOOLS);
-  installExtension(REDUX_DEVTOOLS);
+  installExtension(REACT_DEVELOPER_TOOLS, {
+    loadExtensionOptions: {
+      allowFileAccess: true,
+    }
+  })
+  .then((name) => console.log(`Added Extension:  ${name}`))
+  .catch((err) => console.log('An error occurred: ', err));
 }
 
 app.whenReady().then(() => {
@@ -78,7 +77,11 @@ app.whenReady().then(() => {
   ...
 })
 
-// https://juejin.cn/post/6844903669293400072
+// 请根据自身项目Electron版本选择使用工具加载 DevTools 扩展
+// electron-devtools-installer 和 electron-extension-installer
+// 当前项目Electron版本25.1.0，使用electron-extension-installer进行安装 React_Developer_Tools拓展。
+// 当使用 electron-devtools-installer 安装 React_Developer_Tools时报错，尝试安装其他扩展(REDUX_DEVTOOLS)正常。似乎是与 Electron >= 24.0版本问题。
+// https://github.com/MarshallOfSound/electron-devtools-installer/issues/238
 ```
 
 #### 你可能会遇到的问题集合
@@ -118,4 +121,7 @@ new BrowserWindow({
   }
   ...
 })
+```
+
+```
 ```

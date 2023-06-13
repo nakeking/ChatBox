@@ -5,15 +5,15 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "type": "node",
-            "name": "Debug Electron ChatBox",
-            "request": "launch",
-            "cwd": "${workspaceFolder}",
-            "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron",
-            "windows": {
-                "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron.cmd"
-            },
-            "args" : ["."]
+          "name": "Debug Main Process",
+          "type": "node",
+          "request": "launch",
+          "cwd": "${workspaceFolder}",
+          "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron",
+          "windows": {
+            "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron.cmd"
+          },
+          "args" : ["."]
         }
     ]
 }
