@@ -161,12 +161,13 @@ export const useReducerContext = () => {
     
         // 当前删除Dialogue === 当前激活dialogue
         // 需要切换当前激活的Dialogue
-        // 待完成
+        _toggledialogue([...Dialogues.values()][0])
 
         // 所有Dialogues被删除，重新初始化Dialogues
         if(!Dialogues?.size) {
             const baseDialogues = initDialogues()
-            dispatch({type: ActionType.DEL_DIALOGUE, payload: baseDialogues})
+            dispatch({type: ActionType.ADD_DIALOGUE, payload: baseDialogues})
+            
             _toggledialogue([...baseDialogues.values()][0])
         }
 
@@ -178,13 +179,15 @@ export const useReducerContext = () => {
         const { Dialogues } = state
 
         Dialogues?.set(id, payload)
+
+        dispatch({type: ActionType.UPDATE_DIALOGUE, payload})
         dispatch({type: ActionType.RENAME_DIALOGUE, payload: Dialogues})
     }, [state.Dialogues])
 
     // 激活当前对话
     const _toggledialogue = useCallback((payload: DialogueType) => {
         dispatch({type: ActionType.UPDATE_DIALOGUE, payload})
-    }, [state.currentDialogue])
+    }, [])
 
     const _updateDialogue = useCallback((payload: Message[]) => {
         const { currentDialogue, Dialogues } = state

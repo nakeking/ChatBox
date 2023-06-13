@@ -50,6 +50,8 @@ const Room = () => {
                 ...Dialogue!, 
                 messages: [ ...messages ]
             })
+
+            _updateDialogue([...messages])
         }
 
         // ============= openAI 请求错误处理 ======================
@@ -73,7 +75,7 @@ const Room = () => {
 
     return (
         <div className="room">
-            <Header Dialogue={Dialogue} />
+            <Header Dialogue={currentDialogue} />
             <Messages messages={Dialogue?.messages} />
             <Prompt onSubmit={onsubmit} />
         </div>

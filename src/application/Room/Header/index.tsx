@@ -1,4 +1,4 @@
-import { FC, useContext, useEffect } from "react";
+import { FC, useContext, useEffect, useMemo } from "react";
 
 import {
     MessageOutlined,
@@ -13,7 +13,7 @@ interface HeaderProps {
     Dialogue?: DialogueType
 }
 
-const Header: FC<HeaderProps> = (props) => {
+const _Header: FC<HeaderProps> = (props) => {
     const { Dialogue } = props
 
     return (
@@ -34,4 +34,8 @@ const Header: FC<HeaderProps> = (props) => {
     )
 }
 
-export default Header
+export default function Header(props: HeaderProps) {
+    return useMemo(() => {
+        return <_Header {...props} />
+    }, [props.Dialogue?.id, props.Dialogue?.name])
+}

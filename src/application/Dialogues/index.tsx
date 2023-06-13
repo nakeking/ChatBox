@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, memo, useContext, useEffect, useMemo, useState } from 'react'
+import React, { ChangeEvent, FC, MouseEventHandler, memo, useContext, useEffect, useMemo, useState } from 'react'
 
 import {
   MessageOutlined,
@@ -88,7 +88,9 @@ const DialogueItem: FC<DialogueItemProps> = (props) => {
   }
 
   const [open, setOpen] = useState(false)
-  const modalOpenChange = () => {
+  const modalOpenChange = (evt: React.MouseEvent) => {
+    evt.stopPropagation()
+
     setOpen(true)
     setPopoverOpen(false)
   }
@@ -118,7 +120,7 @@ const DialogueItem: FC<DialogueItemProps> = (props) => {
       <div className={itemClass} onClick={() => { handleToggle(dialogue) }}>
         <MessageOutlined />
         <div className='title'>{dialogue.name}</div>
-        <div className='more iconBase'>
+        <div className='more iconBase' onClick={(evt) => { evt.stopPropagation() }}>
           <Popover
             open={popoverOpen}
             onOpenChange={popoverOpenChange}
