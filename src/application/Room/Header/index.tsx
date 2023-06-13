@@ -7,18 +7,22 @@ import {
     SaveFilled
 } from '@ant-design/icons';
 import ChatBoxContext from "../../../context";
+import { DialogueType } from "../../../types";
 
-const Header: FC = () => {
-    const { state } = useContext(ChatBoxContext)
-    const { currentDialogue, Dialogues } = state
+interface HeaderProps {
+    Dialogue?: DialogueType
+}
+
+const Header: FC<HeaderProps> = (props) => {
+    const { Dialogue } = props
 
     return (
         <div className="header">
-            { currentDialogue?.id ? (
+            { Dialogue?.id ? (
                 <>
                 <div className="left">
                     <span className="iconBase"><MessageOutlined /></span>
-                    <span className="title">{currentDialogue?.name}</span>
+                    <span className="title">{Dialogue?.name}</span>
                 </div>
                 <div className="right">
                     <span className="iconBase"><RestFilled /></span>

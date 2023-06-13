@@ -1,4 +1,4 @@
-import { FC, useContext, useEffect, useRef, useState } from "react";
+import React, { FC, useContext, useEffect, useRef, useState } from "react";
 import { v4 as uuidv4 } from 'uuid'
 
 import Header from "./Header";
@@ -9,8 +9,8 @@ import type { DialogueType, Message } from "../../types";
 import { createMessage } from '../../types';
 import { OnTextCallbackResult, replay } from "../../services/http";
 
-const Room: FC = () => {
-    const { state } = useContext(ChatBoxContext)
+const Room = () => {
+    const { state, _updateDialogue } = useContext(ChatBoxContext)
     const { currentDialogue } = state
 
     const [ Dialogue, setDialogue ] = useState<DialogueType>()
@@ -73,7 +73,7 @@ const Room: FC = () => {
 
     return (
         <div className="room">
-            <Header />
+            <Header Dialogue={Dialogue} />
             <Messages messages={Dialogue?.messages} />
             <Prompt onSubmit={onsubmit} />
         </div>

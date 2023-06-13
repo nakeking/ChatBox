@@ -1,5 +1,9 @@
 import { v4 as uuidv4 } from 'uuid'
 
+export type PartialByKeys<T, K extends keyof T> = {
+    [P in K]?: T[P]
+} & Omit<T, K>
+
 const OpenAIRoleEnum = {
     System: 'system',
     User: "user"
