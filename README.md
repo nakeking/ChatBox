@@ -93,6 +93,7 @@ app.whenReady().then(() => {
 #### 启动项目
 
 ```
+// 启动方式一
 // package.json
 "script": {
   "start": "concurrently \"npm run start:react\" \"npm run start:electron\"",
@@ -103,8 +104,37 @@ app.whenReady().then(() => {
 // concurrently: 同时执行两条(或多条)命令
 // cross-env BROWSER=none: 设置默认不打开浏览器。cross-env做传参兼容
 // wait-on: 因为两条命令是同时运行，设置wait-on等待http服务准备就绪，再启动Electron
-
 // https://juejin.cn/post/6844903669293400072
+```
+
+```
+// 启动方式二
+// package.json
+"script": {
+  "start": "concurrently \"npm run start:react\"",
+  "start:react": "cross-env BROWSER=none craco start"
+}
+
+// .vscode/lauch.json
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug Main Process",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron",
+      "windows": {
+        "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron.cmd"
+      },
+      "args": ["."]
+    }
+  ]
+}
+
+// npm run start 启动http服务
+// 再使用 vscode 开启调试项目
 ```
 
 #### 你可能会遇到的问题集合
