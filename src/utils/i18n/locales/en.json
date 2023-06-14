@@ -1,31 +1,31 @@
 {
-    "common": {
-        "Save": "Save",
-        "Cancel": "Cancel",
-        "Send": "SEND",
-        "Copy": "copy"
-    },
-    "Dialogues": {
-        "dialogues": "Dialogues",
-        "rename": "Rename",
-        "delete": "Delete",
-        "name": "Name"
-    },
-    "options": {
-        "newDialogue": "New Chat",
-        "setUp": "Settings",
-        "version": "Version"
-    },
-    "SettingsPanel": {
-        "Settings": "Settings",
-        "OpenAIKey": "OpenAI API Key",
-        "language": "Language",
-        "theme": "Theme",
-        "model": "Model",
-        "token": "Token",
-        "waringMsg": "These settings are aimed at professional developers. If you do not understand the meaning of these settings, please do not modify them, as it may result in request errors.Before making any modifications, please verify that your account has access to the selected models (some models require additional joining of the waiting list, regardless of your account type, otherwise, it will result in 404 errors).Please make sure that the number of tokens does not exceed the limit for the selected model, otherwise, an error message will occur once the context exceeds the limit.Please make sure you know what you are doing."
-    },
-    "Prompt": {
-        "Tip": "[Enter] send, [Shift+Enter] line break"
-    }
+  "common": {
+    "Save": "Save",
+    "Cancel": "Cancel",
+    "Send": "SEND",
+    "Copy": "copy"
+  },
+  "Dialogues": {
+    "dialogues": "Dialogues",
+    "rename": "Rename",
+    "delete": "Delete",
+    "name": "Name"
+  },
+  "options": {
+    "newDialogue": "New Chat",
+    "setUp": "Settings",
+    "version": "Version"
+  },
+  "SettingsPanel": {
+    "Settings": "Settings",
+    "OpenAIKey": "OpenAI API Key",
+    "language": "Language",
+    "theme": "Theme",
+    "model": "Model",
+    "token": "Token",
+    "waringMsg": "These settings are aimed at professional developers. If you do not understand the meaning of these settings, please do not modify them, as it may result in request errors.Before making any modifications, please verify that your account has access to the selected models (some models require additional joining of the waiting list, regardless of your account type, otherwise, it will result in 404 errors).Please make sure that the number of tokens does not exceed the limit for the selected model, otherwise, an error message will occur once the context exceeds the limit.Please make sure you know what you are doing."
+  },
+  "Prompt": {
+    "Tip": "[Enter] send, [Shift+Enter] line break"
+  }
 }

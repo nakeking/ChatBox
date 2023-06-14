@@ -1,8 +1,8 @@
-const webpack = require("webpack")
+const webpack = require('webpack')
 
-const CracoLessPlugin = require('craco-less');
+const CracoLessPlugin = require('craco-less')
 
-const WorkerLoaderPlugin = require("craco-worker-loader");
+const WorkerLoaderPlugin = require('craco-worker-loader')
 
 module.exports = {
   plugins: [
@@ -16,10 +16,10 @@ module.exports = {
           lessOptions: {
             // modifyVars: {'@primary-color': '#1DA57A'},
             javascriptEnabled: true,
-            module: true,
-          },
-        },
-      },
+            module: true
+          }
+        }
+      }
     }
   ],
   webpack: {
@@ -39,20 +39,20 @@ module.exports = {
       resolve: {
         fallback: {
           fs: false,
-          process: require.resolve("process/browser"),
-          zlib: require.resolve("browserify-zlib"),
-          stream: require.resolve("stream-browserify"),
-          buffer: require.resolve("buffer"),
-          asset: require.resolve("assert"),
-          crypto: require.resolve('crypto-browserify'),
-        },
+          process: require.resolve('process/browser'),
+          zlib: require.resolve('browserify-zlib'),
+          stream: require.resolve('stream-browserify'),
+          buffer: require.resolve('buffer'),
+          asset: require.resolve('assert'),
+          crypto: require.resolve('crypto-browserify')
+        }
       },
       plugins: [
         new webpack.ProvidePlugin({
-          Buffer: ["buffer", "Buffer"],
-          process: "process/browser",
-        }),
+          Buffer: ['buffer', 'Buffer'],
+          process: 'process/browser'
+        })
       ]
-    },
-  },
+    }
+  }
 }

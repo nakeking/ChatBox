@@ -1,27 +1,30 @@
 // Modules to control application life and create native browser window
 const { app, BrowserWindow, Menu, session } = require('electron')
 // const { default: installExtension, REDUX_DEVTOOLS } = require('electron-devtools-installer');
-const { default: installExtension, REACT_DEVELOPER_TOOLS } = require("electron-extension-installer")
+const {
+  default: installExtension,
+  REACT_DEVELOPER_TOOLS
+} = require('electron-extension-installer')
 
 const path = require('path')
 const os = require('os')
 
-const Store = require('electron-store');
-const store = new Store();
+const Store = require('electron-store')
+const store = new Store()
 
 // dev环境添加调试
-const isDev = require('electron-is-dev');
-isDev && require('electron-debug')({ enabled: true, showDevTools: false });
+const isDev = require('electron-is-dev')
+isDev && require('electron-debug')({ enabled: true, showDevTools: false })
 
 // 添加Chrome插件
 function createDevTools() {
   installExtension(REACT_DEVELOPER_TOOLS, {
     loadExtensionOptions: {
-      allowFileAccess: true,
+      allowFileAccess: true
     }
   })
-  .then((name) => console.log(`Added Extension:  ${name}`))
-  .catch((err) => console.log('An error occurred: ', err));
+    .then((name) => console.log(`Added Extension:  ${name}`))
+    .catch((err) => console.log('An error occurred: ', err))
 
   // 安装React开发者工具
   // installExtension(REDUX_DEVTOOLS)
@@ -33,13 +36,13 @@ function createDevTools() {
 Menu.setApplicationMenu(null)
 
 // 创建窗口
-function createWindow () {
+function createWindow() {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
-    title: "ChatBox",
-    icon: path.join(__dirname, "./favicon.ico"),
+    title: 'ChatBox',
+    icon: path.join(__dirname, './favicon.ico'),
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
@@ -49,7 +52,7 @@ function createWindow () {
 
   // and load the index.html of the app.
   // mainWindow.loadFile('./index.html')
-  mainWindow.loadURL('http://localhost:3000');
+  mainWindow.loadURL('http://localhost:3000')
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()

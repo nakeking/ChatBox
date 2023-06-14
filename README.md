@@ -1,10 +1,13 @@
 #### ChatBox
 
 <!-- Badge -->
-[![Author](https://img.shields.io/badge/Author-nakeking-red "Author")](https://github.com/nakeking "Nakeking")
+
+[![Author](https://img.shields.io/badge/Author-nakeking-red 'Author')](https://github.com/nakeking 'Nakeking')
 
 #### 环境搭建
+
 ##### pnpm，create-react-app 创建 react 项目
+
 ```
 pnpx create-react-app electron-chatbox --use-pnpm --template typescript
 
@@ -22,6 +25,7 @@ pnpm add -D @types/testing-library__jest-dom
 ```
 
 ##### 安装 Electron
+
 ```
 pnpm add -D electron
 
@@ -44,6 +48,7 @@ https://www.electronjs.org/zh/docs/latest/tutorial/quick-start
 ```
 
 ##### 添加 Electron 调试
+
 ```
 pnpm add -D electron-devtools-installer electron-debug devtron
 pnpm add -S electron-is-dev
@@ -85,6 +90,7 @@ app.whenReady().then(() => {
 ```
 
 #### 你可能会遇到的问题集合
+
 ```
 react-scripts 5 webpack Module not found: Error: Can't resolve 'fs'|'crypto'| ...
 
@@ -124,4 +130,5 @@ new BrowserWindow({
 ```
 
 ```
+
 ```

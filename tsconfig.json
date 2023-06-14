@@ -1,13 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": [
-      "dom",
-      "ES5",
-      "ES6",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "ES5", "ES6", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -23,8 +17,5 @@
     "jsx": "react-jsx",
     "downlevelIteration": true
   },
-  "include": [
-    "src",
-    "global.d.ts"
-  ]
+  "include": ["src", "global.d.ts"]
 }

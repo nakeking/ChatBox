@@ -1,145 +1,144 @@
-[data-theme="light"] {
-    // 品牌色
-    @colorPrimaryActive: #d9d9d9;       //主色激活态
-    @colorPrimary: #ffffff;             //品牌主色
-    @colorPrimaryHover: #f5f5f5;        //主色描边色悬浮态
-    @colorPrimaryBorder: #ffffff;       //主色描边色
+[data-theme='light'] {
+  // 品牌色
+  @colorPrimaryActive: #d9d9d9; //主色激活态
+  @colorPrimary: #ffffff; //品牌主色
+  @colorPrimaryHover: #f5f5f5; //主色描边色悬浮态
+  @colorPrimaryBorder: #ffffff; //主色描边色
 
-    // 中性色
-    @colorText: rgba(0, 0, 0, 0.88);        //一级文本色
-    @colorTextTertiary: rgba(0,0,0,0.45);   //三级文本色
+  // 中性色
+  @colorText: rgba(0, 0, 0, 0.88); //一级文本色
+  @colorTextTertiary: rgba(0, 0, 0, 0.45); //三级文本色
 
-    @colorBorder: #d9d9d9;                  //一级边框色
-    @colorBorderSecondary: #5b5b5b;         //二级边框色
-    @colorBorderTertiary: #878787;          //三级边框色
+  @colorBorder: #d9d9d9; //一级边框色
+  @colorBorderSecondary: #5b5b5b; //二级边框色
+  @colorBorderTertiary: #878787; //三级边框色
 
-    @colorBgMask: #d9d9d9;                  //浮层背景蒙层颜色
+  @colorBgMask: #d9d9d9; //浮层背景蒙层颜色
 
-    @colorFill:rgba(51, 51, 51, 0.15);              //一级填充色
-    @colorFillSecondary:rgba(51, 51, 51, 0.09);     //二级填充色
-    @colorFillTertiary: rgba(51, 51, 51, 0.05);      //三级填充色
+  @colorfill: rgba(51, 51, 51, 0.15); //一级填充色
+  @colorfillsecondary: rgba(51, 51, 51, 0.09); //二级填充色
+  @colorFillTertiary: rgba(51, 51, 51, 0.05); //三级填充色
 
-    @colorActivationFill: rgba(51, 51, 51, 0.06);
+  @colorActivationFill: rgba(51, 51, 51, 0.06);
 
-    /* common start */
-    .webkitScrollbarBase{
-        &::-webkit-scrollbar-thumb {
-            background-color: @colorFill;
-        }
+  /* common start */
+  .webkitScrollbarBase {
+    &::-webkit-scrollbar-thumb {
+      background-color: @colorfill;
+    }
+  }
+
+  .iconBase {
+    color: @colorText;
+
+    &:hover {
+      background-color: @colorFillTertiary;
+    }
+  }
+  /* common end */
+
+  .logo {
+    color: @colorText;
+  }
+
+  .dialogues {
+    & > .title {
+      color: @colorText;
+      background-color: @colorPrimary;
     }
 
-    .iconBase{
+    .dialogue {
+      .dialogueItem {
         color: @colorText;
-
-        &:hover{
-            background-color: @colorFillTertiary;
+        &:hover {
+          background-color: @colorfillsecondary !important;
         }
+      }
+      .dialogueItem.activation {
+        background-color: @colorActivationFill;
+      }
     }
-    /* common end */
 
-    .logo {
+    .dialoguePop {
+      .popItem:hover {
+        background-color: @colorfill;
+      }
+
+      .hr {
+        background-color: @colorBorder;
+      }
+    }
+  }
+
+  .options {
+    background-color: @colorPrimary;
+    color: @colorText;
+
+    border-top: 1px solid @colorBorder;
+
+    .option {
+      &:hover {
+        background-color: @colorFillTertiary;
+      }
+    }
+  }
+
+  .room {
+    .header {
+      color: @colorText;
+      border-bottom: 1px solid @colorBorder;
+    }
+
+    .message {
+      background-color: @colorPrimaryHover;
+
+      .msg {
+        p {
+          color: @colorText;
+        }
+      }
+    }
+
+    .prompt {
+      .promptForm {
         color: @colorText;
+      }
+
+      .tip {
+        color: @colorTextTertiary;
+      }
+    }
+  }
+
+  .setUpModal {
+    .ant-collapse {
+      .warning {
+        background-color: #fff1e1;
+        color: #d25b00;
+      }
+    }
+  }
+
+  /* Corrugation Component start */
+  .SuiCorrugation {
+    .ripple {
+      background-color: @colorBgMask;
+    }
+  }
+  /* Corrugation Component end */
+
+  /* SuiLabel Component start */
+  .SuiLabel {
+    .label {
+      background-color: @colorPrimary;
     }
 
-    .dialogues {
-        &>.title {
-            color: @colorText;
-            background-color: @colorPrimary;
-        }
-
-        .dialogue{
-            .dialogueItem {
-                color: @colorText;
-                &:hover{
-                    background-color: @colorFillSecondary !important;
-                }
-            }
-            .dialogueItem.activation{
-                background-color: @colorActivationFill;
-            }
-        }
-
-        .dialoguePop{
-            .popItem:hover {
-                background-color: @colorFill;
-            }
-
-            .hr{
-                background-color: @colorBorder;
-            }
-        }
+    .childrenBox {
+      border: 1px solid @colorBorder;
+      &:hover {
+        border: 1px solid @colorBorderSecondary;
+      }
     }
-
-    .options {
-        background-color: @colorPrimary;
-        color: @colorText;
-
-        border-top: 1px solid @colorBorder;
-
-        .option {
-            &:hover{
-                background-color: @colorFillTertiary;
-            }
-        }
-    }
-
-    .room {
-        .header{
-            color: @colorText;
-            border-bottom: 1px solid @colorBorder;
-        }
-    
-        .message {
-            background-color: @colorPrimaryHover;
-
-            .msg{
-                p{
-                    color: @colorText;
-                }
-            }
-        }
-    
-        .prompt {
-            .promptForm{
-                color: @colorText;
-            }
-
-            .tip{
-                color: @colorTextTertiary;
-            }
-        }
-    }
-
-    .setUpModal {
-        .ant-collapse {
-            .warning {
-                background-color: #fff1e1;
-                color: #d25b00;
-            }
-        }
-    }
-
-    /* Corrugation Component start */
-    .SuiCorrugation {
-        .ripple {
-            background-color: @colorBgMask;
-        }
-    }
-    /* Corrugation Component end */
-
-    /* SuiLabel Component start */
-    .SuiLabel {
-        .label {
-            background-color: @colorPrimary;
-        }
-
-        .childrenBox{
-            border: 1px solid @colorBorder;
-            &:hover {
-                border: 1px solid @colorBorderSecondary;
-            }
-        }
-    }
-    /* SuiLabel Component end */
+  }
+  /* SuiLabel Component end */
 }
-

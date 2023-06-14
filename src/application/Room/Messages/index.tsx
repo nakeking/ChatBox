@@ -1,50 +1,51 @@
-import { FC, useEffect, useRef } from "react";
+import { FC, useEffect, useRef } from 'react'
 
 import Block from './Block'
 import type { Message } from '../../../types'
 import { App } from 'antd'
 
-
 interface MessagesProps {
-    messages?: Message[]
+  messages?: Message[]
 }
 
 const Messages: FC<MessagesProps> = (props) => {
-    let { messages } = props
-    const { message } = App.useApp();
-    
-    // ============= message中代码片段复制功能 ===================================
-    const codeBlockCopyEvent = useRef((e: Event) => {
-        const target: HTMLElement = e.target as HTMLElement
+  let { messages } = props
+  const { message } = App.useApp()
 
-        const isCopyActionClassName = target.className === "copy-action"
-        const isCodeBlockParent = target.parentElement?.parentElement?.className === 'code-block-wrapper'
-        
-        if(!(isCopyActionClassName && isCodeBlockParent)) {
-            return
-        }
+  // ============= message中代码片段复制功能 ===================================
+  const codeBlockCopyEvent = useRef((e: Event) => {
+    const target: HTMLElement = e.target as HTMLElement
 
-        const content = target.parentNode?.parentNode?.querySelector('code')?.innerText ?? ''
+    const isCopyActionClassName = target.className === 'copy-action'
+    const isCodeBlockParent =
+      target.parentElement?.parentElement?.className === 'code-block-wrapper'
 
-        navigator.clipboard.writeText(content)
-        message.success("复制成昆")
-    })
+    if (!(isCopyActionClassName && isCodeBlockParent)) {
+      return
+    }
 
-    useEffect(() => {
-        document.addEventListener('click', codeBlockCopyEvent.current)
+    const content =
+      target.parentNode?.parentNode?.querySelector('code')?.innerText ?? ''
 
-        return () => {
-            document.removeEventListener('click', codeBlockCopyEvent.current)
-        }
-    }, [])
+    navigator.clipboard.writeText(content)
+    message.success('复制成昆')
+  })
 
-    return (
-        <div className="message webkitScrollbarBase">
-            {messages?.map(m => {
-                return <Block key={m.id} msg={m} />
-            })}
-        </div>
-    )
+  useEffect(() => {
+    document.addEventListener('click', codeBlockCopyEvent.current)
+
+    return () => {
+      document.removeEventListener('click', codeBlockCopyEvent.current)
+    }
+  }, [])
+
+  return (
+    <div className="message webkitScrollbarBase">
+      {messages?.map((m) => {
+        return <Block key={m.id} msg={m} />
+      })}
+    </div>
+  )
 }
 
 export default Messages

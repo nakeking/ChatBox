@@ -93,6 +93,7 @@
     "os": "^0.1.2",
     "os-browserify": "^0.3.0",
     "path": "^0.12.7",
+    "prettier-plugin-tailwindcss": "^0.3.0",
     "process": "^0.11.10",
     "react-scripts": "5.0.1",
     "stream-browserify": "^3.0.0",

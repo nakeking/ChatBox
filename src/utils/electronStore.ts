@@ -1,26 +1,24 @@
-import { Locale } from "antd/es/locale";
-import { themeInterface } from "../hooks/useThemeHook";
+import { Locale } from 'antd/es/locale'
+import { themeInterface } from '../hooks/useThemeHook'
 
-const Store = require('electron-store');
+const Store = require('electron-store')
 const store = new Store()
 
 export const setStore = (key: string, data?: unknown) => {
-    store.set(key, data)
+  store.set(key, data)
 }
 
-function getStore(key: "Settings"): string | null
-function getStore(key: "Dialogues"): string | null
+function getStore(key: 'Settings'): string | null
+function getStore(key: 'Dialogues'): string | null
 function getStore(key: 'theme'): themeInterface | null
 function getStore(key: 'language'): string | null
 function getStore(key: 'OpenAIKey'): string | null
 function getStore(key: string): unknown {
-    return store.get(key)
+  return store.get(key)
 }
 
 export const delStore = (key: string) => {
-    store.delete(key)
+  store.delete(key)
 }
 
-export {
-    getStore
-}
+export { getStore }
