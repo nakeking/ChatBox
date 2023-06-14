@@ -37,7 +37,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "concurrently \"npm run start:react\" \"npm run start:electron\"",
+    "start": "concurrently \"npm run start:react\" ",
     "start:react": "cross-env BROWSER=none craco start",
     "start:electron": "wait-on http://localhost:3000 && electron .",
     "build": "craco build",

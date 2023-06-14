@@ -1,5 +1,5 @@
 // Modules to control application life and create native browser window
-const { app, BrowserWindow, Menu, session } = require('electron')
+const { app, BrowserWindow, Menu, ipcMain } = require('electron')
 // const { default: installExtension, REDUX_DEVTOOLS } = require('electron-devtools-installer');
 const {
   default: installExtension,
@@ -36,9 +36,10 @@ function createDevTools() {
 Menu.setApplicationMenu(null)
 
 // 创建窗口
+let mainWindow
 function createWindow() {
   // Create the browser window.
-  const mainWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
     title: 'ChatBox',
@@ -71,6 +72,11 @@ app.whenReady().then(() => {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
+  })
+
+  //
+  ipcMain.on('chatbox-close', (event) => {
+    mainWindow.close()
   })
 })
 

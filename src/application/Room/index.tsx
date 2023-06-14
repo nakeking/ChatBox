@@ -9,12 +9,31 @@ import type { DialogueType, Message } from '../../types'
 import { createMessage } from '../../types'
 import { OnTextCallbackResult, replay } from '../../services/http'
 
+const { ipcRenderer } = window.require('electron/renderer')
+
 const Room = () => {
   const { state, _updateDialogue } = useContext(ChatBoxContext)
   const { currentDialogue } = state
 
   const [Dialogue, setDialogue] = useState<DialogueType>()
   const DialogueRef = useRef(currentDialogue)
+
+  const handleBeforeUnload = (event: Event) => {
+    if (!event.defaultPrevented) {
+      event.preventDefault()
+      _updateDialogue(DialogueRef.current!)
+
+      ipcRenderer.send('chatbox-close')
+    }
+  }
+
+  useEffect(() => {
+    window.addEventListener('beforeunload', handleBeforeUnload)
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload)
+    }
+  }, [])
 
   useEffect(() => {
     DialogueRef.current = currentDialogue

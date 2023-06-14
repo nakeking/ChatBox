@@ -87,6 +87,24 @@ app.whenReady().then(() => {
 // 当前项目Electron版本25.1.0，使用electron-extension-installer进行安装 React_Developer_Tools拓展。
 // 当使用 electron-devtools-installer 安装 React_Developer_Tools时报错，尝试安装其他扩展(REDUX_DEVTOOLS)正常。似乎是与 Electron >= 24.0版本问题。
 // https://github.com/MarshallOfSound/electron-devtools-installer/issues/238
+
+```
+
+#### 启动项目
+
+```
+// package.json
+"script": {
+  "start": "concurrently \"npm run start:react\" \"npm run start:electron\"",
+  "start:react": "cross-env BROWSER=none craco start",
+  "start:electron": "wait-on http://localhost:3000 && electron app",
+}
+
+// concurrently: 同时执行两条(或多条)命令
+// cross-env BROWSER=none: 设置默认不打开浏览器。cross-env做传参兼容
+// wait-on: 因为两条命令是同时运行，设置wait-on等待http服务准备就绪，再启动Electron
+
+// https://juejin.cn/post/6844903669293400072
 ```
 
 #### 你可能会遇到的问题集合
@@ -127,8 +145,4 @@ new BrowserWindow({
   }
   ...
 })
-```
-
-```
-
 ```
