@@ -32,8 +32,6 @@ const Room = () => {
   const handleBeforeUnload = async (event: Event) => {
     if (!event.defaultPrevented) {
       event.preventDefault()
-
-      console.log('执行了')
       await _updateDialogueMsg(DialogueRef.current!)
 
       setCloseWinStatus(true)
@@ -99,7 +97,7 @@ const Room = () => {
         if (messages[i].id === id) {
           messages[i] = {
             ...messages[i],
-            content: t('common.apiError') + '\n```\n' + error.message + '\n```',
+            content: t('common.ApiError') + '\n```\n' + error.message + '\n```',
             model: state.Settings.model,
             generating: false
           }
