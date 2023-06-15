@@ -1,11 +1,4 @@
-import React, {
-  FC,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-  useTransition
-} from 'react'
+import React, { FC, useContext, useEffect, useRef, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
 import Header from './Header'
@@ -21,7 +14,8 @@ const { ipcRenderer } = window.require('electron/renderer')
 
 const Room = () => {
   const { t } = useTranslation()
-  const { state, _updateDialogue, _toggledialogue } = useContext(ChatBoxContext)
+  const { state, _updateDialogueMsg, _toggleDialogue } =
+    useContext(ChatBoxContext)
   const { currentDialogue } = state
 
   const [Dialogue, setDialogue] = useState<DialogueType>()
@@ -38,7 +32,9 @@ const Room = () => {
   const handleBeforeUnload = async (event: Event) => {
     if (!event.defaultPrevented) {
       event.preventDefault()
-      await _updateDialogue(DialogueRef.current!)
+
+      console.log('执行了')
+      await _updateDialogueMsg(DialogueRef.current!)
 
       setCloseWinStatus(true)
     }
@@ -57,7 +53,7 @@ const Room = () => {
     setDialogue(currentDialogue)
   }, [currentDialogue])
 
-  // ================= user 提交 prompt =========================
+  // ================= 提交 prompt =========================
   const onsubmit = async (newUserMsg: Message) => {
     let { messages } = Dialogue!
 
@@ -88,7 +84,7 @@ const Room = () => {
       }
 
       // 在system回复消息时，保持在当前对话。
-      _toggledialogue(Dialogue!)
+      _toggleDialogue(Dialogue!)
 
       setDialogue({
         ...Dialogue!,

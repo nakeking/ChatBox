@@ -154,7 +154,7 @@ export const useReducerContext = () => {
     dispatch({ type: ActionType.ADD_DIALOGUE, payload: Dialogues })
 
     // 新建对话时激活
-    _toggledialogue(messageTemplate(id))
+    _toggleDialogue(messageTemplate(id))
   }, [state.Dialogues])
 
   // ========== 删除对话 =========================
@@ -167,14 +167,14 @@ export const useReducerContext = () => {
 
       // 当前删除Dialogue === 当前激活dialogue
       // 需要切换当前激活的Dialogue
-      _toggledialogue([...Dialogues.values()][0])
+      _toggleDialogue([...Dialogues.values()][0])
 
       // 所有Dialogues被删除，重新初始化Dialogues
       if (!Dialogues?.size) {
         const baseDialogues = initDialogues()
         dispatch({ type: ActionType.ADD_DIALOGUE, payload: baseDialogues })
 
-        _toggledialogue([...baseDialogues.values()][0])
+        _toggleDialogue([...baseDialogues.values()][0])
       }
     },
     [state.Dialogues]
@@ -195,12 +195,12 @@ export const useReducerContext = () => {
   )
 
   // 激活当前对话
-  const _toggledialogue = useCallback((payload: DialogueType) => {
+  const _toggleDialogue = useCallback((payload: DialogueType) => {
     dispatch({ type: ActionType.UPDATE_DIALOGUE, payload })
   }, [])
 
   // 更新当前对话信息
-  const _updateDialogue = useCallback(
+  const _updateDialogueMsg = useCallback(
     (payload: DialogueType) => {
       const { Dialogues } = state
 
@@ -219,8 +219,8 @@ export const useReducerContext = () => {
     _addDialogue,
     _delDialogue,
     _renameDialogue,
-    _toggledialogue,
-    _updateDialogue
+    _toggleDialogue,
+    _updateDialogueMsg
   }
 }
 
@@ -232,8 +232,8 @@ interface ChatBoxContextType {
   _addDialogue: () => void
   _delDialogue: (payload: string) => void
   _renameDialogue: (payload: DialogueType) => void
-  _toggledialogue: (payload: DialogueType) => void
-  _updateDialogue: (payload: DialogueType) => void
+  _toggleDialogue: (payload: DialogueType) => void
+  _updateDialogueMsg: (payload: DialogueType) => void
 }
 
 const ChatBoxContext = React.createContext<ChatBoxContextType>({
@@ -246,8 +246,8 @@ const ChatBoxContext = React.createContext<ChatBoxContextType>({
   _addDialogue: () => {},
   _delDialogue: () => {},
   _renameDialogue: () => {},
-  _toggledialogue: () => {},
-  _updateDialogue: () => {}
+  _toggleDialogue: () => {},
+  _updateDialogueMsg: () => {}
 })
 
 export default ChatBoxContext

@@ -31,7 +31,7 @@ const Dialogues: FC = () => {
     setPopupContainer(document.getElementById('dialogues') as HTMLElement)
   }, [popupContainer])
 
-  const { state, _delDialogue, _renameDialogue, _toggledialogue } =
+  const { state, _delDialogue, _renameDialogue, _toggleDialogue } =
     useContext(ChatBoxContext)
   const Dialogues = [...state.Dialogues!.values()].reverse()
 
@@ -42,7 +42,7 @@ const Dialogues: FC = () => {
     _renameDialogue(dialogue)
   }
   const handleToggle = async (dialogue: DialogueType) => {
-    _toggledialogue(dialogue)
+    _toggleDialogue(dialogue)
   }
 
   return (
