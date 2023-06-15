@@ -19,6 +19,7 @@ interface OpenAIMessage {
 export type Message = OpenAIMessage & {
   id?: string
   model?: string
+  generating?: boolean
 }
 
 export interface DialogueType {

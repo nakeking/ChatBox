@@ -1,4 +1,11 @@
-import React, { FC, useContext, useEffect, useRef, useState } from 'react'
+import React, {
+  FC,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+  useTransition
+} from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
 import Header from './Header'
@@ -8,33 +15,43 @@ import ChatBoxContext from '../../context'
 import type { DialogueType, Message } from '../../types'
 import { createMessage } from '../../types'
 import { OnTextCallbackResult, replay } from '../../services/http'
+import { useTranslation } from 'react-i18next'
 
 const { ipcRenderer } = window.require('electron/renderer')
 
 const Room = () => {
-  const { state, _updateDialogue } = useContext(ChatBoxContext)
+  const { t } = useTranslation()
+  const { state, _updateDialogue, _toggledialogue } = useContext(ChatBoxContext)
   const { currentDialogue } = state
 
   const [Dialogue, setDialogue] = useState<DialogueType>()
   const DialogueRef = useRef(currentDialogue)
 
-  const handleBeforeUnload = (event: Event) => {
-    if (!event.defaultPrevented) {
-      event.preventDefault()
-      _updateDialogue(DialogueRef.current!)
-
+  // ======= 关闭窗口前，保存当前dialogue对话信息 ==============
+  const [closeWinStatus, setCloseWinStatus] = useState(false)
+  useEffect(() => {
+    if (closeWinStatus) {
       ipcRenderer.send('chatbox-close')
     }
+  }, [closeWinStatus])
+
+  const handleBeforeUnload = async (event: Event) => {
+    if (!event.defaultPrevented) {
+      event.preventDefault()
+      await _updateDialogue(DialogueRef.current!)
+
+      setCloseWinStatus(true)
+    }
   }
-
   useEffect(() => {
+    // 窗口关闭事件监听
     window.addEventListener('beforeunload', handleBeforeUnload)
-
     return () => {
       window.removeEventListener('beforeunload', handleBeforeUnload)
     }
   }, [])
 
+  // ========= 初始化dialogue对话信息 ============================
   useEffect(() => {
     DialogueRef.current = currentDialogue
     setDialogue(currentDialogue)
@@ -60,10 +77,18 @@ const Room = () => {
       let { messages } = DialogueRef.current!
       for (let i = messages.length - 1; i >= 0; i--) {
         if (messages[i].id === id) {
-          messages[i] = { ...messages[i], content: text }
+          messages[i] = {
+            ...messages[i],
+            content: text,
+            model: state.Settings.model,
+            generating: true
+          }
           break
         }
       }
+
+      // 在system回复消息时，保持在当前对话。
+      _toggledialogue(Dialogue!)
 
       setDialogue({
         ...Dialogue!,
@@ -73,7 +98,23 @@ const Room = () => {
 
     // ============= openAI 请求错误处理 ======================
     const onError = (error: Error) => {
-      console.log(error)
+      let { messages } = DialogueRef.current!
+      for (let i = messages.length - 1; i >= 0; i--) {
+        if (messages[i].id === id) {
+          messages[i] = {
+            ...messages[i],
+            content: t('common.apiError') + '\n```\n' + error.message + '\n```',
+            model: state.Settings.model,
+            generating: false
+          }
+          break
+        }
+      }
+
+      setDialogue({
+        ...Dialogue!,
+        messages: [...messages]
+      })
     }
 
     // ============= 发起请求 ==================================

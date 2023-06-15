@@ -3,7 +3,8 @@
     "Save": "Save",
     "Cancel": "Cancel",
     "Send": "SEND",
-    "Copy": "copy"
+    "Copy": "copy",
+    "apiError:": "api request failed:"
   },
   "Dialogues": {
     "dialogues": "Dialogues",

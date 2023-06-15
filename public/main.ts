@@ -76,7 +76,7 @@ app.whenReady().then(() => {
 
   //
   ipcMain.on('chatbox-close', (event) => {
-    mainWindow.close()
+    mainWindow.destroy()
   })
 })
 

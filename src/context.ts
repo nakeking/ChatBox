@@ -202,9 +202,14 @@ export const useReducerContext = () => {
   // 更新当前对话信息
   const _updateDialogue = useCallback(
     (payload: DialogueType) => {
+      const { Dialogues } = state
+
+      Dialogues?.set(payload.id, payload)
+
       dispatch({ type: ActionType.UPDATE_DIALOGUE, payload })
+      dispatch({ type: ActionType.UPDATE_DIALOGUES, payload: Dialogues })
     },
-    [state.currentDialogue?.messages]
+    [state.currentDialogue]
   )
 
   return {
