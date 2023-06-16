@@ -1,4 +1,11 @@
-import React, { FC, useContext, useEffect, useRef, useState } from 'react'
+import React, {
+  FC,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
 import Header from './Header'
@@ -12,10 +19,9 @@ import { useTranslation } from 'react-i18next'
 
 const { ipcRenderer } = window.require('electron/renderer')
 
-const Room = () => {
+const _Room = () => {
   const { t } = useTranslation()
-  const { state, _updateDialogueMsg, _toggleDialogue } =
-    useContext(ChatBoxContext)
+  const { state, _updateDialogueMsg } = useContext(ChatBoxContext)
   const { currentDialogue } = state
 
   const [Dialogue, setDialogue] = useState<DialogueType>()
@@ -81,9 +87,7 @@ const Room = () => {
         }
       }
 
-      // 在system回复消息时，保持在当前对话。
-      _toggleDialogue(Dialogue!)
-
+      DialogueRef.current!.messages = [...messages]
       setDialogue({
         ...Dialogue!,
         messages: [...messages]
@@ -134,4 +138,11 @@ const Room = () => {
   )
 }
 
-export default Room
+export default function Room() {
+  const { state } = useContext(ChatBoxContext)
+  const { currentDialogue } = state
+
+  return useMemo(() => {
+    return <_Room />
+  }, [currentDialogue?.id])
+}

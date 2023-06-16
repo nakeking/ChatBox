@@ -5,11 +5,12 @@ import MarkdownIt from 'markdown-it'
 import mdKatex from '@traptitech/markdown-it-katex'
 import mila from 'markdown-it-link-attributes'
 
-import { getI18n } from 'react-i18next'
+import { getI18n, useTranslation } from 'react-i18next'
 import hljs from 'highlight.js'
 
 import { SettingFilled, RocketFilled } from '@ant-design/icons'
-import { Avatar } from 'antd'
+import { Avatar, Tooltip } from 'antd'
+import { ReloadOutlined, CopyOutlined, DeleteFilled } from '@ant-design/icons'
 
 const md = new MarkdownIt({
   linkify: true,
@@ -56,10 +57,11 @@ interface BlockProps {
 }
 
 const _Block: FC<BlockProps> = (props) => {
+  const { t } = useTranslation()
   let { msg } = props
 
   return (
-    <div className="msgItem" id={msg.id} key={msg.id}>
+    <div className={`msgItem ${msg.role}`} id={msg.id} key={msg.id}>
       <div className="role">
         <Avatar
           size={40}
@@ -72,6 +74,28 @@ const _Block: FC<BlockProps> = (props) => {
           className="msg-content"
           dangerouslySetInnerHTML={{ __html: md.render(msg.content) }}
         />
+        <div className="actions">
+          <div className="stop anticon iconBase">
+            <Tooltip title={t('common.stop')}>
+              <div className="stopIcon"></div>
+            </Tooltip>
+          </div>
+          <div className="reset iconBase">
+            <Tooltip title={t('common.Regenerate')}>
+              <ReloadOutlined />
+            </Tooltip>
+          </div>
+          <div className="copy iconBase">
+            <Tooltip title={t('common.Copy')}>
+              <CopyOutlined />
+            </Tooltip>
+          </div>
+          <div className="del iconBase">
+            <Tooltip title={t('common.Del')}>
+              <DeleteFilled />
+            </Tooltip>
+          </div>
+        </div>
       </div>
       <div className="other"></div>
     </div>

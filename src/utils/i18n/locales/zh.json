@@ -4,7 +4,10 @@
     "Cancel": "取消",
     "Send": "发送",
     "Copy": "复制",
-    "ApiError": "API 请求失败："
+    "ApiError": "API 请求失败：",
+    "stop": "停止",
+    "Regenerate": "重新请求",
+    "Del": "删除"
   },
   "Dialogues": {
     "dialogues": "对话",

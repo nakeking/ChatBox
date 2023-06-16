@@ -195,9 +195,12 @@ export const useReducerContext = () => {
   )
 
   // 激活当前对话
-  const _toggleDialogue = useCallback((payload: DialogueType) => {
-    dispatch({ type: ActionType.UPDATE_DIALOGUE, payload })
-  }, [])
+  const _toggleDialogue = useCallback(
+    (payload: DialogueType) => {
+      dispatch({ type: ActionType.UPDATE_DIALOGUE, payload })
+    },
+    [state.currentDialogue]
+  )
 
   // 更新当前对话信息
   const _updateDialogueMsg = useCallback(

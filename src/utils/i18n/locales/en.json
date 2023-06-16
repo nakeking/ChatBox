@@ -4,7 +4,10 @@
     "Cancel": "Cancel",
     "Send": "SEND",
     "Copy": "copy",
-    "ApiError": "api request failed:"
+    "ApiError": "api request failed:",
+    "stop": "Stop",
+    "Regenerate": "Regenerate",
+    "Del": "Delete"
   },
   "Dialogues": {
     "dialogues": "Dialogues",

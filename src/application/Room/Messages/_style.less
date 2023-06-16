@@ -5,8 +5,15 @@
     display: flex;
     align-items: start;
     justify-content: start;
-
     padding: 10px;
+
+    &:hover {
+      .msg {
+        .actions {
+          visibility: visible;
+        }
+      }
+    }
     .role {
       padding-left: 16px;
       padding-top: 24px;
@@ -17,9 +24,23 @@
       padding-left: 16px;
       padding-top: 16px;
 
-      .msg-content p {
+      .msg-content {
         font-size: @font-size-base;
         margin: 0.6rem 0 0.4rem;
+      }
+
+      .actions {
+        display: flex;
+
+        visibility: hidden;
+        padding-top: 5px;
+
+        .stopIcon {
+          background-color: #ffa34e;
+          width: 14px;
+          height: 14px;
+          border-radius: 2px;
+        }
       }
 
       pre {

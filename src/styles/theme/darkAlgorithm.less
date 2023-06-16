@@ -12,7 +12,9 @@
   @colorBorder: #424242; //一级边框色
   @colorBorderSecondary: #5b5b5b; //二级边框色
   @colorBorderTertiary: #878787; //三级边框色
+
   @colorBgMask: rgba(0, 0, 0, 0.45);
+  @colorBgMaskSecondary: rgba(0, 0, 0, 0.12);
 
   @colorfill: rgba(120, 120, 120, 0.35); //一级填充色
   @colorfillsecondary: rgba(120, 120, 120, 0.09); //二级填充色
@@ -91,10 +93,14 @@
     .message {
       background-color: @colorPrimaryActive;
 
+      .msgItem.system {
+        background-color: @colorBgMaskSecondary;
+      }
       .msg {
-        .msg-content {
-          color: @colorText;
-        }
+        color: @colorText;
+        // .msg-content {
+        //   color: @colorText;
+        // }
       }
     }
 
