@@ -54,11 +54,22 @@ md.use(mila, { attrs: { target: '_blank', rel: 'noopener' } })
 
 interface BlockProps {
   msg: Message
+
+  _stopRequest: (msg: Message) => void
+  onCopyContext: (context: string) => void
 }
 
 const _Block: FC<BlockProps> = (props) => {
   const { t } = useTranslation()
-  let { msg } = props
+  let { msg, _stopRequest, onCopyContext } = props
+
+  const handleStopRequest = (evt: React.MouseEvent) => {
+    _stopRequest(msg)
+  }
+
+  const handleCopyContext = () => {
+    onCopyContext(msg.content)
+  }
 
   return (
     <div className={`msgItem ${msg.role}`} id={msg.id} key={msg.id}>
@@ -76,7 +87,7 @@ const _Block: FC<BlockProps> = (props) => {
         />
         <div className="actions">
           {msg.role === 'system' && msg.generating ? (
-            <div className="stop anticon iconBase">
+            <div className="stop anticon iconBase" onClick={handleStopRequest}>
               <Tooltip title={t('common.stop')}>
                 <div className="stopIcon"></div>
               </Tooltip>
@@ -88,7 +99,7 @@ const _Block: FC<BlockProps> = (props) => {
               </Tooltip>
             </div>
           )}
-          <div className="copy iconBase">
+          <div className="copy iconBase" onClick={handleCopyContext}>
             <Tooltip title={t('common.Copy')}>
               <CopyOutlined />
             </Tooltip>

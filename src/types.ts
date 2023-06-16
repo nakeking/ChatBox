@@ -20,6 +20,7 @@ export type Message = OpenAIMessage & {
   id?: string
   model?: string
   generating?: boolean
+  cancel?: Function
 }
 
 export interface DialogueType {

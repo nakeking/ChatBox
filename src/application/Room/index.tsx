@@ -16,10 +16,12 @@ import type { DialogueType, Message } from '../../types'
 import { createMessage } from '../../types'
 import { OnTextCallbackResult, replay } from '../../services/http'
 import { useTranslation } from 'react-i18next'
+import { App } from 'antd'
 
 const { ipcRenderer } = window.require('electron/renderer')
 
 const _Room = () => {
+  const { message } = App.useApp()
   const { t } = useTranslation()
   const { state, _updateDialogueMsg } = useContext(ChatBoxContext)
   const { currentDialogue } = state
@@ -60,7 +62,7 @@ const _Room = () => {
   // ================= 提交 prompt =========================
   const updateSession = (session: DialogueType) => {
     setDialogue(session)
-    dialogueRef.current!.messages = session.messages
+    dialogueRef.current!.messages = [...session.messages]
   }
   const onsubmit = async (newUserMsg: Message) => {
     let { messages } = dialogue!
@@ -74,7 +76,7 @@ const _Room = () => {
 
     // openAI 请求结果处理
     const onText = (option: OnTextCallbackResult) => {
-      let { text } = option
+      let { text, cancel } = option
       text = text.replace(/['"“”]/g, '')
 
       let { messages } = dialogueRef.current!
@@ -83,6 +85,7 @@ const _Room = () => {
           messages[i] = {
             ...messages[i],
             content: text,
+            cancel,
             model: state.Settings.model,
             generating: true
           }
@@ -131,23 +134,38 @@ const _Room = () => {
     )
 
     // openAI请求结束处理
-    for (let i = dialogue!.messages.length - 1; i >= 0; i--) {
-      if (dialogue!.messages[i].id === id) {
-        dialogue!.messages[i] = {
-          ...dialogue!.messages[i],
+    const newMessages = dialogueRef.current!.messages.map((d) => {
+      if (d.id === id) {
+        d = {
+          ...d,
           generating: false
         }
-        break
       }
-    }
 
-    updateSession({ ...dialogue! })
+      return d
+    })
+    updateSession({ ...dialogue!, messages: newMessages })
+  }
+
+  // ================= 中断请求方法 ============================
+  const onStopRequest = (msg: Message) => {
+    msg?.cancel?.()
+  }
+
+  // ================= copy ===================================
+  const onCopyContext = (context: string) => {
+    navigator.clipboard.writeText(context)
+    message.success('复制成昆')
   }
 
   return (
     <div className="room">
       <Header Dialogue={currentDialogue} />
-      <Messages messages={dialogue?.messages} />
+      <Messages
+        messages={dialogue?.messages}
+        onStopRequest={onStopRequest}
+        onCopyContext={onCopyContext}
+      />
       <Prompt onSubmit={onsubmit} />
     </div>
   )

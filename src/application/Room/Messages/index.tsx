@@ -1,15 +1,18 @@
 import { FC, useEffect, useRef } from 'react'
 
 import Block from './Block'
-import type { Message } from '../../../types'
+import type { DialogueType, Message } from '../../../types'
 import { App } from 'antd'
 
 interface MessagesProps {
   messages?: Message[]
+
+  onStopRequest: (msg: Message) => void
+  onCopyContext: (context: string) => void
 }
 
 const Messages: FC<MessagesProps> = (props) => {
-  let { messages } = props
+  let { messages, onStopRequest, onCopyContext } = props
   const { message } = App.useApp()
 
   // ============= message中代码片段复制功能 ===================================
@@ -42,7 +45,14 @@ const Messages: FC<MessagesProps> = (props) => {
   return (
     <div className="message webkitScrollbarBase">
       {messages?.map((m) => {
-        return <Block key={m.id} msg={m} />
+        return (
+          <Block
+            key={m.id}
+            msg={m}
+            _stopRequest={onStopRequest}
+            onCopyContext={onCopyContext}
+          />
+        )
       })}
     </div>
   )
