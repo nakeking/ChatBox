@@ -4,6 +4,21 @@
 
 [![Author](https://img.shields.io/badge/Author-nakeking-red 'Author')](https://github.com/nakeking 'Nakeking')
 
+<!-- ![](doc/screenshot1.jpg)
+![](doc/screenshot2.jpg) -->
+
+#### 特性
+
+- AI 聊天与会话管理
+- 数据存储在本地，不会丢失
+- 内置开箱即用的 AI 服务
+- 支持 OpenAI(GPT3.5)
+- Markdown 和代码高亮
+- 流式回复，打字机特效
+- 符合人体工程学的 UI 设计，夜间模式
+- 国际化(en/zh)
+- 免费，开源
+
 #### 环境搭建
 
 ##### pnpm，create-react-app 创建 react 项目
