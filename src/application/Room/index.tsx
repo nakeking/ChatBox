@@ -24,8 +24,8 @@ const _Room = () => {
   const { state, _updateDialogueMsg } = useContext(ChatBoxContext)
   const { currentDialogue } = state
 
-  const [Dialogue, setDialogue] = useState<DialogueType>()
-  const DialogueRef = useRef(currentDialogue)
+  const [dialogue, setDialogue] = useState<DialogueType>()
+  const dialogueRef = useRef(currentDialogue)
 
   // ======= 关闭窗口前，保存当前dialogue对话信息 ==============
   const [closeWinStatus, setCloseWinStatus] = useState(false)
@@ -38,7 +38,7 @@ const _Room = () => {
   const handleBeforeUnload = async (event: Event) => {
     if (!event.defaultPrevented) {
       event.preventDefault()
-      await _updateDialogueMsg(DialogueRef.current!)
+      await _updateDialogueMsg(dialogueRef.current!)
 
       setCloseWinStatus(true)
     }
@@ -53,28 +53,31 @@ const _Room = () => {
 
   // ========= 初始化dialogue对话信息 ============================
   useEffect(() => {
-    DialogueRef.current = currentDialogue
+    dialogueRef.current = currentDialogue
     setDialogue(currentDialogue)
   }, [currentDialogue])
 
   // ================= 提交 prompt =========================
+  const updateSession = (session: DialogueType) => {
+    setDialogue(session)
+    dialogueRef.current!.messages = session.messages
+  }
   const onsubmit = async (newUserMsg: Message) => {
-    let { messages } = Dialogue!
+    let { messages } = dialogue!
 
     const id = uuidv4()
-    const newSystemMsg = createMessage('system', '.....', id)
-    setDialogue({
-      ...Dialogue!,
+    const newSystemMsg = createMessage('system', '.....', id, true)
+    updateSession({
+      ...dialogue!,
       messages: [...messages, newUserMsg, newSystemMsg]
     })
-    DialogueRef.current!.messages = [...messages, newUserMsg, newSystemMsg]
 
-    // ============= openAI 返回结果 =========================
+    // openAI 请求结果处理
     const onText = (option: OnTextCallbackResult) => {
       let { text } = option
       text = text.replace(/['"“”]/g, '')
 
-      let { messages } = DialogueRef.current!
+      let { messages } = dialogueRef.current!
       for (let i = messages.length - 1; i >= 0; i--) {
         if (messages[i].id === id) {
           messages[i] = {
@@ -87,16 +90,15 @@ const _Room = () => {
         }
       }
 
-      DialogueRef.current!.messages = [...messages]
-      setDialogue({
-        ...Dialogue!,
+      updateSession({
+        ...dialogue!,
         messages: [...messages]
       })
     }
 
-    // ============= openAI 请求错误处理 ======================
+    // openAI 请求错误处理
     const onError = (error: Error) => {
-      let { messages } = DialogueRef.current!
+      let { messages } = dialogueRef.current!
       for (let i = messages.length - 1; i >= 0; i--) {
         if (messages[i].id === id) {
           messages[i] = {
@@ -109,13 +111,13 @@ const _Room = () => {
         }
       }
 
-      setDialogue({
-        ...Dialogue!,
+      updateSession({
+        ...dialogue!,
         messages: [...messages]
       })
     }
 
-    // ============= 发起请求 ==================================
+    // 发起 openAI 请求
     await replay(
       state.Settings.OpenAIKey!,
       '',
@@ -123,16 +125,29 @@ const _Room = () => {
       state.Settings.maxTokens,
       state.Settings.model!,
       state.Settings.temperature,
-      DialogueRef.current!.messages,
+      dialogueRef.current!.messages,
       onText,
       onError
     )
+
+    // openAI请求结束处理
+    for (let i = dialogue!.messages.length - 1; i >= 0; i--) {
+      if (dialogue!.messages[i].id === id) {
+        dialogue!.messages[i] = {
+          ...dialogue!.messages[i],
+          generating: false
+        }
+        break
+      }
+    }
+
+    updateSession({ ...dialogue! })
   }
 
   return (
     <div className="room">
       <Header Dialogue={currentDialogue} />
-      <Messages messages={Dialogue?.messages} />
+      <Messages messages={dialogue?.messages} />
       <Prompt onSubmit={onsubmit} />
     </div>
   )

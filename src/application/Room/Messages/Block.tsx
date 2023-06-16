@@ -75,16 +75,19 @@ const _Block: FC<BlockProps> = (props) => {
           dangerouslySetInnerHTML={{ __html: md.render(msg.content) }}
         />
         <div className="actions">
-          <div className="stop anticon iconBase">
-            <Tooltip title={t('common.stop')}>
-              <div className="stopIcon"></div>
-            </Tooltip>
-          </div>
-          <div className="reset iconBase">
-            <Tooltip title={t('common.Regenerate')}>
-              <ReloadOutlined />
-            </Tooltip>
-          </div>
+          {msg.role === 'system' && msg.generating ? (
+            <div className="stop anticon iconBase">
+              <Tooltip title={t('common.stop')}>
+                <div className="stopIcon"></div>
+              </Tooltip>
+            </div>
+          ) : (
+            <div className="reset iconBase">
+              <Tooltip title={t('common.Regenerate')}>
+                <ReloadOutlined />
+              </Tooltip>
+            </div>
+          )}
           <div className="copy iconBase">
             <Tooltip title={t('common.Copy')}>
               <CopyOutlined />

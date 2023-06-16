@@ -33,12 +33,14 @@ export type DialoguesType = Map<string, DialogueType>
 export const createMessage = (
   role: OpenAIRoleEnumType,
   content: string,
-  id?: string
+  id?: string,
+  generating?: boolean
 ): Message => {
   return {
     id: id || uuidv4(),
     role,
-    content
+    content,
+    generating
   }
 }
 
