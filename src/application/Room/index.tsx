@@ -147,6 +147,12 @@ const _Room = () => {
     updateSession({ ...dialogue!, messages: newMessages })
   }
 
+  // ================= 清空当前对话消息 =====================
+  const onCleanDialogueMsg = () => {
+    let { messages } = dialogueRef.current!
+    updateSession({ ...dialogue!, messages: [messages[0]] })
+  }
+
   // ================= 中断请求方法 ============================
   const onStopRequest = (msg: Message) => {
     msg?.cancel?.()
@@ -166,7 +172,10 @@ const _Room = () => {
 
   return (
     <div className="room">
-      <Header Dialogue={currentDialogue} />
+      <Header
+        Dialogue={currentDialogue}
+        onCleanDialogueMsg={onCleanDialogueMsg}
+      />
       <Messages
         messages={dialogue?.messages}
         onStopRequest={onStopRequest}
