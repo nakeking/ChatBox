@@ -153,6 +153,11 @@ const _Room = () => {
     updateSession({ ...dialogue!, messages: [messages[0]] })
   }
 
+  // ================= 导出当前对话消息 =====================
+  const onExportDialogueMsg = () => {
+    ipcRenderer.send('exportMd', dialogueRef.current)
+  }
+
   // ================= 中断请求方法 ============================
   const onStopRequest = (msg: Message) => {
     msg?.cancel?.()
@@ -175,6 +180,7 @@ const _Room = () => {
       <Header
         Dialogue={currentDialogue}
         onCleanDialogueMsg={onCleanDialogueMsg}
+        onExportDialogueMsg={onExportDialogueMsg}
       />
       <Messages
         messages={dialogue?.messages}

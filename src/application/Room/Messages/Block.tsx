@@ -38,7 +38,7 @@ const md = new MarkdownIt({
       `<div class="code-header"><span class="code-lang">${lang}</span><div class="copy-action">${getI18n().t(
         'common.Copy'
       )}</div></div>`,
-      '<pre class="hljs code-block">',
+      '<pre class="hljs code-block webkitScrollbarBase">',
       `<code>${content}</code>`,
       '</pre>',
       '</div>'

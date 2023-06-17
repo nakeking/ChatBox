@@ -9,23 +9,22 @@ interface HeaderProps {
   Dialogue?: DialogueType
 
   onCleanDialogueMsg: () => void
+  onExportDialogueMsg: () => void
 }
 
 const _Header: FC<HeaderProps> = (props) => {
-  const { Dialogue, onCleanDialogueMsg } = props
+  const { Dialogue, onCleanDialogueMsg, onExportDialogueMsg } = props
   const { t } = useTranslation()
 
   const [isModalOpen, setModalOpen] = useState<boolean>(false)
   const handleCleanDialogueMsg = () => {
     setModalOpen(true)
   }
-
   const handleOk = () => {
     onCleanDialogueMsg()
 
     setModalOpen(false)
   }
-
   const handleCancel = () => {
     setModalOpen(false)
   }
@@ -44,7 +43,7 @@ const _Header: FC<HeaderProps> = (props) => {
             <span className="iconBase" onClick={handleCleanDialogueMsg}>
               <RestFilled />
             </span>
-            <span className="iconBase">
+            <span className="iconBase" onClick={onExportDialogueMsg}>
               <SaveFilled />
             </span>
           </div>
@@ -59,7 +58,7 @@ const _Header: FC<HeaderProps> = (props) => {
               <Button type="text" key="back" onClick={handleCancel}>
                 {t('common.Cancel')}
               </Button>,
-              <Button type="text" key="submit" onClick={handleOk}>
+              <Button type="text" danger key="submit" onClick={handleOk}>
                 {t('common.Save')}
               </Button>
             ]}

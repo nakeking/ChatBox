@@ -41,7 +41,7 @@ const Prompt: FC<PromptProps> = (props) => {
             value={prompt}
             onChange={handleChange}
             spellCheck={false}
-            className="webkitScrollbarBase"
+            className="textarea webkitScrollbarBase"
             bordered={false}
             autoSize={{ maxRows: 5 }}
             onKeyDown={(evt) => {

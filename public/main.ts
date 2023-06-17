@@ -1,5 +1,7 @@
 // Modules to control application life and create native browser window
-const { app, BrowserWindow, Menu, ipcMain } = require('electron')
+const { app, BrowserWindow, Menu, ipcMain, dialog } = require('electron')
+const fs = require('fs')
+
 // const { default: installExtension, REDUX_DEVTOOLS } = require('electron-devtools-installer');
 const {
   default: installExtension,
@@ -8,6 +10,7 @@ const {
 
 const path = require('path')
 const os = require('os')
+const homedir = os.homedir()
 
 const Store = require('electron-store')
 const store = new Store()
@@ -74,9 +77,35 @@ app.whenReady().then(() => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
   })
 
-  //
+  // 关闭窗口
   ipcMain.on('chatbox-close', (event) => {
     mainWindow.destroy()
+  })
+
+  ipcMain.on('exportMd', (event, dialogue) => {
+    console.log(dialogue)
+
+    const context = ''
+    dialog
+      .showSaveDialog({
+        filters: [
+          {
+            name: 'MD文件',
+            extensions: ['md']
+          }
+        ],
+        properties: ['openFile'],
+        defaultPath: `${dialogue.name}.md`,
+        buttonLabel: '导出',
+        title: '保存文件'
+      })
+      .then((res) => {
+        // fs 写文件
+        fs.writeFileSync(res.filePath, context, (err) => {})
+      })
+      .catch((error) => {
+        console.log('error: ', error)
+      })
   })
 })
 
