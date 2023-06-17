@@ -21,7 +21,6 @@ import { App } from 'antd'
 const { ipcRenderer } = window.require('electron/renderer')
 
 const _Room = () => {
-  const { message } = App.useApp()
   const { t } = useTranslation()
   const { state, _updateDialogueMsg } = useContext(ChatBoxContext)
   const { currentDialogue } = state
@@ -147,25 +146,10 @@ const _Room = () => {
     updateSession({ ...dialogue!, messages: newMessages })
   }
 
-  // ================= 中断请求方法 ============================
-  const onStopRequest = (msg: Message) => {
-    msg?.cancel?.()
-  }
-
-  // ================= copy ===================================
-  const onCopyContext = (context: string) => {
-    navigator.clipboard.writeText(context)
-    message.success('复制成昆')
-  }
-
   return (
     <div className="room">
       <Header Dialogue={currentDialogue} />
-      <Messages
-        messages={dialogue?.messages}
-        onStopRequest={onStopRequest}
-        onCopyContext={onCopyContext}
-      />
+      <Messages messages={dialogue?.messages} />
       <Prompt onSubmit={onsubmit} />
     </div>
   )

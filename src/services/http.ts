@@ -64,6 +64,7 @@ export async function replay(
         stream: true,
         temperature
       }),
+      signal: controller.signal,
       headers: {
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + apiKey

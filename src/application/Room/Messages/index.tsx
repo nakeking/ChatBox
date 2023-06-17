@@ -6,13 +6,10 @@ import { App } from 'antd'
 
 interface MessagesProps {
   messages?: Message[]
-
-  onStopRequest: (msg: Message) => void
-  onCopyContext: (context: string) => void
 }
 
 const Messages: FC<MessagesProps> = (props) => {
-  let { messages, onStopRequest, onCopyContext } = props
+  let { messages } = props
   const { message } = App.useApp()
 
   // ============= message中代码片段复制功能 ===================================
@@ -33,7 +30,6 @@ const Messages: FC<MessagesProps> = (props) => {
     navigator.clipboard.writeText(content)
     message.success('复制成昆')
   })
-
   useEffect(() => {
     document.addEventListener('click', codeBlockCopyEvent.current)
 
@@ -41,6 +37,17 @@ const Messages: FC<MessagesProps> = (props) => {
       document.removeEventListener('click', codeBlockCopyEvent.current)
     }
   }, [])
+
+  // ================= 中断请求方法 ============================
+  const onStopRequest = (msg: Message) => {
+    msg?.cancel?.()
+  }
+
+  // ================= copy ===================================
+  const onCopyContext = (context: string) => {
+    navigator.clipboard.writeText(context)
+    message.success('复制成昆')
+  }
 
   return (
     <div className="message webkitScrollbarBase">
