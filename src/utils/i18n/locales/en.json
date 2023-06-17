@@ -7,7 +7,8 @@
     "ApiError": "api request failed:",
     "stop": "Stop",
     "Regenerate": "Regenerate",
-    "Del": "Delete"
+    "Del": "Delete",
+    "Copied to clipboard": "Copied to clipboard"
   },
   "Dialogues": {
     "dialogues": "Dialogues",

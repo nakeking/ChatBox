@@ -7,7 +7,8 @@
     "ApiError": "API 请求失败：",
     "stop": "停止",
     "Regenerate": "重新请求",
-    "Del": "删除"
+    "Del": "删除",
+    "Copied to clipboard": "已复制到剪贴板"
   },
   "Dialogues": {
     "dialogues": "对话",

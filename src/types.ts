@@ -17,7 +17,7 @@ interface OpenAIMessage {
 }
 
 export type Message = OpenAIMessage & {
-  id?: string
+  id: string
   model?: string
   generating?: boolean
   cancel?: Function

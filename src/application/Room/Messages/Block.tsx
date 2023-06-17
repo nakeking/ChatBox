@@ -55,20 +55,25 @@ md.use(mila, { attrs: { target: '_blank', rel: 'noopener' } })
 interface BlockProps {
   msg: Message
 
-  _stopRequest: (msg: Message) => void
+  onStopRequest: (msg: Message) => void
   onCopyContext: (context: string) => void
+  onDeleteMsg: (id: string) => void
 }
 
 const _Block: FC<BlockProps> = (props) => {
   const { t } = useTranslation()
-  let { msg, _stopRequest, onCopyContext } = props
+  let { msg, onStopRequest, onCopyContext, onDeleteMsg } = props
 
   const handleStopRequest = (evt: React.MouseEvent) => {
-    _stopRequest(msg)
+    onStopRequest(msg)
   }
 
   const handleCopyContext = () => {
     onCopyContext(msg.content)
+  }
+
+  const handleDeleteMsg = () => {
+    onDeleteMsg(msg.id)
   }
 
   return (
@@ -104,7 +109,7 @@ const _Block: FC<BlockProps> = (props) => {
               <CopyOutlined />
             </Tooltip>
           </div>
-          <div className="del iconBase">
+          <div className="del iconBase" onClick={handleDeleteMsg}>
             <Tooltip title={t('common.Del')}>
               <DeleteFilled />
             </Tooltip>

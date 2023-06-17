@@ -3,13 +3,19 @@ import { FC, useEffect, useRef } from 'react'
 import Block from './Block'
 import type { DialogueType, Message } from '../../../types'
 import { App } from 'antd'
+import { useTranslation } from 'react-i18next'
 
 interface MessagesProps {
   messages?: Message[]
+
+  onStopRequest: (msg: Message) => void
+  onCopyContext: (context: string) => void
+  onDeleteMsg: (id: string) => void
 }
 
 const Messages: FC<MessagesProps> = (props) => {
-  let { messages } = props
+  const { t } = useTranslation()
+  let { messages, onStopRequest, onCopyContext, onDeleteMsg } = props
   const { message } = App.useApp()
 
   // ============= message中代码片段复制功能 ===================================
@@ -28,8 +34,9 @@ const Messages: FC<MessagesProps> = (props) => {
       target.parentNode?.parentNode?.querySelector('code')?.innerText ?? ''
 
     navigator.clipboard.writeText(content)
-    message.success('复制成昆')
+    message.success(t('common.Copied to clipboard'))
   })
+
   useEffect(() => {
     document.addEventListener('click', codeBlockCopyEvent.current)
 
@@ -38,17 +45,6 @@ const Messages: FC<MessagesProps> = (props) => {
     }
   }, [])
 
-  // ================= 中断请求方法 ============================
-  const onStopRequest = (msg: Message) => {
-    msg?.cancel?.()
-  }
-
-  // ================= copy ===================================
-  const onCopyContext = (context: string) => {
-    navigator.clipboard.writeText(context)
-    message.success('复制成昆')
-  }
-
   return (
     <div className="message webkitScrollbarBase">
       {messages?.map((m) => {
@@ -56,8 +52,9 @@ const Messages: FC<MessagesProps> = (props) => {
           <Block
             key={m.id}
             msg={m}
-            _stopRequest={onStopRequest}
+            onStopRequest={onStopRequest}
             onCopyContext={onCopyContext}
+            onDeleteMsg={onDeleteMsg}
           />
         )
       })}
