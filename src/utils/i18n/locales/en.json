@@ -10,7 +10,8 @@
     "Del": "Delete",
     "Copied to clipboard": "Copied to clipboard",
     "Clean": "Clean",
-    "CleanTip": "This action will permanently delete all non-system messages in [{{name}}] .Are you sure you want to continue?"
+    "CleanTip": "This action will permanently delete all non-system messages in [{{name}}] .Are you sure you want to continue?",
+    "Export": "Export"
   },
   "Dialogues": {
     "dialogues": "Dialogues",

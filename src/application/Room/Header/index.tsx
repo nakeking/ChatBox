@@ -1,6 +1,6 @@
 import { FC, useMemo, useState } from 'react'
 
-import { Button, Modal } from 'antd'
+import { Button, Modal, Tooltip } from 'antd'
 import { MessageOutlined, RestFilled, SaveFilled } from '@ant-design/icons'
 import { DialogueType } from '../../../types'
 import { useTranslation } from 'react-i18next'
@@ -41,10 +41,14 @@ const _Header: FC<HeaderProps> = (props) => {
           </div>
           <div className="right">
             <span className="iconBase" onClick={handleCleanDialogueMsg}>
-              <RestFilled />
+              <Tooltip title={t('common.Clean')}>
+                <RestFilled />
+              </Tooltip>
             </span>
             <span className="iconBase" onClick={onExportDialogueMsg}>
-              <SaveFilled />
+              <Tooltip title={t('common.Export')}>
+                <SaveFilled />
+              </Tooltip>
             </span>
           </div>
 

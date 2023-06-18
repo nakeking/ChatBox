@@ -10,7 +10,8 @@
     "Del": "删除",
     "Copied to clipboard": "已复制到剪贴板",
     "Clean": "清空",
-    "CleanTip": "此操作将永久删除 [{{name}}] 的内容。您确定要继续吗？"
+    "CleanTip": "此操作将永久删除 [{{name}}] 的内容。您确定要继续吗？",
+    "Export": "导出"
   },
   "Dialogues": {
     "dialogues": "对话",
