@@ -83,9 +83,6 @@ app.whenReady().then(() => {
   })
 
   ipcMain.on('exportMd', (event, dialogue) => {
-    console.log(dialogue)
-
-    const context = ''
     dialog
       .showSaveDialog({
         filters: [
@@ -100,8 +97,18 @@ app.whenReady().then(() => {
         title: '保存文件'
       })
       .then((res) => {
+        const md = dialogue.messages.reduce((prev, cur) => {
+          let { content, role } = cur
+
+          prev += `**${role}**: \n`
+          prev += content + '\n'
+          prev += '\n--------------------\n\n'
+
+          return prev
+        }, '')
+
         // fs 写文件
-        fs.writeFileSync(res.filePath, context, (err) => {})
+        fs.writeFileSync(res.filePath, md, (err) => {})
       })
       .catch((error) => {
         console.log('error: ', error)
