@@ -152,6 +152,45 @@ app.whenReady().then(() => {
 // 再使用 vscode 开启调试项目
 ```
 
+#### 配置热更新
+
+```
+pnpm add -D electron-reloader react-hot-loader webpack-dev-server
+
+// main.ts
+function createWindow() {
+  ...
+
+  if (isDev) {
+    try {
+      require('electron-reloader')(module)
+    } catch {}
+  }
+
+  ...
+}
+
+// craco.config.js
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
+
+webpack: {
+  configure: {
+    ...
+    devServer: {
+      hot: true,
+      watchOptions: {
+        poll: true
+      }
+    },
+    plugins: [
+      ...
+
+      new ReactRefreshWebpackPlugin()
+    ]
+  }
+}
+```
+
 #### 你可能会遇到的问题集合
 
 ```

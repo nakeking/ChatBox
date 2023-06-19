@@ -54,6 +54,13 @@ function createWindow() {
     }
   })
 
+  // 热重载
+  if (isDev) {
+    try {
+      require('electron-reloader')(module)
+    } catch {}
+  }
+
   // and load the index.html of the app.
   // mainWindow.loadFile('./index.html')
   mainWindow.loadURL('http://localhost:3000')
@@ -91,7 +98,7 @@ app.whenReady().then(() => {
             extensions: ['md']
           }
         ],
-        properties: ['openFile'],
+        properties: [],
         defaultPath: `${dialogue.name}.md`,
         buttonLabel: '导出',
         title: '保存文件'

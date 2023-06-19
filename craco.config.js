@@ -3,6 +3,7 @@ const webpack = require('webpack')
 const CracoLessPlugin = require('craco-less')
 
 const WorkerLoaderPlugin = require('craco-worker-loader')
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
 
 module.exports = {
   plugins: [
@@ -47,11 +48,18 @@ module.exports = {
           crypto: require.resolve('crypto-browserify')
         }
       },
+      devServer: {
+        hot: true,
+        watchOptions: {
+          poll: true
+        }
+      },
       plugins: [
         new webpack.ProvidePlugin({
           Buffer: ['buffer', 'Buffer'],
           process: 'process/browser'
-        })
+        }),
+        new ReactRefreshWebpackPlugin()
       ]
     }
   }
