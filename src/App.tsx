@@ -25,7 +25,7 @@ const App: FC = () => {
     _delDialogue,
     _renameDialogue,
     _toggleDialogue,
-    _updateDialogueMsg
+    _setStoreDialogues
   } = useReducerContext()
   const { Settings } = state
   const { i18n } = useTranslation()
@@ -49,7 +49,7 @@ const App: FC = () => {
         _delDialogue,
         _renameDialogue,
         _toggleDialogue,
-        _updateDialogueMsg
+        _setStoreDialogues
       }}
     >
       <div id="App" className="App">

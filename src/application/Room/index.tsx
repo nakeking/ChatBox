@@ -23,35 +23,13 @@ const { ipcRenderer } = window.require('electron/renderer')
 const _Room = () => {
   const { message } = App.useApp()
   const { t } = useTranslation()
-  const { state, _updateDialogueMsg } = useContext(ChatBoxContext)
+  const { state, _setStoreDialogues } = useContext(ChatBoxContext)
   const { currentDialogue } = state
 
   const [dialogue, setDialogue] = useState<DialogueType>()
   const dialogueRef = useRef(currentDialogue)
 
   // ======= 关闭窗口前，保存当前dialogue对话信息 ==============
-  const [closeWinStatus, setCloseWinStatus] = useState(false)
-  useEffect(() => {
-    if (closeWinStatus) {
-      ipcRenderer.send('chatbox-close')
-    }
-  }, [closeWinStatus])
-
-  const handleBeforeUnload = async (event: Event) => {
-    if (!event.defaultPrevented) {
-      event.preventDefault()
-      await _updateDialogueMsg(dialogueRef.current!)
-
-      setCloseWinStatus(true)
-    }
-  }
-  useEffect(() => {
-    // 窗口关闭事件监听
-    window.addEventListener('beforeunload', handleBeforeUnload)
-    return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload)
-    }
-  }, [])
 
   // ========= 初始化dialogue对话信息 ============================
   useEffect(() => {
@@ -97,6 +75,8 @@ const _Room = () => {
         ...dialogue!,
         messages: [...messages]
       })
+
+      _setStoreDialogues(dialogueRef.current!)
     }
 
     // openAI 请求错误处理
@@ -118,6 +98,8 @@ const _Room = () => {
         ...dialogue!,
         messages: [...messages]
       })
+
+      _setStoreDialogues(dialogueRef.current!)
     }
 
     // 发起 openAI 请求
@@ -145,6 +127,7 @@ const _Room = () => {
       return d
     })
     updateSession({ ...dialogue!, messages: newMessages })
+    _setStoreDialogues(dialogueRef.current!)
   }
 
   // ================= 清空当前对话消息 =====================

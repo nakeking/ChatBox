@@ -203,14 +203,11 @@ export const useReducerContext = () => {
   )
 
   // 更新当前对话信息
-  const _updateDialogueMsg = useCallback(
+  const _setStoreDialogues = useCallback(
     (payload: DialogueType) => {
       const { Dialogues } = state
-
       Dialogues?.set(payload.id, payload)
-
-      dispatch({ type: ActionType.UPDATE_DIALOGUE, payload })
-      dispatch({ type: ActionType.UPDATE_DIALOGUES, payload: Dialogues })
+      setStore('Dialogues', MapToJSON(Dialogues))
     },
     [state.currentDialogue]
   )
@@ -223,7 +220,7 @@ export const useReducerContext = () => {
     _delDialogue,
     _renameDialogue,
     _toggleDialogue,
-    _updateDialogueMsg
+    _setStoreDialogues
   }
 }
 
@@ -236,7 +233,7 @@ interface ChatBoxContextType {
   _delDialogue: (payload: string) => void
   _renameDialogue: (payload: DialogueType) => void
   _toggleDialogue: (payload: DialogueType) => void
-  _updateDialogueMsg: (payload: DialogueType) => void
+  _setStoreDialogues: (payload: DialogueType) => void
 }
 
 const ChatBoxContext = React.createContext<ChatBoxContextType>({
@@ -250,7 +247,7 @@ const ChatBoxContext = React.createContext<ChatBoxContextType>({
   _delDialogue: () => {},
   _renameDialogue: () => {},
   _toggleDialogue: () => {},
-  _updateDialogueMsg: () => {}
+  _setStoreDialogues: () => {}
 })
 
 export default ChatBoxContext
