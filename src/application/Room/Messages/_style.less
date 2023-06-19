@@ -1,6 +1,7 @@
 .message {
   overflow-y: scroll;
 
+  max-height: 100%;
   .msgItem {
     display: flex;
     align-items: start;
@@ -81,4 +82,12 @@
       flex-basis: 50px;
     }
   }
+}
+
+.scrollActions {
+  position: absolute;
+  right: 8px;
+  bottom: 5px;
+  display: flex;
+  flex-direction: column;
 }

@@ -182,12 +182,15 @@ const _Room = () => {
         onCleanDialogueMsg={onCleanDialogueMsg}
         onExportDialogueMsg={onExportDialogueMsg}
       />
-      <Messages
-        messages={dialogue?.messages}
-        onStopRequest={onStopRequest}
-        onCopyContext={onCopyContext}
-        onDeleteMsg={onDeleteMsg}
-      />
+      <div className="messageWrap">
+        <Messages
+          id={dialogue?.id}
+          messages={dialogue?.messages}
+          onStopRequest={onStopRequest}
+          onCopyContext={onCopyContext}
+          onDeleteMsg={onDeleteMsg}
+        />
+      </div>
       <Prompt onSubmit={onsubmit} />
     </div>
   )
