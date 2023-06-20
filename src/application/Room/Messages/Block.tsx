@@ -12,22 +12,25 @@ import { SettingFilled, RocketFilled } from '@ant-design/icons'
 import { Avatar, Tooltip } from 'antd'
 import { ReloadOutlined, CopyOutlined, DeleteFilled } from '@ant-design/icons'
 
+// const worker = new Worker(`${process.env.PUBLIC_URL}/hljs.worker.js`)
+
 const md = new MarkdownIt({
   linkify: true,
   breaks: true,
   highlight: (str: string, lang: string, attrs: string): string => {
     let content = str
-
     if (lang && hljs.getLanguage(lang)) {
-      try {
-        content = hljs.highlight(str, {
-          language: lang,
-          ignoreIllegals: true
-        }).value
-      } catch (e) {
-        console.log(e)
-        return str
-      }
+      // worker.postMessage({ content, lang })
+
+      // worker.onmessage = function (event) {
+      //   console.log(event.data)
+      //   content = event.data
+      // }
+
+      content = hljs.highlight(content, {
+        language: lang,
+        ignoreIllegals: true
+      }).value
     } else {
       content = md.utils.escapeHtml(str)
     }

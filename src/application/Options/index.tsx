@@ -1,5 +1,4 @@
 import React, { FC, useContext, useState } from 'react'
-import { shell } from 'electron'
 
 import {
   PlusOutlined,

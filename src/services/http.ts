@@ -1,5 +1,6 @@
 import type { Message } from '../types'
 import { createParser } from 'eventsource-parser'
+import { countWord, estimateTokens } from '../utils'
 
 export interface OnTextCallbackResult {
   // response content
@@ -29,12 +30,20 @@ export async function replay(
 
   const maxTokensNumber = Number(maxTokens)
   const maxLen = Number(maxContextSize)
+  let totalLen = head ? estimateTokens(head.content) : 0
 
   let prompts: Message[] = []
   for (let i = msgs.length - 1; i >= 0; i--) {
     const msg = msgs[i]
 
+    // 对msg中的content的字符长度是否大于 > maxLen
+    const msgTokenSize: number = estimateTokens(msg.content) + 200
+    if (msgTokenSize + totalLen > maxLen) {
+      break
+    }
+
     prompts = [msg, ...prompts]
+    totalLen += msgTokenSize
   }
 
   if (head) {

@@ -1,4 +1,19 @@
 import { setStore, getStore, delStore } from './electronStore'
-import { openLink, MapToJSON, JSONToMap } from './util'
+import {
+  openLink,
+  MapToJSON,
+  JSONToMap,
+  countWord,
+  estimateTokens
+} from './util'
 
-export { setStore, getStore, delStore, openLink, MapToJSON, JSONToMap }
+export {
+  countWord,
+  estimateTokens,
+  setStore,
+  getStore,
+  delStore,
+  openLink,
+  MapToJSON,
+  JSONToMap
+}
