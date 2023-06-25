@@ -9,8 +9,6 @@ const {
 } = require('electron-extension-installer')
 
 const path = require('path')
-const os = require('os')
-const homedir = os.homedir()
 
 const Store = require('electron-store')
 const store = new Store()
@@ -18,6 +16,9 @@ const store = new Store()
 // dev环境添加调试
 const isDev = require('electron-is-dev')
 isDev && require('electron-debug')({ enabled: true, showDevTools: false })
+
+// 不需要菜单栏
+Menu.setApplicationMenu(null)
 
 // 添加Chrome插件
 function createDevTools() {
@@ -34,9 +35,6 @@ function createDevTools() {
   //       .then((name) => console.log(`Added Extension:  ${name}`))
   //       .catch((err) => console.log('An error occurred: ', err));
 }
-
-// 不需要菜单栏
-Menu.setApplicationMenu(null)
 
 // 创建窗口
 let mainWindow
@@ -89,6 +87,7 @@ app.whenReady().then(() => {
     mainWindow.destroy()
   })
 
+  // 导出md文件
   ipcMain.on('exportMd', (event, dialogue) => {
     dialog
       .showSaveDialog({

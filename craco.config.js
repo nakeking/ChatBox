@@ -25,7 +25,8 @@ module.exports = {
   ],
   webpack: {
     output: {
-      globalObject: 'this'
+      globalObject: 'this',
+      publicPath: './'
     },
     configure: {
       target: 'electron-main',

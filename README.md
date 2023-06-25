@@ -105,7 +105,7 @@ app.whenReady().then(() => {
 
 ```
 
-#### 启动项目
+##### 启动项目
 
 ```
 // 启动方式一
@@ -152,7 +152,7 @@ app.whenReady().then(() => {
 // 再使用 vscode 开启调试项目
 ```
 
-#### 配置热更新
+##### 配置热更新
 
 ```
 pnpm add -D electron-reloader react-hot-loader webpack-dev-server
@@ -191,7 +191,60 @@ webpack: {
 }
 ```
 
-#### 你可能会遇到的问题集合
+##### 打包
+
+```
+// 辅助生成图标插件, 准备icon.png(1024 * 1024)图片，生成各尺寸icon
+pnpm add phantomjs -D
+pnpm add electron-icon-builder -D
+
+// package.json
+"script": {
+  + "build-icon": "electron-icon-builder --input=./public/icon.png --output=build --flatten"
+}
+
+// 安装Electron打包插件
+pnpm add electron-builder -D
+
+// package.json
+{
+  "script": {
+    + "pack": "electron-builder"
+  }
+  "build": {
+    "appId": "appid",
+    "productName": "productName",
+    "copyright": "Copyright © 2023 Alaso",
+    "directories": {
+      "buildResources": "build",
+      "output": "dist"
+    }
+    ...
+  },
+}
+
+npm run pack
+
+// 你可能会遇到的问题
+Error: Application entry file "build/electron.js" in the "<path>/dist/mac/<app-name>/Contents/Resources/app.asar" does not exist
+
+// package.json
+{
+  "build": {
+    ...
+    + "extends": null
+  }
+}
+// https://github.com/electron-userland/electron-builder/issues/2030
+
+在使用electron-builder打包过程中需要用到几个github上的包，但是由于网络原因，下载不下来，导致出错;
+//可以根据错误信息的github地址自行下载下来，放到electron-builder对应的位置
+// https://blog.csdn.net/qq_32682301/article/details/105234408
+
+// https://juejin.cn/post/7234057976713084984
+```
+
+##### 你可能会遇到的问题集合
 
 ```
 react-scripts 5 webpack Module not found: Error: Can't resolve 'fs'|'crypto'| ...
