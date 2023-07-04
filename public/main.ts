@@ -1,9 +1,6 @@
 // Modules to control application life and create native browser window
 const { app, BrowserWindow, Menu, ipcMain, dialog } = require('electron')
-// import electron from 'electron'
-// import { app, BrowserWindow, Menu, ipcMain, dialog } from 'electron'
 const fs = require('fs')
-// import fs from 'fs'
 
 // const { default: installExtension, REDUX_DEVTOOLS } = require('electron-devtools-installer');
 // const {
@@ -12,7 +9,6 @@ const fs = require('fs')
 // } = require('electron-extension-installer')
 
 const path = require('path')
-// import path from 'path'
 
 const Store = require('electron-store')
 // import Store from 'electron-store'
