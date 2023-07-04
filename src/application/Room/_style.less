@@ -1,0 +1,24 @@
+@import './Header/_style.less';
+@import './Messages/_style.less';
+@import './Prompt/_style.less';
+
+.room {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .header {
+    flex: 0 0 80px;
+  }
+
+  .messageWrap {
+    position: relative;
+
+    flex: 1;
+    overflow: hidden;
+  }
+
+  .prompt {
+    flex: 0 0 130px;
+  }
+}

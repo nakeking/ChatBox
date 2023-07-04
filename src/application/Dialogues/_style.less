@@ -1,0 +1,77 @@
+.dialogues {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+
+  & > .title {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 5px;
+
+    font-size: @font-size-least;
+    height: 50px;
+    line-height: 50px;
+    padding-left: 20px;
+
+    z-index: 2;
+  }
+
+  .dialogue {
+    position: relative;
+    padding-top: 50px;
+    flex: 1;
+    height: 100%;
+
+    overflow-y: scroll;
+    .dialogueItem {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      height: 60px;
+      padding: 0 15px;
+
+      cursor: pointer;
+      .anticon {
+        margin-right: 15px;
+      }
+
+      .title {
+        flex: 1;
+        padding-right: 10px;
+
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+    }
+
+    .more {
+      .anticon {
+        margin-right: 0;
+      }
+    }
+  }
+
+  .dialoguePop {
+    .ant-popover-inner {
+      padding: 4px 0;
+    }
+    .popItem {
+      font-size: @font-size-base;
+      padding: 4px 12px;
+      cursor: pointer;
+    }
+    .hr {
+      display: block;
+      height: 1px;
+      width: 100%;
+      margin: 6px 0;
+    }
+    .anticon {
+      margin-right: 12px;
+    }
+  }
+}

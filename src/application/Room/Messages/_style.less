@@ -1,0 +1,93 @@
+.message {
+  overflow-y: scroll;
+
+  max-height: 100%;
+  .msgItem {
+    display: flex;
+    align-items: start;
+    justify-content: start;
+    padding: 10px;
+
+    &:hover {
+      .msg {
+        .actions {
+          visibility: visible;
+        }
+      }
+    }
+    .role {
+      padding-left: 16px;
+      padding-top: 24px;
+    }
+
+    .msg {
+      flex: 1;
+      padding-left: 16px;
+      padding-top: 16px;
+
+      width: 0;
+      max-width: 100%;
+      .msg-content {
+        font-size: @font-size-base;
+        margin: 0.6rem 0 0.4rem;
+
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+
+        .code-block-wrapper {
+          width: 100%;
+          .code-header {
+            display: flex;
+            line-height: 24px;
+            .code-lang {
+              flex: 1;
+            }
+            .copy-action {
+              background-color: rgba(144, 202, 249, 0.16);
+              cursor: pointer;
+              padding: 0 4px;
+
+              &:hover {
+                background-color: rgba(144, 202, 249, 0.26);
+              }
+            }
+          }
+
+          .code-block {
+            box-sizing: border-box;
+            margin: 0;
+            max-width: 100%;
+            overflow: auto;
+            padding: 15px;
+          }
+        }
+      }
+
+      .actions {
+        display: flex;
+
+        visibility: hidden;
+        padding-top: 5px;
+
+        .stopIcon {
+          background-color: #ffa34e;
+          width: 14px;
+          height: 14px;
+          border-radius: 2px;
+        }
+      }
+    }
+
+    .other {
+      flex-basis: 50px;
+    }
+  }
+}
+
+.scrollActions {
+  position: absolute;
+  right: 8px;
+  bottom: 5px;
+  display: flex;
+  flex-direction: column;
+}

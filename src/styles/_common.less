@@ -1,0 +1,30 @@
+.Corrugation-root {
+  & > *:not(:last-child) {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+.iconBase {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  padding: 10px;
+
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.webkitScrollbarBase {
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  &::-webkit-scrollbar-track {
+    border-radius: 3px;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+  }
+}

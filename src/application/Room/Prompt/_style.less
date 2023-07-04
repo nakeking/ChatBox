@@ -1,0 +1,33 @@
+.prompt {
+  .promptForm {
+    display: flex;
+    padding-top: 30px;
+    .textarea {
+      overflow-y: scroll;
+    }
+
+    .SuiLabel {
+      flex: 1;
+      margin-right: 10px;
+    }
+
+    button {
+      width: 90px;
+      height: 53px;
+      font-size: @font-size-base;
+      border: none;
+      border-radius: 4px;
+
+      background-color: #529aff;
+      &:hover {
+        background-color: #3d7fdc;
+      }
+      cursor: pointer;
+    }
+  }
+
+  .tip {
+    font-size: @font-size-least;
+    line-height: 32px;
+  }
+}

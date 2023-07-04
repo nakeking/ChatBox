@@ -1,0 +1,32 @@
+.setUpModal {
+  .modal_body {
+    overflow-y: scroll;
+    max-height: calc(100vh - 180px);
+
+    .title {
+      margin-right: 15px;
+    }
+
+    .formItem {
+      margin: 20px 0;
+    }
+
+    .warning {
+      display: flex;
+      align-items: start;
+      border-radius: 6px;
+      padding: 10px;
+
+      .anticon {
+        font-size: @font-size-lg;
+      }
+
+      p {
+        font-size: @font-size-least;
+        padding-left: 10px;
+        line-height: 16px;
+        text-align: justify;
+      }
+    }
+  }
+}
