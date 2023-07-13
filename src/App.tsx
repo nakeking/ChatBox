@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useLayoutEffect, useState } from 'react'
 import './App.less'
-import ChatBoxContext, { useReducerContext, languageMap } from './context'
+import ChatBoxContext, { useContextReducer, languageMap } from './context'
 
 import './utils/i18n'
 import { useTranslation, Trans } from 'react-i18next'
@@ -26,7 +26,7 @@ const App: FC = () => {
     _renameDialogue,
     _toggleDialogue,
     _setStoreDialogues
-  } = useReducerContext()
+  } = useContextReducer()
   const { Settings } = state
   const { i18n } = useTranslation()
   useEffect(() => {

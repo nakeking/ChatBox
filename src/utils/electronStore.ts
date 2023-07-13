@@ -1,9 +1,9 @@
 import { Locale } from 'antd/es/locale'
 import { themeInterface } from '../hooks/useThemeHook'
 
-// const Store = require('electron-store')
+const Store = window.require('electron-store')
 // const store = new Store()
-import Store from 'electron-store'
+// import Store from 'electron-store'
 const store = new Store()
 
 export const setStore = (key: string, data?: unknown) => {

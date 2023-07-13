@@ -11,7 +11,8 @@ const fs = require('fs')
 const path = require('path')
 
 const Store = require('electron-store')
-// import Store from 'electron-store'
+// import Store from 'electron-store',
+// let store = new Store()
 Store.initRenderer()
 
 // dev环境添加调试
@@ -39,7 +40,7 @@ Menu.setApplicationMenu(null)
 
 // 创建窗口
 let mainWindow
-async function createWindow() {
+function createWindow() {
   // Create the browser window.
   mainWindow = new BrowserWindow({
     width: 800,
@@ -48,7 +49,10 @@ async function createWindow() {
     icon: path.join(__dirname, './favicon.ico'),
     webPreferences: {
       nodeIntegration: true,
+      enableRemoteModule: false,
       contextIsolation: false,
+      nodeIntegrationInWorker: false,
+      nodeIntegrationInSubFrames: false,
       preload: path.join(__dirname, 'preload.ts')
     }
   })

@@ -116,7 +116,7 @@ export const contextReducer = <T>(state: State, action: Action<T>): State => {
   return state
 }
 
-export const useReducerContext = () => {
+export const useContextReducer = () => {
   // ========= 初始化 State ===================================
   const storeSettings = getStore('Settings') || baseSettings
   const storeDialogues = getStore('Dialogues')

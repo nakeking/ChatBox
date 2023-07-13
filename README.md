@@ -1,5 +1,7 @@
 #### ChatBox
 
+一个 GPT/LLM 的桌面客户端
+
 <!-- Badge -->
 
 [![Author](https://img.shields.io/badge/Author-nakeking-red 'Author')](https://github.com/nakeking 'Nakeking')
