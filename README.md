@@ -208,9 +208,11 @@ pnpm add electron-icon-builder -D
 // 安装Electron打包插件
 pnpm add electron-builder -D
 
-// package.json
+// 修改 package.json
 {
+  "homepage": "."                 //为了build打包时, 项目中的静态资源路径拼接"./"
   "script": {
+    + "build": "craco build",     //打包react项目, 为electron打包后引入做准备
     + "pack": "electron-builder"
   }
   "build": {
@@ -225,6 +227,14 @@ pnpm add electron-builder -D
   },
 }
 
+// 打包react项目
+npm run build
+
+// 修改main.ts
+- mainWindow.loadURL('http://localhost:3000')
++ mainWindow.loadFile('build/index.html')
+
+// 执行 electron-builder 打包
 npm run pack
 
 // 你可能会遇到的问题
