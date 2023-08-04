@@ -88,7 +88,7 @@ export const contextReducer = <T>(state: State, action: Action<T>): State => {
 
   switch (type) {
     case ActionType.SETTINGS:
-      setStore('Settings', payload)
+      setStore('Settings', JSON.stringify(payload))
       return {
         ...state,
         Settings: payload as SettingsType
@@ -118,7 +118,11 @@ export const contextReducer = <T>(state: State, action: Action<T>): State => {
 
 export const useContextReducer = () => {
   // ========= 初始化 State ===================================
-  const storeSettings = getStore('Settings') || baseSettings
+  // const storeSettings = getStore('Settings') || baseSettings
+  const storeSettings = getStore('Settings')
+    ? JSON.parse(getStore('Settings')!)
+    : baseSettings
+
   const storeDialogues = getStore('Dialogues')
     ? JSONToMap(getStore('Dialogues')!)
     : initDialogues()

@@ -135,7 +135,6 @@ dependencies:
   craco-css-modules: 1.0.5_cyfdxq6ai2i5tfogok3unuoh3q
   craco-less: 2.0.0_cyfdxq6ai2i5tfogok3unuoh3q
   electron-is-dev: 2.0.0
-  electron-store: 8.1.0
   esm: 3.2.25
   eventsource-parser: 1.0.0
   fs: 0.0.1-security
@@ -189,6 +188,7 @@ devDependencies:
   electron-extension-installer: 1.2.0
   electron-icon-builder: 2.0.1
   electron-reloader: 1.2.3
+  electron-store: 8.1.0
   flatten: 1.0.3
   for-in: 1.0.2
   for-own: 1.0.0
@@ -4580,7 +4580,7 @@ packages:
   /atomically/1.7.0:
     resolution: {integrity: sha512-Xcz9l0z7y9yQ9rdDaxlmaI4uJHf/T8g9hOEzJcsEqX2SjCj4J20uK7+ldkDHMbpJDK76wF7xEIgxc/vSlsfw5w==}
     engines: {node: '>=10.12.0'}
-    dev: false
+    dev: true
 
   /atomically/2.0.1:
     resolution: {integrity: sha512-sxBhVZUFBFhqSAsYMM3X2oaUi2NVDJ8U026FsIusM8gYXls9AYs/eXzgGrufs1Qjpkxi9zunds+75QUFz+m7UQ==}
@@ -5802,7 +5802,7 @@ packages:
       onetime: 5.1.2
       pkg-up: 3.1.0
       semver: 7.5.1
-    dev: false
+    dev: true
 
   /conf/11.0.1:
     resolution: {integrity: sha512-WlLiQboEjKx0bYx2IIRGedBgNjLAxtwPaCSnsjWPST5xR0DB4q8lcsO/bEH9ZRYNcj63Y9vj/JG/5Fg6uWzI0Q==}
@@ -6343,7 +6343,7 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       mimic-fn: 3.1.0
-    dev: false
+    dev: true
 
   /debounce-fn/5.1.2:
     resolution: {integrity: sha512-Sr4SdOZ4vw6eQDvPYNxHogvrxmCIld/VenC5JbNrFwMiwd7lY/Z18ZFfo+EWNG4DD9nFlAujWAo/wGuOPHmy5A==}
@@ -6745,7 +6745,7 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       is-obj: 2.0.0
-    dev: false
+    dev: true
 
   /dot-prop/7.2.0:
     resolution: {integrity: sha512-Ol/IPXUARn9CSbkrdV4VJo7uCy1I3VuSiWCaFSg+8BdUOzF9n3jefIpcgAydvUZbTdEBZs2vEiTiS9m61ssiDA==}
@@ -6913,7 +6913,7 @@ packages:
     dependencies:
       conf: 10.2.0
       type-fest: 2.19.0
-    dev: false
+    dev: true
 
   /electron-to-chromium/1.4.404:
     resolution: {integrity: sha512-te57sWvQdpxmyd1GiswaodKdXdPgn9cN4ht8JlNa04QgtrfnUdWEo1261rY2vaC6TKaiHn0E7QerJWPKFCvMVw==}
@@ -9230,7 +9230,7 @@ packages:
   /is-obj/2.0.0:
     resolution: {integrity: sha512-drqDG3cbczxxEJRoOXcOjtdp1J/lyp1mNn0xaznRs8+muBhgQcrnbspox5X5fOw0HnMnbfDzvnEMEtqDEJEo8w==}
     engines: {node: '>=8'}
-    dev: false
+    dev: true
 
   /is-path-cwd/2.2.0:
     resolution: {integrity: sha512-w942bTcih8fdJPJmQHFzkS76NEP8Kzzvmw92cXsazb8intwLqPibPPdXf4ANdKV3rYMuuQYGIWtvz9JilB3NFQ==}
@@ -10094,7 +10094,7 @@ packages:
 
   /json-schema-typed/7.0.3:
     resolution: {integrity: sha512-7DE8mpG+/fVw+dTpjbxnx47TaMnDfOI1jwft9g1VybltZCduyRQPJPvc+zzKY9WPHxhPWczyFuYa6I8Mw4iU5A==}
-    dev: false
+    dev: true
 
   /json-schema-typed/8.0.1:
     resolution: {integrity: sha512-XQmWYj2Sm4kn4WeTYvmpKEbyPsL7nBsb647c7pMe6l02/yx2+Jfc4dT6UZkEXnIUb5LhD55r2HPsJ1milQ4rDg==}
@@ -10774,7 +10774,7 @@ packages:
   /mimic-fn/3.1.0:
     resolution: {integrity: sha512-Ysbi9uYW9hFyfrThdDEQuykN4Ey6BuwPD2kpI5ES/nFTDn/98yxYNLZJcgUAKPT/mcrLLKaGzJR9YVxJrIdASQ==}
     engines: {node: '>=8'}
-    dev: false
+    dev: true
 
   /mimic-fn/4.0.0:
     resolution: {integrity: sha512-vqiC06CuhBTUdZH+RYl8sFrL096vA45Ok5ISO6sE/Mr1jRbGH4Csnhi8f3wKVl7x8mO4Au7Ir9D3Oyv1VYMFJw==}

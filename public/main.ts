@@ -10,10 +10,10 @@ const fs = require('fs')
 
 const path = require('path')
 
-const Store = require('electron-store')
-// import Store from 'electron-store',
+// const Store = require('electron-store')
+// import Store from 'electron-store'
 // let store = new Store()
-Store.initRenderer()
+// Store.initRenderer()
 
 // dev环境添加调试
 // const isDev = require('electron-is-dev')
@@ -52,8 +52,8 @@ function createWindow() {
       enableRemoteModule: false,
       contextIsolation: false,
       nodeIntegrationInWorker: false,
-      nodeIntegrationInSubFrames: false,
-      preload: path.join(__dirname, 'preload.ts')
+      nodeIntegrationInSubFrames: false
+      // preload: path.join(__dirname, 'preload.ts')
     }
   })
 
@@ -65,8 +65,8 @@ function createWindow() {
   // }
 
   // and load the index.html of the app.
-  // mainWindow.loadFile('./index.html')
-  mainWindow.loadURL('http://localhost:3000')
+  mainWindow.loadFile('build/index.html')
+  // mainWindow.loadURL('http://localhost:3000')
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()

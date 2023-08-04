@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "main": "public/main.ts",
+  "homepage": ".",
   "dependencies": {
     "@ant-design/icons": "^5.1.1",
     "@testing-library/jest-dom": "^5.16.5",
@@ -43,6 +44,7 @@
     "start:react": "cross-env BROWSER=none craco start",
     "start:electron": "wait-on http://localhost:3000 && electron .",
     "build-icon": "electron-icon-builder --input=./public/icon.png --output=build --flatten",
+    "build": "craco build",
     "pack": "electron-builder",
     "test": "craco test",
     "eject": "craco eject"
