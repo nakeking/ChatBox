@@ -3,10 +3,10 @@ const { app, BrowserWindow, Menu, ipcMain, dialog } = require('electron')
 const fs = require('fs')
 
 // const { default: installExtension, REDUX_DEVTOOLS } = require('electron-devtools-installer');
-// const {
-//   default: installExtension,
-//   REACT_DEVELOPER_TOOLS
-// } = require('electron-extension-installer')
+const {
+  default: installExtension,
+  REACT_DEVELOPER_TOOLS
+} = require('electron-extension-installer')
 
 const path = require('path')
 
@@ -16,27 +16,27 @@ const path = require('path')
 // Store.initRenderer()
 
 // dev环境添加调试
-// const isDev = require('electron-is-dev')
-// isDev && require('electron-debug')({ enabled: true, showDevTools: false })
+const isDev = require('electron-is-dev')
+isDev && require('electron-debug')({ enabled: true, showDevTools: false })
 
 // 不需要菜单栏
 Menu.setApplicationMenu(null)
 
 // 添加Chrome插件
-// function createDevTools() {
-//   installExtension(REACT_DEVELOPER_TOOLS, {
-//     loadExtensionOptions: {
-//       allowFileAccess: true
-//     }
-//   })
-//     .then((name) => console.log(`Added Extension:  ${name}`))
-//     .catch((err) => console.log('An error occurred: ', err))
+function createDevTools() {
+  installExtension(REACT_DEVELOPER_TOOLS, {
+    loadExtensionOptions: {
+      allowFileAccess: true
+    }
+  })
+    .then((name) => console.log(`Added Extension:  ${name}`))
+    .catch((err) => console.log('An error occurred: ', err))
 
-//   // 安装React开发者工具
-//   // installExtension(REDUX_DEVTOOLS)
-//   //       .then((name) => console.log(`Added Extension:  ${name}`))
-//   //       .catch((err) => console.log('An error occurred: ', err));
-// }
+  // 安装React开发者工具
+  // installExtension(REDUX_DEVTOOLS)
+  //       .then((name) => console.log(`Added Extension:  ${name}`))
+  //       .catch((err) => console.log('An error occurred: ', err));
+}
 
 // 创建窗口
 let mainWindow
@@ -52,21 +52,21 @@ function createWindow() {
       enableRemoteModule: false,
       contextIsolation: false,
       nodeIntegrationInWorker: false,
-      nodeIntegrationInSubFrames: false
-      // preload: path.join(__dirname, 'preload.ts')
+      nodeIntegrationInSubFrames: false,
+      preload: path.join(__dirname, 'preload.ts')
     }
   })
 
   // 热重载
-  // if (isDev) {
-  //   try {
-  //     require('electron-reloader')(module)
-  //   } catch {}
-  // }
+  if (isDev) {
+    try {
+      require('electron-reloader')(module)
+    } catch {}
+  }
 
   // and load the index.html of the app.
-  mainWindow.loadFile('build/index.html')
-  // mainWindow.loadURL('http://localhost:3000')
+  // mainWindow.loadFile('build/index.html')  //正式环境
+  mainWindow.loadURL('http://localhost:3000') //开发环境
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
@@ -79,7 +79,7 @@ app.whenReady().then(() => {
   createWindow()
 
   // 开发环境加载开发者工具
-  // isDev && createDevTools()
+  isDev && createDevTools()
 
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
